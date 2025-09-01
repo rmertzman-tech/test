@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ethical Cartography Lab</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Link to your new stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <div id="app" class="container mx-auto p-4 md:p-8">
+        
+        <!-- Welcome Screen -->
+        <div id="welcome-screen" class="text-center py-16">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-900">Welcome to the Ethical Cartography Lab</h1>
+            <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">This is a space to explore ethics not as a set of rules, but as a practice of cultivating capabilities. Discover how diverse historical figures developed similar ethical skills and find role models for your own journey.</p>
+            <button id="start-btn" class="mt-8 bg-indigo-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-indigo-700 transition-colors text-lg">
+                Start Here
+            </button>
+        </div>
+
+        <!-- Main Content (Initially Hidden) -->
+        <div id="main-content" class="hidden">
+            <header class="text-center mb-10 relative">
+                <h1 class="text-4xl md:text-5xl font-bold text-gray-900">Ethical Cartography Lab</h1>
+                <p class="mt-2 text-lg text-gray-600">Ethics as a Practice of Cultivating Capabilities</p>
+                <button id="settings-btn" aria-label="Open API Key Settings" class="absolute top-0 right-0 text-gray-500 hover:text-gray-800 p-2">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                </button>
+            </header>
+
+            <main>
+                <!-- Navigation Tabs -->
+                <div class="mb-8 border-b border-gray-200">
+                    <nav class="flex flex-wrap -mb-px" aria-label="Tabs">
+                        <button id="navigators-tab" class="tab-btn px-3 py-2 font-medium text-sm rounded-t-md" aria-selected="true">Ethical Navigators</button>
+                        <button id="thinkers-tab" class="tab-btn px-3 py-2 font-medium text-sm rounded-t-md" aria-selected="false">Philosophers & Thinkers</button>
+                        <button id="comparison-tab" class="tab-btn px-3 py-2 font-medium text-sm rounded-t-md" aria-selected="false">Capability & Comparison Lab</button>
+                        <button id="resonance-tab" class="tab-btn px-3 py-2 font-medium text-sm rounded-t-md" aria-selected="false">Personal Resonance Lab</button>
+                        <button id="concepts-tab" class="tab-btn px-3 py-2 font-medium text-sm rounded-t-md" aria-selected="false">Core Concepts</button>
+                    </nav>
+                </div>
+
+                <!-- Navigators Section -->
+                <div id="navigators-section">
+                    <h2 class="text-2xl font-bold mb-6 text-gray-900">Ethical Navigators in Action</h2>
+                    <div id="profile-grid" class="card-container"></div>
+                </div>
+
+                <!-- Thinkers Section -->
+                <div id="thinkers-section" class="hidden">
+                    <h2 class="text-2xl font-bold mb-6 text-gray-900">Foundational Philosophers & Scientists</h2>
+                    <div id="thinker-grid" class="card-container"></div>
+                </div>
+                
+                <!-- Comparison Lab Section -->
+                <div id="comparison-section" class="hidden">
+                    <h2 class="text-2xl font-bold mb-4 text-gray-900">Capability & Comparison Lab</h2>
+                    <p class="text-gray-600 mb-6 max-w-3xl">Explore "Functional Equivalence" by comparing any two figures side-by-side, or discover surprising connections by exploring a shared ethical capability.</p>
+                    
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="text-xl font-semibold mb-4 text-gray-800">Direct Comparison</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label for="figureA-select" class="block text-sm font-medium text-gray-700">Select Figure A</label>
+                                <select id="figureA-select" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"></select>
+                            </div>
+                            <div>
+                                <label for="figureB-select" class="block text-sm font-medium text-gray-700">Select Figure B</label>
+                                <select id="figureB-select" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"></select>
+                            </div>
+                        </div>
+                        <button id="compare-figures-btn" class="mt-4 w-full bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-indigo-700 transition-colors">✨ Analyze Functional Equivalence</button>
+                        <div id="comparison-output" class="mt-4"></div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-lg shadow-md mt-8">
+                        <h3 class="text-xl font-semibold mb-4 text-gray-800">Explore by Capability</h3>
+                        <div>
+                            <label for="capability-select" class="block text-sm font-medium text-gray-700">Select a Core Ethical Capability</label>
+                            <select id="capability-select" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"></select>
+                        </div>
+                        <div id="capability-explorer-output" class="mt-4 card-container"></div>
+                    </div>
+                </div>
+
+                <!-- Personal Resonance Lab Section -->
+                <div id="resonance-section" class="hidden">
+                    <h2 class="text-2xl font-bold mb-4 text-gray-900">Personal Resonance Lab</h2>
+                    <p class="text-gray-600 mb-6 max-w-3xl">This is a space for your own ethical reflection. Describe a value you hold, a capability you wish to cultivate, or an ethical challenge you are facing. The AI will help you find historical figures who demonstrated functionally equivalent capabilities, providing you with models for your own journey.</p>
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <label for="resonance-input" class="block text-sm font-medium text-gray-700">Enter your reflection here (e.g., "I want to be more courageous in speaking up," or "I value compassionate service above all else.")</label>
+                        <textarea id="resonance-input" rows="4" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"></textarea>
+                        <button id="find-counterparts-btn" class="mt-4 w-full bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-indigo-700 transition-colors">
+                            ✨ Discover Role Models for Your Ethical Journey
+                        </button>
+                        <div id="counterparts-output" class="mt-4"></div>
+                    </div>
+                </div>
+
+                <!-- Concepts Section -->
+                <div id="concepts-section" class="hidden">
+                     <h2 class="text-2xl font-bold mb-6 text-gray-900">Core Analytical Concepts</h2>
+                     <div id="concept-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+                </div>
+            </main>
+        </div>
+
+        <!-- Privacy & API Key Modal -->
+        <div id="privacy-modal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-75 h-full w-full z-50 flex items-center justify-center p-4">
+            <div class="relative w-full max-w-2xl shadow-lg rounded-lg bg-white">
+                <div class="modal-content p-6">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-4">Your Privacy & API Key</h2>
+                    <div class="text-gray-700 space-y-4 text-sm">
+                        <p>To use the AI-powered features (marked with ✨), you need a Gemini API Key.</p>
+                        <div class="bg-gray-100 p-3 rounded-lg">
+                            <label for="api-key-input-modal" class="block text-sm font-medium text-gray-700">Enter your Gemini API Key</label>
+                            <input type="password" id="api-key-input-modal" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" placeholder="Enter your key here">
+                            <p class="text-xs text-gray-500 mt-1">You can get a free key from <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" class="text-indigo-600 hover:underline">Google AI Studio ↗</a>.</p>
+                        </div>
+                        <p>Your key is saved only in your browser's local storage. It is not sent to any server except to Google for the AI analysis.</p>
+                    </div>
+                    <div class="mt-6 text-right">
+                        <button id="continue-btn" class="bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-indigo-700 transition-colors">Save Key & Continue</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings API Key Modal -->
+        <div id="settings-api-key-modal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-75 h-full w-full z-50 flex items-center justify-center p-4">
+            <div class="relative w-full max-w-md shadow-lg rounded-lg bg-white p-6">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">Gemini API Key</h2>
+                <p class="text-gray-700 mb-4 text-sm">Update your Gemini API Key. You can get a key from <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" class="text-indigo-600 hover:underline">Google AI Studio ↗</a>.</p>
+                <div>
+                    <label for="api-key-input-settings" class="block text-sm font-medium text-gray-700">Your API Key</label>
+                    <input type="password" id="api-key-input-settings" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                </div>
+                <div class="mt-6 flex justify-end space-x-3">
+                    <button id="cancel-api-key-btn" class="bg-gray-200 text-gray-700 font-bold py-2 px-4 rounded-lg hover:bg-gray-300">Cancel</button>
+                    <button id="save-api-key-btn" class="bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-indigo-700">Save Key</button>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Modal for Profile/Thinker Details -->
+        <div id="detail-modal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 h-full w-full z-50 flex items-center justify-center p-4">
+            <div class="relative w-full max-w-3xl shadow-lg rounded-lg bg-white">
+                <div class="modal-content p-6">
+                     <div class="flex justify-between items-start">
+                         <div id="modal-content-details" class="w-full pr-4">
+                             <!-- Modal content will be injected here -->
+                         </div>
+                         <button id="close-modal" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center sticky top-0">
+                             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                         </button>
+                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Link to your new script files (Order is important!) -->
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

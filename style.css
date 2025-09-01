@@ -1,0 +1,67 @@
+body {
+    font-family: 'Inter', sans-serif;
+}
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+.modal-content {
+    max-height: 85vh;
+    overflow-y: auto;
+}
+.concept-card, .profile-card, .thinker-card {
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.concept-card:hover, .profile-card:hover, .thinker-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+/* Custom scrollbar for modal */
+.modal-content::-webkit-scrollbar {
+    width: 8px;
+}
+.modal-content::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+.modal-content::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+.modal-content::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+.gemini-output {
+    background-color: #f8f9fa;
+    border-left: 4px solid #4f46e5;
+    padding: 1rem;
+    margin-top: 1rem;
+    border-radius: 0.25rem;
+    white-space: pre-wrap;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+.loader {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #4f46e5;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    animation: spin 1s linear infinite;
+    margin: 1rem auto;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+.tab-btn[aria-selected="true"] {
+    color: white;
+    background-color: #4f46e5;
+}
+.tab-btn[aria-selected="false"] {
+    color: #6b7280;
+    background-color: transparent;
+}
+.tab-btn[aria-selected="false"]:hover {
+    color: #111827;
+}
