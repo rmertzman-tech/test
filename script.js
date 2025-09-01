@@ -307,22 +307,45 @@ document.addEventListener('DOMContentLoaded', () => {
 
         getNavigatorModalHtml(data) {
              let videoButton = data.videoUrl ? `<a href="${data.videoUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center bg-red-600 text-white font-semibold py-2 px-4 rounded-md hover:bg-red-700 transition-colors text-sm"><svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"></path></svg>Watch Video Summary</a>` : '';
-             return `
-                 <h2 class="text-3xl font-bold mb-1 text-indigo-800">${data.name}</h2>
-                 <p class="text-md text-gray-500 mb-2">${data.title} (${data.lifespan})</p>
-                 <div class="flex space-x-4 mb-4">
-                     <a href="${data.bioLink}" target="_blank" rel="noopener noreferrer" class="text-indigo-600 hover:underline text-sm">Read Full Biography ↗</a>
-                     ${videoButton}
-                 </div>
-                 <div class="space-y-5 text-gray-700">
-                     <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Assembly History</h4><p class="text-sm">${data.assemblyHistory}</p></div>
-                     <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">BROA+ Configuration</h4><p class="text-sm">${data.broa}</p></div>
-                     <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Adaptive Temporal Coherence Function (ATCF)</h4><p class="text-sm">${data.atcf}</p></div>
-                     <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Future-Oriented Projections (FOP)</h4><p class="text-sm">${data.fop}</p></div>
-                     <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Key Ethical Capabilities</h4><ul class="list-disc list-inside mt-2 space-y-1 text-sm">${(data.capabilities || []).map(c => `<li>${c}</li>`).join('')}</ul></div>
-                     <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Textbook Connections</h4><ul class="list-disc list-inside mt-2 space-y-1 text-sm">${(data.relatedChapters || []).map(link => `<li><strong>Chapter ${link.chapter}:</strong> ${link.topic}</li>`).join('')}</ul></div>
-                     <div class="border-t pt-4 mt-4"><h4 class="font-semibold text-lg text-gray-900 mb-2">Interactive Ethical Scenarios ✨</h4><div class="mb-4"><button id="generate-dilemma-btn" class="w-full text-sm bg-indigo-600 text-white font-semibold py-2 px-4 rounded-md hover:bg-indigo-700">Generate an Ethical Dilemma for ${data.name}</button><div id="dilemma-output" class="mt-2"></div></div><div><label for="dialogue-input" class="block text-sm font-medium">Ask ${data.name} a question about a modern issue:</label><div class="mt-1 flex rounded-md shadow-sm"><input type="text" id="dialogue-input" class="flex-1 block w-full rounded-none rounded-l-md border-gray-300" placeholder="e.g., Is social media good for society?"><button id="generate-dialogue-btn" class="inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-sm hover:bg-gray-100">Ask</button></div><div id="dialogue-output" class="mt-2"></div></div></div>
-                 </div>`;
+             // This logic now checks if the new detailed fields exist. If not, it falls back to the old fields.
+             const hasNewFormat = data.assemblyHistory && data.broa;
+             if (hasNewFormat) {
+                 return `
+                     <h2 class="text-3xl font-bold mb-1 text-indigo-800">${data.name}</h2>
+                     <p class="text-md text-gray-500 mb-2">${data.title} (${data.lifespan})</p>
+                     <div class="flex space-x-4 mb-4">
+                         <a href="${data.bioLink}" target="_blank" rel="noopener noreferrer" class="text-indigo-600 hover:underline text-sm">Read Full Biography ↗</a>
+                         ${videoButton}
+                     </div>
+                     <div class="space-y-5 text-gray-700">
+                         <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Assembly History</h4><p class="text-sm">${data.assemblyHistory}</p></div>
+                         <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">BROA+ Configuration</h4><p class="text-sm">${data.broa}</p></div>
+                         <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Adaptive Temporal Coherence Function (ATCF)</h4><p class="text-sm">${data.atcf}</p></div>
+                         <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Future-Oriented Projections (FOP)</h4><p class="text-sm">${data.fop}</p></div>
+                         <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Key Ethical Capabilities</h4><ul class="list-disc list-inside mt-2 space-y-1 text-sm">${(data.capabilities || []).map(c => `<li>${c}</li>`).join('')}</ul></div>
+                         <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Textbook Connections</h4><ul class="list-disc list-inside mt-2 space-y-1 text-sm">${(data.relatedChapters || []).map(link => `<li><strong>Chapter ${link.chapter}:</strong> ${link.topic}</li>`).join('')}</ul></div>
+                         <div class="border-t pt-4 mt-4"><h4 class="font-semibold text-lg text-gray-900 mb-2">Interactive Ethical Scenarios ✨</h4><div class="mb-4"><button id="generate-dilemma-btn" class="w-full text-sm bg-indigo-600 text-white font-semibold py-2 px-4 rounded-md hover:bg-indigo-700">Generate an Ethical Dilemma for ${data.name}</button><div id="dilemma-output" class="mt-2"></div></div><div><label for="dialogue-input" class="block text-sm font-medium">Ask ${data.name} a question about a modern issue:</label><div class="mt-1 flex rounded-md shadow-sm"><input type="text" id="dialogue-input" class="flex-1 block w-full rounded-none rounded-l-md border-gray-300" placeholder="e.g., Is social media good for society?"><button id="generate-dialogue-btn" class="inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-sm hover:bg-gray-100">Ask</button></div><div id="dialogue-output" class="mt-2"></div></div></div>
+                     </div>`;
+             } else {
+                // Fallback for old data format
+                 return `
+                     <h2 class="text-3xl font-bold mb-1 text-indigo-800">${data.name}</h2>
+                     <p class="text-md text-gray-500 mb-2">${data.title} (${data.lifespan})</p>
+                     <div class="flex space-x-4 mb-4">
+                         <a href="${data.bioLink}" target="_blank" rel="noopener noreferrer" class="text-indigo-600 hover:underline text-sm">Read Full Biography ↗</a>
+                         ${videoButton}
+                     </div>
+                     <div class="space-y-5 text-gray-700">
+                         <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Identity Kernel (K)</h4><p class="text-sm">${data.identityKernel}</p></div>
+                         <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Personal Reality Framework (PRF)</h4><p class="text-sm">${data.prf}</p></div>
+                         <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Future Pull (Retrocausal Markov Blanket)</h4><p class="text-sm">${data.futurePull_RMB}</p></div>
+                         <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Adaptive Temporal Consistency (ATCF)</h4><p class="text-sm">${data.atcf}</p></div>
+                         <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Dramatic Ethical Example</h4><p class="text-sm">${data.dramaticExample}</p></div>
+                         <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Key Ethical Capabilities</h4><ul class="list-disc list-inside mt-2 space-y-1 text-sm">${(data.capabilities || []).map(c => `<li>${c}</li>`).join('')}</ul></div>
+                         <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Textbook Connections</h4><ul class="list-disc list-inside mt-2 space-y-1 text-sm">${(data.relatedChapters || []).map(link => `<li><strong>Chapter ${link.chapter}:</strong> ${link.topic}</li>`).join('')}</ul></div>
+                         <div class="border-t pt-4 mt-4"><h4 class="font-semibold text-lg text-gray-900 mb-2">Interactive Ethical Scenarios ✨</h4><div class="mb-4"><button id="generate-dilemma-btn" class="w-full text-sm bg-indigo-600 text-white font-semibold py-2 px-4 rounded-md hover:bg-indigo-700">Generate an Ethical Dilemma for ${data.name}</button><div id="dilemma-output" class="mt-2"></div></div><div><label for="dialogue-input" class="block text-sm font-medium">Ask ${data.name} a question about a modern issue:</label><div class="mt-1 flex rounded-md shadow-sm"><input type="text" id="dialogue-input" class="flex-1 block w-full rounded-none rounded-l-md border-gray-300" placeholder="e.g., Is social media good for society?"><button id="generate-dialogue-btn" class="inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-sm hover:bg-gray-100">Ask</button></div><div id="dialogue-output" class="mt-2"></div></div></div>
+                     </div>`;
+             }
         },
         
         getThinkerModalHtml(data) {
@@ -346,4 +369,3 @@ document.addEventListener('DOMContentLoaded', () => {
 
     app.init();
 });
-
