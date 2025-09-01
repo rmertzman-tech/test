@@ -16,7 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
             this.renderComparisonLab();
             this.setupEventListeners();
             
-            // Load saved user reflection from local storage
             const savedResonance = localStorage.getItem('resonanceInput');
             if (savedResonance) {
                 document.getElementById('resonance-input').value = savedResonance;
@@ -86,8 +85,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!this.apiKey) {
                 document.getElementById('settings-api-key-modal').classList.remove('hidden');
                 if(button) {
-                    button.disabled = false; // Re-enable button if API key is missing
-                    button.innerHTML = button.dataset.originalText;
+                    button.disabled = false;
+                    button.innerHTML = button.dataset.originalText || 'Generate';
                 }
                 return;
             }
@@ -96,9 +95,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 button.dataset.originalText = button.innerHTML;
                 button.disabled = true;
                 button.innerHTML = '<div class="loader" style="margin: 0 auto; width: 20px; height: 20px;"></div>';
+            } else {
+                outputElement.innerHTML = '<div class="loader"></div>';
             }
             
-            outputElement.innerHTML = '<div class="loader"></div>';
             const payload = { contents: [{ parts: [{ text: prompt }] }] };
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${this.apiKey}`;
             
@@ -120,7 +120,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     const text = result.candidates[0].content.parts[0].text;
                     outputElement.innerHTML = `<div class="gemini-output">${text.trim()}</div>`;
                 } else {
-                    // Handle cases where the API returns a successful status but no content
                     outputElement.innerHTML = '<p class="text-red-500 text-sm">The AI returned an empty response. Please try again.</p>';
                 }
 
@@ -136,26 +135,9 @@ document.addEventListener('DOMContentLoaded', () => {
         },
 
         setupEventListeners() {
-            const startBtn = document.getElementById('start-btn');
-            const privacyModal = document.getElementById('privacy-modal');
-            const continueBtn = document.getElementById('continue-btn');
-            const welcomeScreen = document.getElementById('welcome-screen');
-            const mainContent = document.getElementById('main-content');
-            
-            startBtn.addEventListener('click', () => {
-                welcomeScreen.classList.add('hidden');
-                mainContent.classList.remove('hidden');
-            });
-
-            continueBtn.addEventListener('click', () => {
-                const apiKeyInput = document.getElementById('api-key-input-modal').value.trim();
-                if (apiKeyInput) {
-                    this.apiKey = apiKeyInput;
-                    localStorage.setItem('geminiApiKey', apiKeyInput);
-                    privacyModal.classList.add('hidden');
-                } else {
-                    alert('Please enter an API key to continue.');
-                }
+            document.getElementById('start-btn').addEventListener('click', () => {
+                document.getElementById('welcome-screen').classList.add('hidden');
+                document.getElementById('main-content').classList.remove('hidden');
             });
 
             const tabs = {
@@ -216,14 +198,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
             document.getElementById('find-counterparts-btn').addEventListener('click', (e) => {
                 const userInput = resonanceInput.value;
-                if (!userInput.trim()) {
-                    alert("Please describe a value or capability first.");
-                    return;
-                }
+                if (!userInput.trim()) { alert("Please describe a value or capability first."); return; }
                 const outputElement = document.getElementById('counterparts-output');
-                const allFigures = [...this.navigators, ...this.thinkers];
-                const figuresData = allFigures.map(f => ({ name: f.name, capabilities: (f.capabilities || []).join(', ') }) );
-                const prompt = `You are an AI assistant for a philosophy course. A student has described an ethical value or capability they care about: "${userInput}". Analyze the student's input and compare it to the following list of historical figures and their key ethical capabilities: ${JSON.stringify(figuresData, null, 2)}. Identify the top 3-5 figures who demonstrate a functionally equivalent capability. For each match, provide a brief, encouraging explanation of *how* that person's life and actions exemplify the capability the student described. Frame the response as a guide for the student's own ethical development.`;
+                const figuresData = [...this.navigators, ...this.thinkers].map(f => {
+                    return {
+                        name: f.name,
+                        // Use the FULL analysis for the AI if it exists, otherwise fallback
+                        details: f.fullPrfAnalysis || `Capabilities: ${(f.capabilities || []).join(', ')}. Summary: ${f.summary}`
+                    };
+                });
+                const prompt = `You are an AI assistant for a philosophy course. A student has described an ethical value they care about: "${userInput}". Analyze the student's input and compare it to the following list of historical figures and their detailed PRF analyses: ${JSON.stringify(figuresData, null, 2)}. Identify the top 3-5 figures who demonstrate a functionally equivalent capability. For each match, provide a brief, encouraging explanation of *how* that person's life and actions exemplify the capability the student described. Frame the response as a guide for the student's own ethical development.`;
                 this.callGeminiAPI(prompt, outputElement, e.target);
             });
 
@@ -239,8 +223,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 const [typeB, indexB] = valB.split('-');
                 const personB = this[typeB === 'navigator' ? 'navigators' : 'thinkers'][indexB];
 
+                // Use the full analysis for the AI prompt if it exists
+                const contextA = personA.fullPrfAnalysis || `Summary: ${personA.summary}. Key Ideas: ${personA.identityKernel || personA.broa}`;
+                const contextB = personB.fullPrfAnalysis || `Summary: ${personB.summary}. Key Ideas: ${personB.identityKernel || personB.broa}`;
+
                 const outputElement = document.getElementById('comparison-output');
-                const prompt = `As an AI assistant for a philosophy course, analyze the connection between ${personA.name} and ${personB.name} using 'Functional Equivalence'. Background: Different individuals, with different beliefs and histories can develop functionally equivalent ethical capabilities. Your Task: 1. Identify one or two key ethical capabilities that both individuals demonstrate. 2. Explain how each person developed this shared capability from their unique background. 3. Conclude by explaining how this demonstrates 'Functional Equivalence'. --- Profile for ${personA.name}: - Key Ideas/Values: ${personA.identityKernel || personA.broa} - Key Capabilities: ${(personA.capabilities || []).join(', ')} --- Profile for ${personB.name}: - Key Ideas/Values: ${personB.identityKernel || personB.broa} - Key Capabilities: ${(personB.capabilities || []).join(', ')}`;
+                const prompt = `As an AI assistant, analyze the connection between ${personA.name} and ${personB.name} using 'Functional Equivalence'. Your task is to identify a shared ethical capability and explain how each person developed it from their unique background.
+                ---
+                Full Analysis for ${personA.name}:
+                ${contextA}
+                ---
+                Full Analysis for ${personB.name}:
+                ${contextB}
+                ---
+                Conclude by explaining how this demonstrates 'Functional Equivalence' in action for a college student.`;
                 this.callGeminiAPI(prompt, outputElement, e.target);
             });
 
@@ -252,7 +248,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const matchingFigures = allFigures.filter(f => (f.capabilities || []).includes(selectedCapability));
                     
                     outputElement.innerHTML = matchingFigures.map(person => `
-                        <div class="${person.type === 'navigator' ? 'profile-card' : 'thinker-card'} bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 cursor-pointer flex flex-col" data-type="${person.type}" data-index="${person.originalIndex}">
+                        <div class="${person.type}-card bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 cursor-pointer flex flex-col" data-type="${person.type}" data-index="${person.originalIndex}">
                             <h3 class="text-xl font-bold ${person.type === 'navigator' ? 'text-indigo-700' : 'text-teal-700'}">${person.name}</h3>
                             <p class="text-sm text-gray-500 mb-2">${person.lifespan}</p>
                             <p class="font-semibold text-gray-800">${person.title}</p>
@@ -291,7 +287,9 @@ document.addEventListener('DOMContentLoaded', () => {
             if (type === 'navigator') {
                 document.getElementById('generate-dilemma-btn').addEventListener('click', (e) => {
                     const outputElement = document.getElementById('dilemma-output');
-                    const prompt = `Based on the life and ethical framework of ${data.name}, whose core values are captured in their BROA+ configuration and life story (Assembly History), generate a short, new, hypothetical ethical dilemma they might have faced. The dilemma should test their core principles. Present the scenario and then ask, 'What should ${data.name} do?'`;
+                    // Use the full analysis for the AI if it exists
+                    const context = data.fullPrfAnalysis || data.identityKernel;
+                    const prompt = `Based on the life and ethical framework of ${data.name}, whose principles are detailed here: "${context}", generate a short, new, hypothetical ethical dilemma they might have faced. The dilemma should test their core principles. Present the scenario and then ask, 'What should ${data.name} do?'`;
                     this.callGeminiAPI(prompt, outputElement, e.target);
                 });
 
@@ -299,7 +297,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     const userInput = document.getElementById('dialogue-input').value;
                     if (!userInput) { alert("Please enter a question."); return; }
                     const outputElement = document.getElementById('dialogue-output');
-                    const prompt = `You are an expert in the life and philosophy of ${data.name}. A student has asked the following modern ethical question: "${userInput}". Based on ${data.name}'s known values (from their BROA+), their way of reasoning, and their life experiences (Assembly History), write a short response in their voice, explaining how they might think about this issue.`;
+                    // Use the full analysis for the AI if it exists
+                    const context = data.fullPrfAnalysis || data.identityKernel;
+                    const prompt = `You are an expert in the life and philosophy of ${data.name}. A student has asked: "${userInput}". Based on ${data.name}'s detailed analysis provided here: "${context}", write a short response in their voice, explaining how they might think about this issue.`;
                     this.callGeminiAPI(prompt, outputElement, e.target.parentElement.querySelector('button'));
                 });
             } 
@@ -307,7 +307,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         getNavigatorModalHtml(data) {
              let videoButton = data.videoUrl ? `<a href="${data.videoUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center bg-red-600 text-white font-semibold py-2 px-4 rounded-md hover:bg-red-700 transition-colors text-sm"><svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"></path></svg>Watch Video Summary</a>` : '';
-             // This logic now checks if the new detailed fields exist. If not, it falls back to the old fields.
+             // Check if the new detailed format exists
              const hasNewFormat = data.assemblyHistory && data.broa;
              if (hasNewFormat) {
                  return `
@@ -317,51 +317,42 @@ document.addEventListener('DOMContentLoaded', () => {
                          <a href="${data.bioLink}" target="_blank" rel="noopener noreferrer" class="text-indigo-600 hover:underline text-sm">Read Full Biography ↗</a>
                          ${videoButton}
                      </div>
-                     <div class="space-y-5 text-gray-700">
-                         <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Assembly History</h4><p class="text-sm">${data.assemblyHistory}</p></div>
-                         <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">BROA+ Configuration</h4><p class="text-sm">${data.broa}</p></div>
-                         <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Adaptive Temporal Coherence Function (ATCF)</h4><p class="text-sm">${data.atcf}</p></div>
-                         <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Future-Oriented Projections (FOP)</h4><p class="text-sm">${data.fop}</p></div>
-                         <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Key Ethical Capabilities</h4><ul class="list-disc list-inside mt-2 space-y-1 text-sm">${(data.capabilities || []).map(c => `<li>${c}</li>`).join('')}</ul></div>
-                         <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Textbook Connections</h4><ul class="list-disc list-inside mt-2 space-y-1 text-sm">${(data.relatedChapters || []).map(link => `<li><strong>Chapter ${link.chapter}:</strong> ${link.topic}</li>`).join('')}</ul></div>
+                     <div class="space-y-5 text-gray-700 text-sm">
+                         <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Assembly History</h4>${data.assemblyHistory}</div>
+                         <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">BROA+ Configuration</h4>${data.broa}</div>
+                         <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Adaptive Temporal Coherence (ATCF)</h4><p>${data.atcf}</p></div>
+                         <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Future-Oriented Projections (FOP)</h4><p>${data.fop}</p></div>
                          <div class="border-t pt-4 mt-4"><h4 class="font-semibold text-lg text-gray-900 mb-2">Interactive Ethical Scenarios ✨</h4><div class="mb-4"><button id="generate-dilemma-btn" class="w-full text-sm bg-indigo-600 text-white font-semibold py-2 px-4 rounded-md hover:bg-indigo-700">Generate an Ethical Dilemma for ${data.name}</button><div id="dilemma-output" class="mt-2"></div></div><div><label for="dialogue-input" class="block text-sm font-medium">Ask ${data.name} a question about a modern issue:</label><div class="mt-1 flex rounded-md shadow-sm"><input type="text" id="dialogue-input" class="flex-1 block w-full rounded-none rounded-l-md border-gray-300" placeholder="e.g., Is social media good for society?"><button id="generate-dialogue-btn" class="inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-sm hover:bg-gray-100">Ask</button></div><div id="dialogue-output" class="mt-2"></div></div></div>
                      </div>`;
              } else {
-                // Fallback for old data format
+                 // Fallback for old data format
                  return `
                      <h2 class="text-3xl font-bold mb-1 text-indigo-800">${data.name}</h2>
                      <p class="text-md text-gray-500 mb-2">${data.title} (${data.lifespan})</p>
-                     <div class="flex space-x-4 mb-4">
+                      <div class="flex space-x-4 mb-4">
                          <a href="${data.bioLink}" target="_blank" rel="noopener noreferrer" class="text-indigo-600 hover:underline text-sm">Read Full Biography ↗</a>
                          ${videoButton}
                      </div>
-                     <div class="space-y-5 text-gray-700">
-                         <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Identity Kernel (K)</h4><p class="text-sm">${data.identityKernel}</p></div>
-                         <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Personal Reality Framework (PRF)</h4><p class="text-sm">${data.prf}</p></div>
-                         <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Future Pull (Retrocausal Markov Blanket)</h4><p class="text-sm">${data.futurePull_RMB}</p></div>
-                         <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Adaptive Temporal Consistency (ATCF)</h4><p class="text-sm">${data.atcf}</p></div>
-                         <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Dramatic Ethical Example</h4><p class="text-sm">${data.dramaticExample}</p></div>
-                         <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Key Ethical Capabilities</h4><ul class="list-disc list-inside mt-2 space-y-1 text-sm">${(data.capabilities || []).map(c => `<li>${c}</li>`).join('')}</ul></div>
-                         <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Textbook Connections</h4><ul class="list-disc list-inside mt-2 space-y-1 text-sm">${(data.relatedChapters || []).map(link => `<li><strong>Chapter ${link.chapter}:</strong> ${link.topic}</li>`).join('')}</ul></div>
+                     <div class="space-y-5 text-gray-700 text-sm">
+                         <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Identity Kernel (K)</h4><p>${data.identityKernel}</p></div>
+                         <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Personal Reality Framework (PRF)</h4><p>${data.prf}</p></div>
+                         <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Dramatic Ethical Example</h4><p>${data.dramaticExample}</p></div>
                          <div class="border-t pt-4 mt-4"><h4 class="font-semibold text-lg text-gray-900 mb-2">Interactive Ethical Scenarios ✨</h4><div class="mb-4"><button id="generate-dilemma-btn" class="w-full text-sm bg-indigo-600 text-white font-semibold py-2 px-4 rounded-md hover:bg-indigo-700">Generate an Ethical Dilemma for ${data.name}</button><div id="dilemma-output" class="mt-2"></div></div><div><label for="dialogue-input" class="block text-sm font-medium">Ask ${data.name} a question about a modern issue:</label><div class="mt-1 flex rounded-md shadow-sm"><input type="text" id="dialogue-input" class="flex-1 block w-full rounded-none rounded-l-md border-gray-300" placeholder="e.g., Is social media good for society?"><button id="generate-dialogue-btn" class="inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-sm hover:bg-gray-100">Ask</button></div><div id="dialogue-output" class="mt-2"></div></div></div>
                      </div>`;
              }
         },
         
         getThinkerModalHtml(data) {
-            let videoButton = data.videoUrl ? `<a href="${data.videoUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center bg-red-600 text-white font-semibold py-2 px-4 rounded-md hover:bg-red-700 transition-colors text-sm"><svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"></path></svg>Watch Video Summary</a>` : '';
+            let videoButton = data.videoUrl ? `<a href="${data.videoUrl}" target="_blank" rel="noopener noreferrer" class="..."><svg>...</svg>Watch Video</a>` : '';
             return `
                  <h2 class="text-3xl font-bold mb-1 text-teal-800">${data.name}</h2>
                  <p class="text-md text-gray-500 mb-4">${data.title} (${data.lifespan})</p>
-                 <div class="flex space-x-4 mb-4">
-                     ${videoButton}
-                 </div>
-                 <div class="space-y-5 text-gray-700">
-                     <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Assembly History</h4><p class="text-sm">${data.assemblyHistory}</p></div>
-                     <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">BROA+ Configuration</h4><p class="text-sm">${data.broa}</p></div>
-                     <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Adaptive Temporal Coherence Function (ATCF)</h4><p class="text-sm">${data.atcf}</p></div>
-                     <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Future-Oriented Projections (FOP)</h4><p class="text-sm">${data.fop}</p></div>
-                     <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Key Ethical Capabilities</h4><ul class="list-disc list-inside mt-2 space-y-1 text-sm">${(data.capabilities || []).map(c => `<li>${c}</li>`).join('')}</ul></div>
+                 <div class="flex space-x-4 mb-4">${videoButton}</div>
+                 <div class="space-y-5 text-gray-700 text-sm">
+                     <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Assembly History</h4><p>${data.assemblyHistory}</p></div>
+                     <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">BROA+ Configuration</h4><p>${data.broa}</p></div>
+                     <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Adaptive Temporal Coherence (ATCF)</h4><p>${data.atcf}</p></div>
+                     <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Future-Oriented Projections (FOP)</h4><p>${data.fop}</p></div>
                  </div>
             `;
         }
@@ -369,3 +360,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
     app.init();
 });
+
