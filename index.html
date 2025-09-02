@@ -6,6 +6,7 @@
     <title>Ethical Cartography Lab</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="bg-gray-50 text-gray-800">
@@ -16,7 +17,7 @@
             <h1 class="text-4xl md:text-5xl font-bold text-gray-900">Welcome to the Ethical Cartography Lab</h1>
             <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">This is a space to explore ethics not as a set of rules, but as a practice of cultivating capabilities. Discover how diverse historical figures developed similar ethical skills and find role models for your own journey.</p>
             <button id="start-btn" class="mt-8 bg-indigo-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-indigo-700 transition-colors text-lg">
-                Start Exploring
+                Start Here
             </button>
         </div>
 
@@ -37,13 +38,9 @@
                         <button id="comparison-tab" class="tab-btn px-3 py-2 font-medium text-sm rounded-t-md" aria-selected="false">Capability & Comparison Lab</button>
                         <button id="resonance-tab" class="tab-btn px-3 py-2 font-medium text-sm rounded-t-md" aria-selected="false">Personal Resonance Lab</button>
                         <button id="concepts-tab" class="tab-btn px-3 py-2 font-medium text-sm rounded-t-md" aria-selected="false">Core Concepts</button>
-                        <button id="foundations-tab" class="tab-btn px-3 py-2 font-medium text-sm rounded-t-md" aria-selected="false">Foundations</button>
-                        <button id="casestudies-tab" class="tab-btn px-3 py-2 font-medium text-sm rounded-t-md" aria-selected="false">Case Studies</button>
-                        <button id="essays-tab" class="tab-btn px-3 py-2 font-medium text-sm rounded-t-md" aria-selected="false">Essays & Deeper Dives</button>
                     </nav>
                 </div>
 
-                <!-- Sections for each tab -->
                 <div id="navigators-section">
                     <h2 class="text-2xl font-bold mb-6 text-gray-900">Ethical Navigators in Action</h2>
                     <div id="profile-grid" class="card-container"></div>
@@ -58,7 +55,7 @@
                     <h2 class="text-2xl font-bold mb-4 text-gray-900">Capability & Comparison Lab</h2>
                     <p class="text-gray-600 mb-6 max-w-3xl">Explore "Functional Equivalence" by comparing any two figures side-by-side, or discover surprising connections by exploring a shared ethical capability.</p>
                     
-                    <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+                    <div class="bg-white p-6 rounded-lg shadow-md">
                         <h3 class="text-xl font-semibold mb-4 text-gray-800">Direct Comparison</h3>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
@@ -71,28 +68,29 @@
                             </div>
                         </div>
                         <button id="compare-figures-btn" class="mt-4 w-full bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-indigo-700 transition-colors">✨ Analyze Functional Equivalence</button>
-                        <div id="comparison-output" class="mt-4 space-y-4"></div>
-                        <div id="comparison-chat-container" class="hidden mt-4">
-                            <textarea id="comparison-chat-input" rows="2" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" placeholder="Ask a follow-up question..."></textarea>
-                            <button id="comparison-chat-send" class="mt-2 bg-indigo-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-indigo-600">Send</button>
+                        <div id="comparison-output" class="mt-4"></div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-lg shadow-md mt-8">
+                        <h3 class="text-xl font-semibold mb-4 text-gray-800">Explore by Capability</h3>
+                        <div>
+                            <label for="capability-select" class="block text-sm font-medium text-gray-700">Select a Core Ethical Capability</label>
+                            <select id="capability-select" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"></select>
                         </div>
+                        <div id="capability-explorer-output" class="mt-4 card-container"></div>
                     </div>
                 </div>
 
                 <div id="resonance-section" class="hidden">
                     <h2 class="text-2xl font-bold mb-4 text-gray-900">Personal Resonance Lab</h2>
-                    <p class="text-gray-600 mb-6 max-w-3xl">Describe a value you hold, a capability you wish to cultivate, or an ethical challenge you are facing. The AI will help you find historical figures who demonstrated functionally equivalent capabilities, providing you with models for your own journey.</p>
+                    <p class="text-gray-600 mb-6 max-w-3xl">This is a space for your own ethical reflection. Describe a value you hold, a capability you wish to cultivate, or an ethical challenge you are facing. The AI will help you find historical figures who demonstrated functionally equivalent capabilities, providing you with models for your own journey.</p>
                     <div class="bg-white p-6 rounded-lg shadow-md">
                         <label for="resonance-input" class="block text-sm font-medium text-gray-700">Enter your reflection here (e.g., "I want to be more courageous in speaking up," or "I value compassionate service above all else.")</label>
                         <textarea id="resonance-input" rows="4" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"></textarea>
                         <button id="find-counterparts-btn" class="mt-4 w-full bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-indigo-700 transition-colors">
                             ✨ Discover Role Models for Your Ethical Journey
                         </button>
-                        <div id="counterparts-output" class="mt-4 space-y-4"></div>
-                        <div id="resonance-chat-container" class="hidden mt-4">
-                            <textarea id="resonance-chat-input" rows="2" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" placeholder="Ask a follow-up question..."></textarea>
-                            <button id="resonance-chat-send" class="mt-2 bg-indigo-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-indigo-600">Send</button>
-                        </div>
+                        <div id="counterparts-output" class="mt-4"></div>
                     </div>
                 </div>
 
@@ -100,27 +98,44 @@
                      <h2 class="text-2xl font-bold mb-6 text-gray-900">Core Analytical Concepts</h2>
                      <div id="concept-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
                 </div>
-
-                <div id="foundations-section" class="hidden">
-                    <h2 class="text-2xl font-bold mb-4 text-gray-900">Theoretical Foundations</h2>
-                    <div id="disclaimer-container" class="mb-6"></div>
-                    <div id="foundation-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
-                </div>
-
-                <div id="casestudies-section" class="hidden">
-                    <h2 class="text-2xl font-bold mb-6 text-gray-900">Case Studies in Practice</h2>
-                    <div id="casestudy-grid" class="card-container"></div>
-                </div>
-
-                <div id="essays-section" class="hidden">
-                    <h2 class="text-2xl font-bold mb-6 text-gray-900">Essays & Deeper Dives</h2>
-                    <div id="essay-grid" class="card-container"></div>
-                </div>
-
             </main>
         </div>
 
-        <!-- Modals -->
+        <div id="privacy-modal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-75 h-full w-full z-50 flex items-center justify-center p-4">
+            <div class="relative w-full max-w-2xl shadow-lg rounded-lg bg-white">
+                <div class="modal-content p-6">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-4">Your Privacy & Psychological Safety</h2>
+                    <div class="text-gray-700 space-y-4 text-sm">
+                        <p>This tool is designed for deep, personal reflection. Before you begin, please review the following.</p>
+                        <div>
+                            <h3 class="font-semibold">1. Local Data Storage</h3>
+                            <p>All text you enter is saved only in your browser's local storage. It is not sent to any server and is not visible to anyone else. To resume your work, use the same computer and browser.</p>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold">2. AI Analysis & API Key</h3>
+                            <p class="mb-2">To use the AI-powered features (marked with ✨), you need a Gemini API Key. When you use these features, your text is sent securely to Google's servers for processing and is not stored or used for training.</p>
+                            <div class="bg-gray-100 p-3 rounded-lg">
+                                <label for="api-key-input-modal" class="block text-sm font-medium text-gray-700">Enter your Gemini API Key</label>
+                                <input type="password" id="api-key-input-modal" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" placeholder="Enter your key here">
+                                <p class="text-xs text-gray-500 mt-1">You can get a free key from <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" class="text-indigo-600 hover:underline">Google AI Studio ↗</a>.</p>
+                            </div>
+                        </div>
+                         <div>
+                            <h3 class="font-semibold">3. Advice for Your Psychological Safety</h3>
+                             <ul class="list-disc list-inside mt-1 space-y-1">
+                                <li><strong>Be Mindful:</strong> You are in complete control of what you write.</li>
+                                <li><strong>Generalize If Needed:</strong> Consider describing sensitive experiences in general terms.</li>
+                                <li><strong>Protect Others' Privacy:</strong> Avoid using real names or identifying information of others.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="mt-6 text-right">
+                        <button id="continue-btn" class="bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-indigo-700 transition-colors">I Understand & Continue</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div id="settings-api-key-modal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-75 h-full w-full z-50 flex items-center justify-center p-4">
             <div class="relative w-full max-w-md shadow-lg rounded-lg bg-white p-6">
                 <h2 class="text-2xl font-bold text-gray-900 mb-4">Gemini API Key</h2>
@@ -140,7 +155,8 @@
             <div class="relative w-full max-w-3xl shadow-lg rounded-lg bg-white">
                 <div class="modal-content p-6">
                      <div class="flex justify-between items-start">
-                         <div id="modal-content-details" class="w-full pr-4"></div>
+                         <div id="modal-content-details" class="w-full pr-4">
+                             </div>
                          <button id="close-modal" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center sticky top-0">
                              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                          </button>
@@ -154,4 +170,3 @@
     <script src="script.js"></script>
 </body>
 </html>
-
