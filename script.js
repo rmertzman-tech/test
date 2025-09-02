@@ -10,6 +10,10 @@ document.addEventListener('DOMContentLoaded', () => {
         foundations: appData.foundations,
         caseStudies: appData.caseStudies,
         disclaimerText: appData.disclaimerText,
+
+        // Store chat histories for conversational context
+        comparisonChatHistory: [],
+        resonanceChatHistory: [],
         
         // Create a summary of foundations to prime the AI
         foundationSummary: `Core theoretical principles to frame your analysis: ` + (appData.foundations || []).map(f => `${f.title} - ${f.summary}`).join('; '),
@@ -128,25 +132,22 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('capability-select').innerHTML = capabilityOptions;
         },
 
-        async callGeminiAPI(prompt, outputElement, button) {
+        async callGeminiAPI(chatHistory, outputElement, button, chatContainer) {
             if (!this.apiKey) {
                 document.getElementById('settings-api-key-modal').classList.remove('hidden');
-                if(button) {
-                    button.disabled = false;
-                    if (button.dataset.originalText) button.innerHTML = button.dataset.originalText;
-                }
                 return;
             }
 
-            if(button){
-                button.dataset.originalText = button.innerHTML;
+            let tempLoader;
+            if (button) {
                 button.disabled = true;
-                button.innerHTML = '<div class="loader" style="margin: 0 auto; width: 20px; height: 20px; border-width: 2px;"></div>';
             } else {
-                outputElement.innerHTML = '<div class="loader"></div>';
+                tempLoader = document.createElement('div');
+                tempLoader.innerHTML = '<div class="loader"></div>';
+                outputElement.appendChild(tempLoader);
             }
             
-            const payload = { contents: [{ parts: [{ text: prompt }] }] };
+            const payload = { contents: chatHistory };
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${this.apiKey}`;
             
             try {
@@ -156,29 +157,43 @@ document.addEventListener('DOMContentLoaded', () => {
                     body: JSON.stringify(payload)
                 });
 
-                if (!response.ok) {
-                    const errorData = await response.json();
-                    throw new Error(`API Error: ${response.status} - ${errorData.error.message}`);
-                }
+                if (!response.ok) throw new Error(`API Error: ${response.status}`);
 
                 const result = await response.json();
                 
                 if (result.candidates && result.candidates[0].content.parts.length > 0) {
-                    const text = result.candidates[0].content.parts[0].text;
-                    outputElement.innerHTML = `<div class="gemini-output">${text.trim()}</div>`;
+                    const aiResponse = result.candidates[0].content;
+                    chatHistory.push(aiResponse); // Add AI response to history
+                    const text = aiResponse.parts[0].text;
+                    this.appendChatMessage(outputElement, text, 'ai');
+                    if (chatContainer) chatContainer.classList.remove('hidden'); // Show chat input
                 } else {
-                    outputElement.innerHTML = '<p class="text-red-500 text-sm">The AI returned an empty response. Please try again.</p>';
+                    this.appendChatMessage(outputElement, 'The AI returned an empty response. Please try again.', 'error');
                 }
 
             } catch (error) {
                 console.error("API call failed:", error);
-                outputElement.innerHTML = `<p class="text-red-500 text-sm">An error occurred: ${error.message}</p>`;
+                this.appendChatMessage(outputElement, `An error occurred: ${error.message}`, 'error');
             } finally {
-                if(button){
-                    button.disabled = false;
-                    button.innerHTML = button.dataset.originalText;
-                }
+                if (button) button.disabled = false;
+                if (tempLoader) tempLoader.remove();
             }
+        },
+        
+        appendChatMessage(outputElement, message, role) {
+            const messageDiv = document.createElement('div');
+            if (role === 'ai') {
+                messageDiv.className = 'gemini-output';
+                messageDiv.innerHTML = message.trim();
+            } else if (role === 'user') {
+                messageDiv.className = 'bg-indigo-100 p-4 rounded-md text-gray-800';
+                messageDiv.textContent = message.trim();
+            } else { // error
+                messageDiv.className = 'bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded-md';
+                messageDiv.textContent = message.trim();
+            }
+            outputElement.appendChild(messageDiv);
+            outputElement.scrollTop = outputElement.scrollHeight;
         },
 
         setupEventListeners() {
@@ -202,9 +217,9 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             const detailModal = document.getElementById('detail-modal');
-            document.getElementById('profile-grid').addEventListener('click', (e) => this.handleCardClick(e));
-            document.getElementById('thinker-grid').addEventListener('click', (e) => this.handleCardClick(e));
-            document.getElementById('casestudy-grid').addEventListener('click', (e) => this.handleCardClick(e));
+            ['profile-grid', 'thinker-grid', 'casestudy-grid'].forEach(id => {
+                document.getElementById(id).addEventListener('click', (e) => this.handleCardClick(e));
+            });
 
             document.getElementById('close-modal').addEventListener('click', () => detailModal.classList.add('hidden'));
             detailModal.addEventListener('click', (e) => {
@@ -226,54 +241,26 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('concept-grid').addEventListener('click', (e) => {
                 const button = e.target.closest('.generate-analogy-btn');
                 if (button) {
-                    const index = button.dataset.index;
-                    const concept = this.concepts[index];
-                    const outputElement = document.getElementById(`analogy-output-${index}`);
+                    const outputElement = document.getElementById(`analogy-output-${button.dataset.index}`);
+                    outputElement.innerHTML = '';
+                    const concept = this.concepts[button.dataset.index];
                     const prompt = `Explain the following complex ethical concept in a simple, relatable analogy for a college student: "${concept.name} - ${concept.description}".`;
-                    this.callGeminiAPI(prompt, outputElement, button);
+                    this.callGeminiAPI([{ role: "user", parts: [{ text: prompt }] }], outputElement, button);
                 }
             });
 
-            const resonanceInput = document.getElementById('resonance-input');
-            resonanceInput.addEventListener('input', () => {
-                localStorage.setItem('resonanceInput', resonanceInput.value);
-            });
-
-            document.getElementById('find-counterparts-btn').addEventListener('click', (e) => {
-                const userInput = resonanceInput.value;
-                if (!userInput.trim()) { alert("Please describe a value or capability first."); return; }
-                const outputElement = document.getElementById('counterparts-output');
-                const figuresData = [...this.navigators, ...this.thinkers].map(f => ({
-                    name: f.name,
-                    details: f.fullPrfAnalysis || `Capabilities: ${(f.capabilities || []).join(', ')}. Summary: ${f.summary}`
-                }));
-
-                const prompt = `As an AI assistant, analyze a student's reflection: "${userInput}". Compare it to the historical figures below and identify the top 3-5 who demonstrate a functionally equivalent capability. For each match, briefly explain *how* their life exemplifies this capability, using the provided theoretical framework.
-                ---
-                **Theoretical Framework:** ${this.foundationSummary}
-                ---
-                **Historical Figures Data:**
-                ${JSON.stringify(figuresData, null, 2)}
-                ---
-                Frame your response as an encouraging guide for the student's own ethical development.`;
-                this.callGeminiAPI(prompt, outputElement, e.target);
-            });
-
-            document.getElementById('compare-figures-btn').addEventListener('click', (e) => {
+            // --- Conversational Lab Event Listeners ---
+            this.setupConversationalLab('compare-figures-btn', 'comparison-output', 'comparison-chat-container', 'comparison-chat-input', 'comparison-chat-send', 'comparisonChatHistory', () => {
                 const valA = document.getElementById('figureA-select').value;
                 const valB = document.getElementById('figureB-select').value;
-                if (!valA || !valB || valA === valB) { alert("Please select two different figures."); return; }
-
+                if (!valA || !valB || valA === valB) { alert("Please select two different figures."); return null; }
                 const [typeA, indexA] = valA.split('-');
                 const personA = this[typeA === 'navigator' ? 'navigators' : 'thinkers'][indexA];
                 const [typeB, indexB] = valB.split('-');
                 const personB = this[typeB === 'navigator' ? 'navigators' : 'thinkers'][indexB];
-
                 const contextA = personA.fullPrfAnalysis || `Summary: ${personA.summary}. Key Ideas: ${personA.identityKernel || personA.broa}`;
                 const contextB = personB.fullPrfAnalysis || `Summary: ${personB.summary}. Key Ideas: ${personB.identityKernel || personB.broa}`;
-
-                const outputElement = document.getElementById('comparison-output');
-                const prompt = `As an AI assistant, analyze the connection between ${personA.name} and ${personB.name} using 'Functional Equivalence'.
+                return `As an AI assistant, analyze the connection between ${personA.name} and ${personB.name} using 'Functional Equivalence'.
                 ---
                 **Theoretical Framework:** ${this.foundationSummary}
                 ---
@@ -288,10 +275,27 @@ document.addEventListener('DOMContentLoaded', () => {
                 **Full Analysis for ${personB.name}:**
                 ${contextB}
                 ---`;
-                this.callGeminiAPI(prompt, outputElement, e.target);
             });
 
-            document.getElementById('capability-select').addEventListener('change', (e) => {
+            this.setupConversationalLab('find-counterparts-btn', 'counterparts-output', 'resonance-chat-container', 'resonance-chat-input', 'resonance-chat-send', 'resonanceChatHistory', () => {
+                const userInput = document.getElementById('resonance-input').value;
+                if (!userInput.trim()) { alert("Please describe a value or capability first."); return null; }
+                localStorage.setItem('resonanceInput', userInput);
+                const figuresData = [...this.navigators, ...this.thinkers].map(f => ({
+                    name: f.name,
+                    details: f.fullPrfAnalysis || `Capabilities: ${(f.capabilities || []).join(', ')}. Summary: ${f.summary}`
+                }));
+                return `As an AI assistant, analyze a student's reflection: "${userInput}". Compare it to the historical figures below and identify the top 3-5 who demonstrate a functionally equivalent capability. For each match, briefly explain *how* their life exemplifies this capability, using the provided theoretical framework.
+                ---
+                **Theoretical Framework:** ${this.foundationSummary}
+                ---
+                **Historical Figures Data:**
+                ${JSON.stringify(figuresData, null, 2)}
+                ---
+                Frame your response as an encouraging guide for the student's own ethical development.`;
+            });
+
+             document.getElementById('capability-select').addEventListener('change', (e) => {
                 const selectedCapability = e.target.value;
                 const outputElement = document.getElementById('capability-explorer-output');
                 if (selectedCapability) {
@@ -306,12 +310,44 @@ document.addEventListener('DOMContentLoaded', () => {
                             <p class="text-gray-600 mt-2 text-sm flex-grow">${person.summary}</p>
                         </div>
                     `).join('');
-                    
-                    outputElement.querySelectorAll('.profile-card, .thinker-card').forEach(card => {
-                        card.addEventListener('click', (event) => this.handleCardClick(event));
-                    });
                 } else {
                     outputElement.innerHTML = '';
+                }
+            });
+        },
+        
+        setupConversationalLab(startButtonId, outputId, chatContainerId, inputId, sendButtonId, historyProp, getInitialPrompt) {
+            const startButton = document.getElementById(startButtonId);
+            const outputElement = document.getElementById(outputId);
+            const chatContainer = document.getElementById(chatContainerId);
+            const inputElement = document.getElementById(inputId);
+            const sendButton = document.getElementById(sendButtonId);
+
+            startButton.addEventListener('click', () => {
+                const initialPrompt = getInitialPrompt();
+                if (!initialPrompt) return;
+
+                outputElement.innerHTML = '';
+                chatContainer.classList.add('hidden');
+                this[historyProp] = [{ role: "user", parts: [{ text: initialPrompt }] }];
+                this.callGeminiAPI(this[historyProp], outputElement, startButton, chatContainer);
+            });
+
+            const sendFollowUp = () => {
+                const userText = inputElement.value.trim();
+                if (!userText) return;
+
+                this.appendChatMessage(outputElement, userText, 'user');
+                this[historyProp].push({ role: "user", parts: [{ text: userText }] });
+                inputElement.value = '';
+                this.callGeminiAPI(this[historyProp], outputElement);
+            };
+
+            sendButton.addEventListener('click', sendFollowUp);
+            inputElement.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    sendFollowUp();
                 }
             });
         },
@@ -353,17 +389,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 link.addEventListener('click', (e) => {
                     e.preventDefault();
                     modal.classList.add('hidden');
-                    const targetTabId = e.target.dataset.targetTab;
+                    const targetTabId = e.currentTarget.dataset.targetTab;
                     const targetButton = document.getElementById(targetTabId);
                     if(targetButton) {
-                        const tabs = {
-                            navigators: { btn: document.getElementById('navigators-tab'), section: document.getElementById('navigators-section') },
-                            thinkers:   { btn: document.getElementById('thinkers-tab'),   section: document.getElementById('thinkers-section') },
-                            comparison: { btn: document.getElementById('comparison-tab'), section: document.getElementById('comparison-section') },
-                            resonance:  { btn: document.getElementById('resonance-tab'),  section: document.getElementById('resonance-section') },
-                            concepts:   { btn: document.getElementById('concepts-tab'),   section: document.getElementById('concepts-section') },
-                            foundations:{ btn: document.getElementById('foundations-tab'),section: document.getElementById('foundations-section') },
-                            casestudies:{ btn: document.getElementById('casestudies-tab'),section: document.getElementById('casestudies-section') }
+                        const tabs = { // Re-creating tabs object for scope
+                             navigators: { btn: document.getElementById('navigators-tab'), section: document.getElementById('navigators-section') },
+                             thinkers:   { btn: document.getElementById('thinkers-tab'),   section: document.getElementById('thinkers-section') },
+                             comparison: { btn: document.getElementById('comparison-tab'), section: document.getElementById('comparison-section') },
+                             resonance:  { btn: document.getElementById('resonance-tab'),  section: document.getElementById('resonance-section') },
+                             concepts:   { btn: document.getElementById('concepts-tab'),   section: document.getElementById('concepts-section') },
+                             foundations:{ btn: document.getElementById('foundations-tab'),section: document.getElementById('foundations-section') },
+                             casestudies:{ btn: document.getElementById('casestudies-tab'),section: document.getElementById('casestudies-section') }
                         };
                          this.switchTab(targetButton, tabs);
                     }
@@ -373,18 +409,20 @@ document.addEventListener('DOMContentLoaded', () => {
             if (type === 'navigator') {
                 document.getElementById('generate-dilemma-btn')?.addEventListener('click', (e) => {
                     const outputElement = document.getElementById('dilemma-output');
+                    outputElement.innerHTML = '';
                     const context = data.fullPrfAnalysis || data.identityKernel;
                     const prompt = `Based on the detailed analysis of ${data.name}: "${context}", generate a short, new, hypothetical ethical dilemma they might have faced that tests their core principles. Present the scenario, then ask, 'What should ${data.name} do?'`;
-                    this.callGeminiAPI(prompt, outputElement, e.target);
+                    this.callGeminiAPI([{ role: "user", parts: [{ text: prompt }] }], outputElement, e.target);
                 });
 
                 document.getElementById('generate-dialogue-btn')?.addEventListener('click', (e) => {
                     const userInput = document.getElementById('dialogue-input').value;
                     if (!userInput) { alert("Please enter a question."); return; }
                     const outputElement = document.getElementById('dialogue-output');
+                    outputElement.innerHTML = '';
                     const context = data.fullPrfAnalysis || data.identityKernel;
                     const prompt = `You are an expert on ${data.name}. A student asked: "${userInput}". Based on ${data.name}'s detailed analysis: "${context}", write a short response in their voice, explaining how they might think about this issue.`;
-                    this.callGeminiAPI(prompt, outputElement, e.target);
+                    this.callGeminiAPI([{ role: "user", parts: [{ text: prompt }] }], outputElement, e.target.parentElement.querySelector('button'));
                 });
             } 
         },
@@ -418,24 +456,24 @@ document.addEventListener('DOMContentLoaded', () => {
             
             const hasNewFormat = data.assemblyHistory && data.broa;
             const contentHtml = hasNewFormat ? `
-                <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Assembly History</h4>${data.assemblyHistory}</div>
-                <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">BROA+ Configuration</h4>${data.broa}</div>
-                <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Adaptive Temporal Coherence (ATCF)</h4><p>${data.atcf}</p></div>
-                <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Future-Oriented Projections (FOP)</h4><p>${data.fop}</p></div>
+                <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Assembly History</h4><div class="text-sm">${data.assemblyHistory}</div></div>
+                <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">BROA+ Configuration</h4><div class="text-sm">${data.broa}</div></div>
+                <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Adaptive Temporal Coherence (ATCF)</h4><p class="text-sm">${data.atcf}</p></div>
+                <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Future-Oriented Projections (FOP)</h4><p class="text-sm">${data.fop}</p></div>
                 ` : `
-                <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Identity Kernel</h4><p>${data.identityKernel}</p></div>
-                <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Personal Reality Framework</h4><p>${data.prf}</p></div>
-                <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Dramatic Example</h4><p>${data.dramaticExample}</p></div>
+                <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Identity Kernel</h4><p class="text-sm">${data.identityKernel}</p></div>
+                <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Personal Reality Framework</h4><p class="text-sm">${data.prf}</p></div>
+                <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Dramatic Example</h4><p class="text-sm">${data.dramaticExample}</p></div>
                 `;
 
             return `
                 <h2 class="text-3xl font-bold mb-1 text-indigo-800">${data.name}</h2>
-                <p class="text-md text-gray-500 mb-2">${data.title} (${data.lifespan})</p>
+                <p class="text-md text-gray-500 mb-2">${data.title}</p>
                 <div class="flex space-x-4 mb-4">
                     <a href="${data.bioLink}" target="_blank" rel="noopener noreferrer" class="text-indigo-600 hover:underline text-sm">Read Full Biography ↗</a>
                     ${videoButton}
                 </div>
-                <div class="space-y-5 text-gray-700 text-sm">
+                <div class="space-y-5 text-gray-700">
                    ${contentHtml}
                    ${foundationalLinksHtml}
                    ${interactiveScenarios}
