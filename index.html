@@ -6,6 +6,8 @@
     <title>Ethical Cartography Lab</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Link to your new stylesheet -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="bg-gray-50 text-gray-800">
@@ -37,10 +39,10 @@
                     <nav class="flex flex-wrap -mb-px" aria-label="Tabs">
                         <button id="navigators-tab" class="tab-btn px-3 py-2 font-medium text-sm rounded-t-md" aria-selected="true">Ethical Navigators</button>
                         <button id="thinkers-tab" class="tab-btn px-3 py-2 font-medium text-sm rounded-t-md" aria-selected="false">Philosophers & Thinkers</button>
-                        <button id="comparison-tab" class="tab-btn px-3 py-2 font-medium text-sm rounded-t-md" aria-selected="false">Comparison Lab</button>
-                        <button id="resonance-tab" class="tab-btn px-3 py-2 font-medium text-sm rounded-t-md" aria-selected="false">Personal Resonance</button>
+                        <button id="comparison-tab" class="tab-btn px-3 py-2 font-medium text-sm rounded-t-md" aria-selected="false">Capability & Comparison Lab</button>
+                        <button id="resonance-tab" class="tab-btn px-3 py-2 font-medium text-sm rounded-t-md" aria-selected="false">Personal Resonance Lab</button>
                         <button id="concepts-tab" class="tab-btn px-3 py-2 font-medium text-sm rounded-t-md" aria-selected="false">Core Concepts</button>
-                        <button id="foundations-tab" class="tab-btn px-3 py-2 font-medium text-sm rounded-t-md" aria-selected="false">Foundations</button>
+                        <button id="foundations-tab" class="tab-btn px-3 py-2 font-medium text-sm rounded-t-md" aria-selected="false">Theoretical Foundations</button>
                         <button id="casestudies-tab" class="tab-btn px-3 py-2 font-medium text-sm rounded-t-md" aria-selected="false">Case Studies</button>
                     </nav>
                 </div>
@@ -61,6 +63,7 @@
                 <div id="comparison-section" class="hidden">
                     <h2 class="text-2xl font-bold mb-4 text-gray-900">Capability & Comparison Lab</h2>
                     <p class="text-gray-600 mb-6 max-w-3xl">Explore "Functional Equivalence" by comparing any two figures side-by-side, or discover surprising connections by exploring a shared ethical capability.</p>
+                    
                     <div class="bg-white p-6 rounded-lg shadow-md">
                         <h3 class="text-xl font-semibold mb-4 text-gray-800">Direct Comparison</h3>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -74,8 +77,15 @@
                             </div>
                         </div>
                         <button id="compare-figures-btn" class="mt-4 w-full bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-indigo-700 transition-colors">✨ Analyze Functional Equivalence</button>
-                        <div id="comparison-output" class="mt-4"></div>
+                        <div id="comparison-output" class="mt-4 space-y-4"></div>
+                        <div id="comparison-chat-container" class="mt-4 hidden">
+                            <div class="flex rounded-md shadow-sm">
+                                <input type="text" id="comparison-chat-input" class="flex-1 block w-full rounded-none rounded-l-md border-gray-300" placeholder="Ask a follow-up question...">
+                                <button id="comparison-chat-send" class="inline-flex items-center px-4 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-sm hover:bg-gray-100">Send</button>
+                            </div>
+                        </div>
                     </div>
+
                     <div class="bg-white p-6 rounded-lg shadow-md mt-8">
                         <h3 class="text-xl font-semibold mb-4 text-gray-800">Explore by Capability</h3>
                         <div>
@@ -91,34 +101,39 @@
                     <h2 class="text-2xl font-bold mb-4 text-gray-900">Personal Resonance Lab</h2>
                     <p class="text-gray-600 mb-6 max-w-3xl">This is a space for your own ethical reflection. Describe a value you hold, a capability you wish to cultivate, or an ethical challenge you are facing. The AI will help you find historical figures who demonstrated functionally equivalent capabilities, providing you with models for your own journey.</p>
                     <div class="bg-white p-6 rounded-lg shadow-md">
-                        <label for="resonance-input" class="block text-sm font-medium text-gray-700">Enter your reflection here (e.g., "I want to be more courageous in speaking up.")</label>
+                        <label for="resonance-input" class="block text-sm font-medium text-gray-700">Enter your reflection here (e.g., "I want to be more courageous in speaking up," or "I value compassionate service above all else.")</label>
                         <textarea id="resonance-input" rows="4" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"></textarea>
                         <button id="find-counterparts-btn" class="mt-4 w-full bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-indigo-700 transition-colors">
-                            ✨ Discover Role Models
+                            ✨ Discover Role Models for Your Ethical Journey
                         </button>
-                        <div id="counterparts-output" class="mt-4"></div>
+                        <div id="counterparts-output" class="mt-4 space-y-4"></div>
+                        <div id="resonance-chat-container" class="mt-4 hidden">
+                             <div class="flex rounded-md shadow-sm">
+                                <input type="text" id="resonance-chat-input" class="flex-1 block w-full rounded-none rounded-l-md border-gray-300" placeholder="Ask a follow-up question...">
+                                <button id="resonance-chat-send" class="inline-flex items-center px-4 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-sm hover:bg-gray-100">Send</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Concepts Section -->
                 <div id="concepts-section" class="hidden">
                      <h2 class="text-2xl font-bold mb-6 text-gray-900">Core Analytical Concepts</h2>
-                     <div id="concept-grid" class="card-container"></div>
+                     <div id="concept-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
                 </div>
 
                 <!-- Foundations Section -->
                 <div id="foundations-section" class="hidden">
                     <h2 class="text-2xl font-bold mb-4 text-gray-900">Theoretical Foundations</h2>
                     <div id="disclaimer-container" class="mb-6"></div>
-                    <div id="foundation-grid" class="card-container"></div>
+                    <div id="foundation-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
                 </div>
 
                 <!-- Case Studies Section -->
-                <div id="casestudies-section" class="hidden">
+                 <div id="casestudies-section" class="hidden">
                     <h2 class="text-2xl font-bold mb-6 text-gray-900">Case Studies in Practice</h2>
                     <div id="casestudy-grid" class="card-container"></div>
                 </div>
-
             </main>
         </div>
 
@@ -138,7 +153,7 @@
             </div>
         </div>
 
-        <!-- Modal for Details -->
+        <!-- Modal for Profile/Thinker Details -->
         <div id="detail-modal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 h-full w-full z-50 flex items-center justify-center p-4">
             <div class="relative w-full max-w-3xl shadow-lg rounded-lg bg-white">
                 <div class="modal-content p-6">
@@ -155,6 +170,7 @@
         </div>
     </div>
 
+    <!-- Link to your new script files -->
     <script src="data.js"></script>
     <script src="script.js"></script>
 </body>
