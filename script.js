@@ -3,10 +3,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const app = {
         apiKey: '',
         
-        // Load data from the global appData object defined in data.js
+        // Load all data from the global appData object
         navigators: appData.navigators,
         thinkers: appData.thinkers,
         concepts: appData.concepts,
+        foundations: appData.foundations,
+        caseStudies: appData.caseStudies,
+        disclaimerText: appData.disclaimerText,
+        
+        // Create a summary of foundations to prime the AI
+        foundationSummary: `Core theoretical principles to frame your analysis: ` + (appData.foundations || []).map(f => `${f.title} - ${f.summary}`).join('; '),
 
         init() {
             this.loadApiKey();
@@ -14,6 +20,9 @@ document.addEventListener('DOMContentLoaded', () => {
             this.renderThinkers();
             this.renderConcepts();
             this.renderComparisonLab();
+            this.renderFoundations();
+            this.renderCaseStudies();
+            this.renderDisclaimer();
             this.setupEventListeners();
             
             const savedResonance = localStorage.getItem('resonanceInput');
@@ -26,6 +35,43 @@ document.addEventListener('DOMContentLoaded', () => {
             const savedKey = localStorage.getItem('geminiApiKey');
             if (savedKey) {
                 this.apiKey = savedKey;
+            }
+        },
+
+        renderDisclaimer() {
+            const container = document.getElementById('disclaimer-container');
+            if(container && this.disclaimerText) {
+                container.innerHTML = `<div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 rounded-md" role="alert"><p class="font-bold">A Note on Interpretation</p><p>${this.disclaimerText}</p></div>`;
+            }
+        },
+
+        renderFoundations() {
+            const grid = document.getElementById('foundation-grid');
+            if(grid && this.foundations) {
+                grid.innerHTML = this.foundations.map((foundation, index) => `
+                    <div class="concept-card bg-white p-6 rounded-lg shadow-md flex flex-col" data-type="foundation" data-index="${index}">
+                        <h3 class="text-xl font-bold text-green-700">${foundation.title}</h3>
+                        <p class="text-gray-600 mt-2 text-sm flex-grow">${foundation.summary}</p>
+                        <div class="mt-4">
+                            <h4 class="text-sm font-semibold text-gray-800">Key Concepts:</h4>
+                            <ul class="list-disc list-inside text-sm text-gray-600">
+                                ${foundation.keyConcepts.map(c => `<li>${c}</li>`).join('')}
+                            </ul>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        },
+
+        renderCaseStudies() {
+            const grid = document.getElementById('casestudy-grid');
+            if(grid && this.caseStudies){
+                grid.innerHTML = this.caseStudies.map((study, index) => `
+                    <div class="profile-card bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 cursor-pointer flex flex-col" data-type="caseStudy" data-index="${index}">
+                        <h3 class="text-xl font-bold text-blue-700">${study.title}</h3>
+                        <p class="text-gray-600 mt-2 text-sm flex-grow">${study.summary}</p>
+                    </div>
+                `).join('');
             }
         },
         
@@ -66,12 +112,13 @@ document.addEventListener('DOMContentLoaded', () => {
         },
 
         renderComparisonLab() {
-            const allFigures = [...this.navigators.map((p, i) => ({...p, type: 'navigator', index: i})), ...this.thinkers.map((p, i) => ({...p, type: 'thinker', index: i}))]
-                .sort((a, b) => a.name.localeCompare(b.name));
+            const allFigures = [...this.navigators, ...this.thinkers].sort((a, b) => a.name.localeCompare(b.name));
             
-            const figureOptions = `<option value="" disabled selected>Select a figure...</option>` + allFigures.map(person => 
-                `<option value="${person.type}-${person.index}">${person.name} (${person.title})</option>`
-            ).join('');
+            const figureOptions = `<option value="" disabled selected>Select a figure...</option>` + allFigures.map(person => {
+                const type = this.navigators.some(p => p.name === person.name) ? 'navigator' : 'thinker';
+                const originalIndex = this[type === 'navigator' ? 'navigators' : 'thinkers'].findIndex(p => p.name === person.name);
+                return `<option value="${type}-${originalIndex}">${person.name}</option>`;
+            }).join('');
 
             document.getElementById('figureA-select').innerHTML = figureOptions;
             document.getElementById('figureB-select').innerHTML = figureOptions;
@@ -86,7 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.getElementById('settings-api-key-modal').classList.remove('hidden');
                 if(button) {
                     button.disabled = false;
-                    button.innerHTML = button.dataset.originalText || 'Generate';
+                    if (button.dataset.originalText) button.innerHTML = button.dataset.originalText;
                 }
                 return;
             }
@@ -94,7 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if(button){
                 button.dataset.originalText = button.innerHTML;
                 button.disabled = true;
-                button.innerHTML = '<div class="loader" style="margin: 0 auto; width: 20px; height: 20px;"></div>';
+                button.innerHTML = '<div class="loader" style="margin: 0 auto; width: 20px; height: 20px; border-width: 2px;"></div>';
             } else {
                 outputElement.innerHTML = '<div class="loader"></div>';
             }
@@ -111,12 +158,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if (!response.ok) {
                     const errorData = await response.json();
-                    throw new Error(`API Error: ${response.status} ${response.statusText} - ${errorData.error.message}`);
+                    throw new Error(`API Error: ${response.status} - ${errorData.error.message}`);
                 }
 
                 const result = await response.json();
                 
-                if (result.candidates && result.candidates.length > 0 && result.candidates[0].content.parts.length > 0) {
+                if (result.candidates && result.candidates[0].content.parts.length > 0) {
                     const text = result.candidates[0].content.parts[0].text;
                     outputElement.innerHTML = `<div class="gemini-output">${text.trim()}</div>`;
                 } else {
@@ -143,25 +190,22 @@ document.addEventListener('DOMContentLoaded', () => {
             const tabs = {
                 navigators: { btn: document.getElementById('navigators-tab'), section: document.getElementById('navigators-section') },
                 thinkers:   { btn: document.getElementById('thinkers-tab'),   section: document.getElementById('thinkers-section') },
-                concepts:   { btn: document.getElementById('concepts-tab'),   section: document.getElementById('concepts-section') },
                 comparison: { btn: document.getElementById('comparison-tab'), section: document.getElementById('comparison-section') },
-                resonance:  { btn: document.getElementById('resonance-tab'),  section: document.getElementById('resonance-section') }
+                resonance:  { btn: document.getElementById('resonance-tab'),  section: document.getElementById('resonance-section') },
+                concepts:   { btn: document.getElementById('concepts-tab'),   section: document.getElementById('concepts-section') },
+                foundations:{ btn: document.getElementById('foundations-tab'),section: document.getElementById('foundations-section') },
+                casestudies:{ btn: document.getElementById('casestudies-tab'),section: document.getElementById('casestudies-section') }
             };
 
             Object.values(tabs).forEach(tab => {
-                tab.btn.addEventListener('click', () => {
-                    Object.values(tabs).forEach(t => {
-                        t.section.classList.add('hidden');
-                        t.btn.setAttribute('aria-selected', 'false');
-                    });
-                    tab.section.classList.remove('hidden');
-                    tab.btn.setAttribute('aria-selected', 'true');
-                });
+                tab.btn.addEventListener('click', (e) => this.switchTab(e.target, tabs));
             });
 
             const detailModal = document.getElementById('detail-modal');
             document.getElementById('profile-grid').addEventListener('click', (e) => this.handleCardClick(e));
             document.getElementById('thinker-grid').addEventListener('click', (e) => this.handleCardClick(e));
+            document.getElementById('casestudy-grid').addEventListener('click', (e) => this.handleCardClick(e));
+
             document.getElementById('close-modal').addEventListener('click', () => detailModal.classList.add('hidden'));
             detailModal.addEventListener('click', (e) => {
                 if (e.target === detailModal) detailModal.classList.add('hidden');
@@ -174,9 +218,8 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             document.getElementById('cancel-api-key-btn').addEventListener('click', () => settingsApiKeyModal.classList.add('hidden'));
             document.getElementById('save-api-key-btn').addEventListener('click', () => {
-                const newKey = document.getElementById('api-key-input-settings').value.trim();
-                this.apiKey = newKey;
-                localStorage.setItem('geminiApiKey', newKey);
+                this.apiKey = document.getElementById('api-key-input-settings').value.trim();
+                localStorage.setItem('geminiApiKey', this.apiKey);
                 settingsApiKeyModal.classList.add('hidden');
             });
 
@@ -200,43 +243,51 @@ document.addEventListener('DOMContentLoaded', () => {
                 const userInput = resonanceInput.value;
                 if (!userInput.trim()) { alert("Please describe a value or capability first."); return; }
                 const outputElement = document.getElementById('counterparts-output');
-                const figuresData = [...this.navigators, ...this.thinkers].map(f => {
-                    return {
-                        name: f.name,
-                        // Use the FULL analysis for the AI if it exists, otherwise fallback
-                        details: f.fullPrfAnalysis || `Capabilities: ${(f.capabilities || []).join(', ')}. Summary: ${f.summary}`
-                    };
-                });
-                const prompt = `You are an AI assistant for a philosophy course. A student has described an ethical value they care about: "${userInput}". Analyze the student's input and compare it to the following list of historical figures and their detailed PRF analyses: ${JSON.stringify(figuresData, null, 2)}. Identify the top 3-5 figures who demonstrate a functionally equivalent capability. For each match, provide a brief, encouraging explanation of *how* that person's life and actions exemplify the capability the student described. Frame the response as a guide for the student's own ethical development.`;
+                const figuresData = [...this.navigators, ...this.thinkers].map(f => ({
+                    name: f.name,
+                    details: f.fullPrfAnalysis || `Capabilities: ${(f.capabilities || []).join(', ')}. Summary: ${f.summary}`
+                }));
+
+                const prompt = `As an AI assistant, analyze a student's reflection: "${userInput}". Compare it to the historical figures below and identify the top 3-5 who demonstrate a functionally equivalent capability. For each match, briefly explain *how* their life exemplifies this capability, using the provided theoretical framework.
+                ---
+                **Theoretical Framework:** ${this.foundationSummary}
+                ---
+                **Historical Figures Data:**
+                ${JSON.stringify(figuresData, null, 2)}
+                ---
+                Frame your response as an encouraging guide for the student's own ethical development.`;
                 this.callGeminiAPI(prompt, outputElement, e.target);
             });
 
             document.getElementById('compare-figures-btn').addEventListener('click', (e) => {
                 const valA = document.getElementById('figureA-select').value;
                 const valB = document.getElementById('figureB-select').value;
-
-                if (!valA || !valB) { alert("Please select two figures to compare."); return; }
-                if (valA === valB) { alert("Please select two different figures."); return; }
+                if (!valA || !valB || valA === valB) { alert("Please select two different figures."); return; }
 
                 const [typeA, indexA] = valA.split('-');
                 const personA = this[typeA === 'navigator' ? 'navigators' : 'thinkers'][indexA];
                 const [typeB, indexB] = valB.split('-');
                 const personB = this[typeB === 'navigator' ? 'navigators' : 'thinkers'][indexB];
 
-                // Use the full analysis for the AI prompt if it exists
                 const contextA = personA.fullPrfAnalysis || `Summary: ${personA.summary}. Key Ideas: ${personA.identityKernel || personA.broa}`;
                 const contextB = personB.fullPrfAnalysis || `Summary: ${personB.summary}. Key Ideas: ${personB.identityKernel || personB.broa}`;
 
                 const outputElement = document.getElementById('comparison-output');
-                const prompt = `As an AI assistant, analyze the connection between ${personA.name} and ${personB.name} using 'Functional Equivalence'. Your task is to identify a shared ethical capability and explain how each person developed it from their unique background.
+                const prompt = `As an AI assistant, analyze the connection between ${personA.name} and ${personB.name} using 'Functional Equivalence'.
                 ---
-                Full Analysis for ${personA.name}:
+                **Theoretical Framework:** ${this.foundationSummary}
+                ---
+                **Your Analysis Must:**
+                1. Identify a shared ethical capability from the analyses below.
+                2. Explain how each person developed this from their unique background.
+                3. Conclude by explaining how this demonstrates 'Functional Equivalence'.
+                ---
+                **Full Analysis for ${personA.name}:**
                 ${contextA}
                 ---
-                Full Analysis for ${personB.name}:
+                **Full Analysis for ${personB.name}:**
                 ${contextB}
-                ---
-                Conclude by explaining how this demonstrates 'Functional Equivalence' in action for a college student.`;
+                ---`;
                 this.callGeminiAPI(prompt, outputElement, e.target);
             });
 
@@ -264,13 +315,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
         },
+
+        switchTab(clickedButton, tabs) {
+             Object.values(tabs).forEach(t => {
+                t.section.classList.add('hidden');
+                t.btn.setAttribute('aria-selected', 'false');
+            });
+            const key = Object.keys(tabs).find(k => tabs[k].btn === clickedButton);
+            if(key) {
+                tabs[key].section.classList.remove('hidden');
+                tabs[key].btn.setAttribute('aria-selected', 'true');
+            }
+        },
         
         handleCardClick(e) {
             const card = e.target.closest('div[data-index]');
             if (card) {
                 const type = card.dataset.type;
                 const index = card.dataset.index;
-                const data = this[type === 'navigator' ? 'navigators' : 'thinkers'][index];
+                const data = this[type === 'navigator' ? 'navigators' : (type === 'thinker' ? 'thinkers' : 'caseStudies')][index];
                 this.showDetailModal(data, type);
             }
         },
@@ -279,71 +342,125 @@ document.addEventListener('DOMContentLoaded', () => {
             const modalContent = document.getElementById('modal-content-details');
             const modal = document.getElementById('detail-modal');
             
-            modalContent.innerHTML = type === 'navigator' ? this.getNavigatorModalHtml(data) : this.getThinkerModalHtml(data);
+            if (type === 'navigator') modalContent.innerHTML = this.getNavigatorModalHtml(data);
+            else if (type === 'thinker') modalContent.innerHTML = this.getThinkerModalHtml(data);
+            else if (type === 'caseStudy') modalContent.innerHTML = this.getCaseStudyModalHtml(data);
             
             modal.classList.remove('hidden');
             modal.querySelector('.modal-content').scrollTop = 0;
+            
+            modalContent.querySelectorAll('[data-target-tab]').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    modal.classList.add('hidden');
+                    const targetTabId = e.target.dataset.targetTab;
+                    const targetButton = document.getElementById(targetTabId);
+                    if(targetButton) {
+                        const tabs = {
+                            navigators: { btn: document.getElementById('navigators-tab'), section: document.getElementById('navigators-section') },
+                            thinkers:   { btn: document.getElementById('thinkers-tab'),   section: document.getElementById('thinkers-section') },
+                            comparison: { btn: document.getElementById('comparison-tab'), section: document.getElementById('comparison-section') },
+                            resonance:  { btn: document.getElementById('resonance-tab'),  section: document.getElementById('resonance-section') },
+                            concepts:   { btn: document.getElementById('concepts-tab'),   section: document.getElementById('concepts-section') },
+                            foundations:{ btn: document.getElementById('foundations-tab'),section: document.getElementById('foundations-section') },
+                            casestudies:{ btn: document.getElementById('casestudies-tab'),section: document.getElementById('casestudies-section') }
+                        };
+                         this.switchTab(targetButton, tabs);
+                    }
+                });
+            });
 
             if (type === 'navigator') {
-                document.getElementById('generate-dilemma-btn').addEventListener('click', (e) => {
+                document.getElementById('generate-dilemma-btn')?.addEventListener('click', (e) => {
                     const outputElement = document.getElementById('dilemma-output');
-                    // Use the full analysis for the AI if it exists
                     const context = data.fullPrfAnalysis || data.identityKernel;
-                    const prompt = `Based on the life and ethical framework of ${data.name}, whose principles are detailed here: "${context}", generate a short, new, hypothetical ethical dilemma they might have faced. The dilemma should test their core principles. Present the scenario and then ask, 'What should ${data.name} do?'`;
+                    const prompt = `Based on the detailed analysis of ${data.name}: "${context}", generate a short, new, hypothetical ethical dilemma they might have faced that tests their core principles. Present the scenario, then ask, 'What should ${data.name} do?'`;
                     this.callGeminiAPI(prompt, outputElement, e.target);
                 });
 
-                document.getElementById('generate-dialogue-btn').addEventListener('click', (e) => {
+                document.getElementById('generate-dialogue-btn')?.addEventListener('click', (e) => {
                     const userInput = document.getElementById('dialogue-input').value;
                     if (!userInput) { alert("Please enter a question."); return; }
                     const outputElement = document.getElementById('dialogue-output');
-                    // Use the full analysis for the AI if it exists
                     const context = data.fullPrfAnalysis || data.identityKernel;
-                    const prompt = `You are an expert in the life and philosophy of ${data.name}. A student has asked: "${userInput}". Based on ${data.name}'s detailed analysis provided here: "${context}", write a short response in their voice, explaining how they might think about this issue.`;
-                    this.callGeminiAPI(prompt, outputElement, e.target.parentElement.querySelector('button'));
+                    const prompt = `You are an expert on ${data.name}. A student asked: "${userInput}". Based on ${data.name}'s detailed analysis: "${context}", write a short response in their voice, explaining how they might think about this issue.`;
+                    this.callGeminiAPI(prompt, outputElement, e.target);
                 });
             } 
         },
 
         getNavigatorModalHtml(data) {
-             let videoButton = data.videoUrl ? `<a href="${data.videoUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center bg-red-600 text-white font-semibold py-2 px-4 rounded-md hover:bg-red-700 transition-colors text-sm"><svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"></path></svg>Watch Video Summary</a>` : '';
-             // Check if the new detailed format exists
-             const hasNewFormat = data.assemblyHistory && data.broa;
-             if (hasNewFormat) {
-                 return `
-                     <h2 class="text-3xl font-bold mb-1 text-indigo-800">${data.name}</h2>
-                     <p class="text-md text-gray-500 mb-2">${data.title} (${data.lifespan})</p>
-                     <div class="flex space-x-4 mb-4">
-                         <a href="${data.bioLink}" target="_blank" rel="noopener noreferrer" class="text-indigo-600 hover:underline text-sm">Read Full Biography ↗</a>
-                         ${videoButton}
-                     </div>
-                     <div class="space-y-5 text-gray-700 text-sm">
-                         <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Assembly History</h4>${data.assemblyHistory}</div>
-                         <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">BROA+ Configuration</h4>${data.broa}</div>
-                         <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Adaptive Temporal Coherence (ATCF)</h4><p>${data.atcf}</p></div>
-                         <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Future-Oriented Projections (FOP)</h4><p>${data.fop}</p></div>
-                         <div class="border-t pt-4 mt-4"><h4 class="font-semibold text-lg text-gray-900 mb-2">Interactive Ethical Scenarios ✨</h4><div class="mb-4"><button id="generate-dilemma-btn" class="w-full text-sm bg-indigo-600 text-white font-semibold py-2 px-4 rounded-md hover:bg-indigo-700">Generate an Ethical Dilemma for ${data.name}</button><div id="dilemma-output" class="mt-2"></div></div><div><label for="dialogue-input" class="block text-sm font-medium">Ask ${data.name} a question about a modern issue:</label><div class="mt-1 flex rounded-md shadow-sm"><input type="text" id="dialogue-input" class="flex-1 block w-full rounded-none rounded-l-md border-gray-300" placeholder="e.g., Is social media good for society?"><button id="generate-dialogue-btn" class="inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-sm hover:bg-gray-100">Ask</button></div><div id="dialogue-output" class="mt-2"></div></div></div>
-                     </div>`;
-             } else {
-                 // Fallback for old data format
-                 return `
-                     <h2 class="text-3xl font-bold mb-1 text-indigo-800">${data.name}</h2>
-                     <p class="text-md text-gray-500 mb-2">${data.title} (${data.lifespan})</p>
-                      <div class="flex space-x-4 mb-4">
-                         <a href="${data.bioLink}" target="_blank" rel="noopener noreferrer" class="text-indigo-600 hover:underline text-sm">Read Full Biography ↗</a>
-                         ${videoButton}
-                     </div>
-                     <div class="space-y-5 text-gray-700 text-sm">
-                         <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Identity Kernel (K)</h4><p>${data.identityKernel}</p></div>
-                         <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Personal Reality Framework (PRF)</h4><p>${data.prf}</p></div>
-                         <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Dramatic Ethical Example</h4><p>${data.dramaticExample}</p></div>
-                         <div class="border-t pt-4 mt-4"><h4 class="font-semibold text-lg text-gray-900 mb-2">Interactive Ethical Scenarios ✨</h4><div class="mb-4"><button id="generate-dilemma-btn" class="w-full text-sm bg-indigo-600 text-white font-semibold py-2 px-4 rounded-md hover:bg-indigo-700">Generate an Ethical Dilemma for ${data.name}</button><div id="dilemma-output" class="mt-2"></div></div><div><label for="dialogue-input" class="block text-sm font-medium">Ask ${data.name} a question about a modern issue:</label><div class="mt-1 flex rounded-md shadow-sm"><input type="text" id="dialogue-input" class="flex-1 block w-full rounded-none rounded-l-md border-gray-300" placeholder="e.g., Is social media good for society?"><button id="generate-dialogue-btn" class="inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-sm hover:bg-gray-100">Ask</button></div><div id="dialogue-output" class="mt-2"></div></div></div>
-                     </div>`;
-             }
+             const videoButton = data.videoUrl ? `<a href="${data.videoUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center bg-red-600 text-white font-semibold py-2 px-4 rounded-md hover:bg-red-700 transition-colors text-sm"><svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"></path></svg>Watch Video</a>` : '';
+             const foundationalLinksHtml = (data.foundationalLinks || []).length > 0 ? `
+                <div>
+                    <h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Theoretical Connections</h4>
+                    <ul class="list-disc list-inside space-y-1 text-sm">
+                        ${data.foundationalLinks.map(link => `<li><a href="#" class="text-indigo-600 hover:underline" data-target-tab="foundations-tab">${link}</a></li>`).join('')}
+                    </ul>
+                </div>` : '';
+
+             const interactiveScenarios = `
+                <div class="border-t pt-4 mt-4">
+                    <h4 class="font-semibold text-lg text-gray-900 mb-2">Interactive Ethical Scenarios ✨</h4>
+                    <div class="mb-4">
+                        <button id="generate-dilemma-btn" class="w-full text-sm bg-indigo-600 text-white font-semibold py-2 px-4 rounded-md hover:bg-indigo-700">Generate an Ethical Dilemma for ${data.name}</button>
+                        <div id="dilemma-output" class="mt-2"></div>
+                    </div>
+                    <div>
+                        <label for="dialogue-input" class="block text-sm font-medium">Ask ${data.name} a question:</label>
+                        <div class="mt-1 flex rounded-md shadow-sm">
+                            <input type="text" id="dialogue-input" class="flex-1 block w-full rounded-none rounded-l-md border-gray-300" placeholder="e.g., Is social media good for society?">
+                            <button id="generate-dialogue-btn" class="inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-sm hover:bg-gray-100">Ask</button>
+                        </div>
+                        <div id="dialogue-output" class="mt-2"></div>
+                    </div>
+                </div>`;
+            
+            const hasNewFormat = data.assemblyHistory && data.broa;
+            const contentHtml = hasNewFormat ? `
+                <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Assembly History</h4>${data.assemblyHistory}</div>
+                <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">BROA+ Configuration</h4>${data.broa}</div>
+                <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Adaptive Temporal Coherence (ATCF)</h4><p>${data.atcf}</p></div>
+                <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Future-Oriented Projections (FOP)</h4><p>${data.fop}</p></div>
+                ` : `
+                <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Identity Kernel</h4><p>${data.identityKernel}</p></div>
+                <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Personal Reality Framework</h4><p>${data.prf}</p></div>
+                <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Dramatic Example</h4><p>${data.dramaticExample}</p></div>
+                `;
+
+            return `
+                <h2 class="text-3xl font-bold mb-1 text-indigo-800">${data.name}</h2>
+                <p class="text-md text-gray-500 mb-2">${data.title} (${data.lifespan})</p>
+                <div class="flex space-x-4 mb-4">
+                    <a href="${data.bioLink}" target="_blank" rel="noopener noreferrer" class="text-indigo-600 hover:underline text-sm">Read Full Biography ↗</a>
+                    ${videoButton}
+                </div>
+                <div class="space-y-5 text-gray-700 text-sm">
+                   ${contentHtml}
+                   ${foundationalLinksHtml}
+                   ${interactiveScenarios}
+                </div>`;
+        },
+
+        getCaseStudyModalHtml(data) {
+            return `
+                 <h2 class="text-3xl font-bold mb-1 text-blue-800">${data.title}</h2>
+                 <div class="space-y-5 text-gray-700 text-sm mt-4">
+                    ${data.analysis}
+                 </div>
+            `;
         },
         
         getThinkerModalHtml(data) {
-            let videoButton = data.videoUrl ? `<a href="${data.videoUrl}" target="_blank" rel="noopener noreferrer" class="..."><svg>...</svg>Watch Video</a>` : '';
+            const videoButton = data.videoUrl ? `<a ...>...</a>` : '';
+            const foundationalLinksHtml = (data.foundationalLinks || []).length > 0 ? `
+                <div>
+                    <h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Theoretical Connections</h4>
+                    <ul class="list-disc list-inside space-y-1 text-sm">
+                        ${data.foundationalLinks.map(link => `<li><a href="#" class="text-indigo-600 hover:underline" data-target-tab="foundations-tab">${link}</a></li>`).join('')}
+                    </ul>
+                </div>` : '';
+
             return `
                  <h2 class="text-3xl font-bold mb-1 text-teal-800">${data.name}</h2>
                  <p class="text-md text-gray-500 mb-4">${data.title} (${data.lifespan})</p>
@@ -353,6 +470,7 @@ document.addEventListener('DOMContentLoaded', () => {
                      <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">BROA+ Configuration</h4><p>${data.broa}</p></div>
                      <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Adaptive Temporal Coherence (ATCF)</h4><p>${data.atcf}</p></div>
                      <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Future-Oriented Projections (FOP)</h4><p>${data.fop}</p></div>
+                     ${foundationalLinksHtml}
                  </div>
             `;
         }
