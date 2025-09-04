@@ -65,7 +65,7 @@ const appData = {
         <p class="mt-2">A farmer noticing a weak spot in a local dike and an engineer designing a new pumping station were performing functionally equivalent actions—both were advancing the same, unambiguous network-goal of flood protection[cite: 36]. This system persisted because the shared objective remained non-negotiable, allowing the methods and technologies to adapt over centuries without breaking the cooperative framework[cite: 746].</p>
     
     `
-}
+},
     ],
 
     essays: [
