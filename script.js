@@ -28,16 +28,10 @@ document.addEventListener('DOMContentLoaded', () => {
             this.setupEventListeners();
         },
 
-        // UPDATED FUNCTION
         loadApiKey() {
-            try {
-                // This 'try...catch' block prevents the app from crashing if localStorage is blocked.
-                const savedKey = localStorage.getItem('geminiApiKey');
-                if (savedKey) {
-                    this.apiKey = savedKey;
-                }
-            } catch (e) {
-                console.error("Could not access localStorage. This is expected in some private browsing modes.", e);
+            const savedKey = localStorage.getItem('geminiApiKey');
+            if (savedKey) {
+                this.apiKey = savedKey;
             }
         },
         
@@ -376,6 +370,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const color = type === 'navigator' ? 'text-indigo-800' : 'text-teal-800';
             const fullAnalysisHtml = (data.fullPrfAnalysis || '').replace(/\n\n/g, '</p><p>').replace(/\n/g, '<br>');
             
+            // This logic creates the video link button ONLY if a videoUrl exists
             const videoLinkHtml = data.videoUrl ? `<a href="${data.videoUrl}" target="_blank" rel="noopener noreferrer" class="text-indigo-600 hover:underline text-sm">Watch Video ↗</a>` : '';
         
             return `
@@ -407,24 +402,9 @@ document.addEventListener('DOMContentLoaded', () => {
         
         getSimpleModalHtml(data) {
             const fullContent = data.content || data.analysis || data.summary || '';
-            
-            let paperButtonHtml = '';
-            if (data.paperUrl) {
-                const buttonText = data.paperUrl.toLowerCase().endsWith('.pdf') 
-                    ? "Read Full Paper (PDF) ↗" 
-                    : "Read Full Paper ↗";
-                paperButtonHtml = `<a href="${data.paperUrl}" target="_blank" rel="noopener noreferrer" class="pdf-button">${buttonText}</a>`;
-            }
-        
             return `
-                <h2 class="text-3xl font-bold mb-2">${data.title}</h2>
-                <p class="text-gray-600 text-sm mb-4">${data.summary}</p>
-                
-                ${paperButtonHtml} 
-                
-                <div class="border-t mt-4 pt-4 prose prose-sm max-w-none text-gray-700">
-                    ${fullContent.replace(/\n/g, '<br>')}
-                </div>
+                 <h2 class="text-3xl font-bold mb-4">${data.title}</h2>
+                 <div class="prose prose-sm max-w-none text-gray-700">${fullContent.replace(/\n/g, '<br>')}</div>
             `;
         }
     };
