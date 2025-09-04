@@ -6,19 +6,16 @@ const appData = {
             title: "Cross-Scale Information Organization",
             summary: "Establishes that normative reasoning in logic and ethics operates through universal information organization principles validated across biological, technological, and entertainment media systems.",
             keyConcepts: ["Capability-Based Propositions", "Temporal Coherence Functions", "Cross-Scale Markup Organization"]
-            paperUrl: null
         },
         {
             title: "Capability-Based Coordination & Bootstrap Authority",
             summary: "Argues that normative authority emerges from the practical necessity of temporal agency—the 'bootstrap resolution'. It enables coordination across diverse Personal Reality Frameworks through universal principles.",
             keyConcepts: ["Bootstrap Resolution of Normative Authority", "Personal Reality Framework (PRF)", "Capability-Based Coordination"]
-            paperUrl: "https://rmertzman-tech.github.io/CRC-Bootstrap-Normative-Authority-essay/"
         },
         {
             title: "Capability-Based Coordination in Practice",
             summary: "Analyzes the NFL's CTE crisis as a real-world example of multi-stakeholder coordination failure and transformation, illustrating 'capability equivalence' and 'bootstrap authority' in action.",
             keyConcepts: ["Capability Equivalence", "Network-Goal Coordination", "Bootstrap Authority"]
-            paperUrl: null
         }
     ],
 
@@ -36,39 +33,7 @@ const appData = {
                 </ul>
                 <p class="mt-2">These groups demonstrated <strong>Capability Equivalence</strong>. They used different methods (testimony, research, reporting) but all advanced the same shared objective. Their coordination was not based on agreeing on a single method, but on recognizing that their different capabilities were functionally equivalent in pursuing the network goal. This case study shows how ethical authority can emerge from demonstrated competence and how diverse groups can achieve powerful coordination without needing to abandon their unique approaches.</p>
             `
-        },
-        
-{
-    title: "The Green Belt Movement: A Study in Ecological Coordination",
-    summary: "Wangari Maathai's Green Belt Movement in Kenya illustrates how a genuine network-goal ('environmental sustainability and resilience') can coordinate diverse stakeholders—from rural women to international bodies—through functionally equivalent capabilities.",
-    analysis: `
-        <p class="mb-2">The Green Belt Movement, founded by Wangari Maathai, serves as a powerful example of successful, long-term network-goal coordination[cite: 3]. Unlike many environmental coalitions that fragment when individual interests diverge, the Green Belt Movement united diverse actors around the shared network-goal of <strong>'environmental sustainability and community empowerment.'</strong></p>
-        <p class="mb-2">This was a genuine network-goal because different stakeholders could advance it using their unique, authentic capabilities without conflict:</p>
-        <ul class="list-disc list-inside space-y-2 mt-2 text-sm">
-            <li><strong>Rural Women & Farmers</strong> contributed through sustainable land management, tree planting, and applying traditional ecological knowledge. Their lived experience gave them <strong>Bootstrap Authority</strong> on local environmental issues[cite: 54].</li>
-            <li><strong>Scientists & Researchers</strong> contributed by providing ecological data, monitoring biodiversity, and validating the environmental impact of the conservation efforts[cite: 651].</li>
-            <li><strong>Government Agencies & International Bodies</strong> contributed through policy frameworks, funding mechanisms, and technical support, integrating the grassroots movement into national and global sustainability efforts[cite: 652, 653].</li>
-        </ul>
-        <p class="mt-2">These groups demonstrated <strong>Capability Equivalence</strong>. Planting a tree (a local, tangible act) and securing international funding (a global, abstract act) were functionally equivalent because both advanced the same shared network-goal[cite: 36, 656]. The movement's success shows how ethical authority can emerge from demonstrated competence in advancing collective objectives, creating sustainable, democratic, and effective social change[cite: 9, 769].</p>
-    `
-},
-
-        
-{
-    title: "Dutch Water Boards: 800 Years of Network-Goal Coordination",
-    summary: "The Dutch Water Boards ('waterschappen') are a historical testament to network-goal persistence, coordinating farmers, merchants, and experts around the shared goal of 'regional flood protection' for over eight centuries.",
-    analysis: `
-        <p class="mb-2">For over 800 years, the Dutch Water Boards have exemplified network-goal coordination, surviving massive political, technological, and environmental shifts[cite: 745]. Their longevity stands in contrast to temporary alliances based on aligned interests. Their success is rooted in a clear and persistent network-goal: <strong>'regional flood protection and water management.'</strong></p>
-        <p class="mb-2">This goal allowed for a durable system of <strong>Capability Equivalence</strong>:</p>
-        <ul class="list-disc list-inside space-y-2 mt-2 text-sm">
-            <li><strong>Local Farmers & Landowners</strong> possessed deep, experiential knowledge of their specific landscape. Their capability was in day-to-day observation and maintenance, giving them practical <strong>Bootstrap Authority</strong>[cite: 716].</li>
-            <li><strong>Technical Experts & Engineers</strong> contributed systematic knowledge of hydrology, dike construction, and large-scale water systems[cite: 745].</li>
-            <li><strong>Merchants & Political Representatives</strong> provided the financial resources and regulatory frameworks necessary to fund and govern the system on a larger scale[cite: 745].</li>
-        </ul>
-        <p class="mt-2">A farmer noticing a weak spot in a local dike and an engineer designing a new pumping station were performing functionally equivalent actions—both were advancing the same, unambiguous network-goal of flood protection[cite: 36]. This system persisted because the shared objective remained non-negotiable, allowing the methods and technologies to adapt over centuries without breaking the cooperative framework[cite: 746].</p>
-    
-    `
-},
+        }
     ],
 
     essays: [
@@ -1302,24 +1267,23 @@ Inter-Faith-Secular Dialogue Integration: Demonstrated capacity for engaging div
             <li><strong>Present-Future Safety Advocacy:</strong> Demonstrated capacity for coordinating immediate technical work with long-term safety implications.</li>
         </ul>
     `
-        },
+        }
         
     ],
     thinkers: [
         {
-            {
-    name: "Confucius",
-    lifespan: "551-479 BCE",
-    title: "A PRF Analysis of Moral Cultivation, Social Harmony, and Ethical Governance",
-    summary: "His PRF emerged from social upheaval, emphasizing relational wisdom and cultural cultivation as the foundation for social harmony.",
-    bioLink: "https://www.britannica.com/biography/Confucius",
-    videoUrl: null,
-    assemblyHistory: `<p><strong>Early Formation (551-520 BCE):</strong> Born into minor nobility during a period of institutional decline, his framework was shaped by a deep reverence for traditional Zhou dynasty rituals and a practical need to address social disorder. His roles as an administrator, teacher, and wandering advisor integrated theoretical wisdom with the practical challenges of governance and moral education.</p>`,
-    broa: `<p><strong>Beliefs:</strong> Human beings develop through reciprocal care and fulfilling their social roles. Rules: Act with ritual propriety (Li) and benevolent governance (Ren).</p><p><strong>Ontology:</strong> Personhood is constituted through a network of social relationships, not an individual essence.</p><p><strong>Authenticity:</strong> Achieved through the sincere and excellent fulfillment of one's social duties.</p>`,
-    atcf: "Confucius maintained remarkable coherence by adapting ancient cultural wisdom to contemporary social challenges. He integrated his roles as a scholar, teacher, and political advisor, always aiming to create a framework for social harmony that future generations could inherit and build upon.",
-    fop: "His Future-Oriented Projections were focused on creating a durable educational and cultural legacy. He developed systematic approaches to moral education and reinterpreted classical traditions to ensure they would remain relevant for restoring social order and guiding future cultural development.",
-    capabilities: ["Capability for Cultural Transmission and Reinterpretation", "Capability for Relational Moral Cultivation", "Capability for Integrating Theory and Governance", "Individual-Social Moral Integration"],
-    fullPrfAnalysis: `Confucius: A PRF Analysis of Moral Cultivation, Social Harmony, and Ethical Governance
+            name: "Confucius",
+            lifespan: "551-479 BCE",
+            title: "A PRF Analysis of Moral Cultivation, Social Harmony, and Ethical Governance",
+            summary: "His PRF emerged from social upheaval, emphasizing relational wisdom and cultural cultivation as the foundation for social harmony.",
+            bioLink: "https://www.britannica.com/biography/Confucius",
+            videoUrl: null,
+            assemblyHistory: `<p><strong>Early Formation (551-520 BCE):</strong> Born into minor nobility during a period of institutional decline, his framework was shaped by a deep reverence for traditional Zhou dynasty rituals and a practical need to address social disorder. His roles as an administrator, teacher, and wandering advisor integrated theoretical wisdom with the practical challenges of governance and moral education.</p>`,
+            broa: `<p><strong>Beliefs:</strong> Human beings develop through reciprocal care and fulfilling their social roles. Rules: Act with ritual propriety (Li) and benevolent governance (Ren).</p><p><strong>Ontology:</strong> Personhood is constituted through a network of social relationships, not an individual essence.</p><p><strong>Authenticity:</strong> Achieved through the sincere and excellent fulfillment of one's social duties.</p>`,
+            atcf: "Confucius maintained remarkable coherence by adapting ancient cultural wisdom to contemporary social challenges. He integrated his roles as a scholar, teacher, and political advisor, always aiming to create a framework for social harmony that future generations could inherit and build upon.",
+            fop: "His Future-Oriented Projections were focused on creating a durable educational and cultural legacy. He developed systematic approaches to moral education and reinterpreted classical traditions to ensure they would remain relevant for restoring social order and guiding future cultural development.",
+            capabilities: ["Capability for Cultural Transmission and Reinterpretation", "Capability for Relational Moral Cultivation", "Capability for Integrating Theory and Governance", "Individual-Social Moral Integration"],
+            fullPrfAnalysis: `Confucius: A PRF Analysis of Moral Cultivation, Social Harmony, and Ethical Governance
 Personal Reality Framework Analysis (551-479 BCE)
 Assembly History: From Minor Noble to Foundational Ethical Teacher
 Early Formation and Cultural Foundation (551-520 BCE)
@@ -1383,8 +1347,7 @@ Moral Education Systematization: Development of comprehensive frameworks for eth
 Virtue-Based Governance Implementation: Integration of moral leadership principles with practical governmental administration through institutional reforms that coordinate individual character development with collective political wisdom and administrative effectiveness.
 Cultural Wisdom Preservation: Understanding that traditional cultural knowledge requires active interpretation and creative application to serve contemporary moral education while preserving essential insights for ongoing ethical development and social transformation.
 Social Harmony Through Character: Contribution to systematic approaches for building social cohesion and political stability through moral cultivation rather than coercive control, creating sustainable frameworks for collective flourishing based on ethical relationships and virtuous leadership.`
-},
-
+        },
         {
             name: "Aristotle",
     lifespan: "384-322 BCE",
