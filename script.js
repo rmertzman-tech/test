@@ -1,38 +1,31 @@
 document.addEventListener('DOMContentLoaded', () => {
-    
+
     const app = {
         apiKey: '',
-        
-        // Load all data from the global appData object
+        currentComparison: null,
+        currentResonance: null,
+        currentModalFigure: null,
+
         navigators: appData.navigators,
         thinkers: appData.thinkers,
         concepts: appData.concepts,
         foundations: appData.foundations,
         caseStudies: appData.caseStudies,
-        disclaimerText: appData.disclaimerText,
+        essays: appData.essays,
 
-        // Store chat histories for conversational context
-        comparisonChatHistory: [],
-        resonanceChatHistory: [],
-        
-        // Create a summary of foundations to prime the AI
-        foundationSummary: `Core theoretical principles to frame your analysis: ` + (appData.foundations || []).map(f => `${f.title} - ${f.summary}`).join('; '),
+        frameworkContext: `
+            You are an expert in the "Capability-Based Coordination" philosophical system. Your entire knowledge base for this conversation is the following set of principles:
+            1.  **Personal Reality Framework (PRF):** Each person has a unique architecture for organizing experience (Beliefs, Rules, Ontology, Authenticity).
+            2.  **Capability-Based Coordination & Functional Equivalence:** People can coordinate by developing "functionally equivalent" capabilities to achieve shared goals, even with different beliefs.
+            3.  **Adaptive Temporal Coherence Function (ATCF):** A measure of a coherent identity over time.
+            4.  **Bootstrap Authority:** Normative authority emerges from demonstrated competence.
+            5.  **Two Operating Systems:** People can use OS1 (Truth-Commitment) for personal meaning and OS2 (Capability-Coordination) for practical cooperation.
+        `,
 
         init() {
             this.loadApiKey();
-            this.renderNavigators();
-            this.renderThinkers();
-            this.renderConcepts();
-            this.renderComparisonLab();
-            this.renderFoundations();
-            this.renderCaseStudies();
-            this.renderDisclaimer();
+            this.renderAllContent();
             this.setupEventListeners();
-            
-            const savedResonance = localStorage.getItem('resonanceInput');
-            if (savedResonance) {
-                document.getElementById('resonance-input').value = savedResonance;
-            }
         },
 
         loadApiKey() {
@@ -41,479 +34,375 @@ document.addEventListener('DOMContentLoaded', () => {
                 this.apiKey = savedKey;
             }
         },
+        
+        renderAllContent() {
+            document.getElementById('profile-grid').innerHTML = this.navigators.map((item, index) => this.createCardHtml(item, 'navigator', index)).join('');
+            document.getElementById('thinker-grid').innerHTML = this.thinkers.map((item, index) => this.createCardHtml(item, 'thinker', index)).join('');
+            document.getElementById('concept-grid').innerHTML = this.concepts.map((item, index) => this.createConceptCardHtml(item, index)).join('');
+            document.getElementById('foundation-grid').innerHTML = this.foundations.map((item, index) => this.createSimpleCardHtml(item, 'foundation', index)).join('');
+            document.getElementById('casestudy-grid').innerHTML = this.caseStudies.map((item, index) => this.createSimpleCardHtml(item, 'casestudy', index)).join('');
+            document.getElementById('essay-grid').innerHTML = this.essays.map((item, index) => this.createSimpleCardHtml(item, 'essay', index)).join('');
+            
+            const disclaimerEl = document.getElementById('disclaimer-text');
+            if(disclaimerEl && appData.disclaimerText) disclaimerEl.textContent = appData.disclaimerText;
 
-        renderDisclaimer() {
-            const container = document.getElementById('disclaimer-container');
-            if(container && this.disclaimerText) {
-                container.innerHTML = `<div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 rounded-md" role="alert"><p class="font-bold">A Note on Interpretation</p><p>${this.disclaimerText}</p></div>`;
-            }
-        },
-
-        renderFoundations() {
-            const grid = document.getElementById('foundation-grid');
-            if(grid && this.foundations) {
-                grid.innerHTML = this.foundations.map((foundation, index) => `
-                    <div class="concept-card bg-white p-6 rounded-lg shadow-md flex flex-col" data-type="foundation" data-index="${index}">
-                        <h3 class="text-xl font-bold text-green-700">${foundation.title}</h3>
-                        <p class="text-gray-600 mt-2 text-sm flex-grow">${foundation.summary}</p>
-                        <div class="mt-4">
-                            <h4 class="text-sm font-semibold text-gray-800">Key Concepts:</h4>
-                            <ul class="list-disc list-inside text-sm text-gray-600">
-                                ${foundation.keyConcepts.map(c => `<li>${c}</li>`).join('')}
-                            </ul>
-                        </div>
-                    </div>
-                `).join('');
-            }
-        },
-
-        renderCaseStudies() {
-            const grid = document.getElementById('casestudy-grid');
-            if(grid && this.caseStudies){
-                grid.innerHTML = this.caseStudies.map((study, index) => `
-                    <div class="profile-card bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 cursor-pointer flex flex-col" data-type="caseStudy" data-index="${index}">
-                        <h3 class="text-xl font-bold text-blue-700">${study.title}</h3>
-                        <p class="text-gray-600 mt-2 text-sm flex-grow">${study.summary}</p>
-                    </div>
-                `).join('');
-            }
+            this.renderComparisonLab();
         },
         
-        renderNavigators() {
-            const grid = document.getElementById('profile-grid');
-            grid.innerHTML = this.navigators.map((profile, index) => `
-                <div class="profile-card bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 cursor-pointer flex flex-col" data-type="navigator" data-index="${index}">
-                    <h3 class="text-xl font-bold text-indigo-700">${profile.name}</h3>
-                    <p class="text-sm text-gray-500 mb-2">${profile.lifespan}</p>
-                    <p class="font-semibold text-gray-800">${profile.title}</p>
-                    <p class="text-gray-600 mt-2 text-sm flex-grow">${profile.summary}</p>
-                </div>
-            `).join('');
+        createCardHtml(item, type, index) {
+            const colors = { navigator: 'text-indigo-700', thinker: 'text-teal-700' };
+            return `
+                <div class="profile-card bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 cursor-pointer flex flex-col" data-type="${type}" data-index="${index}">
+                    <h3 class="text-xl font-bold ${colors[type]}">${item.name}</h3>
+                    <p class="text-sm text-gray-500 mb-2">${item.lifespan}</p>
+                    <p class="font-semibold text-gray-800">${item.title}</p>
+                    <p class="text-gray-600 mt-2 text-sm flex-grow">${item.summary}</p>
+                </div>`;
         },
 
-        renderThinkers() {
-            const grid = document.getElementById('thinker-grid');
-            grid.innerHTML = this.thinkers.map((thinker, index) => `
-                 <div class="thinker-card bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 cursor-pointer flex flex-col" data-type="thinker" data-index="${index}">
-                     <h3 class="text-xl font-bold text-teal-700">${thinker.name}</h3>
-                     <p class="text-sm text-gray-500 mb-2">${thinker.lifespan}</p>
-                     <p class="font-semibold text-gray-800">${thinker.title}</p>
-                     <p class="text-gray-600 mt-2 text-sm flex-grow">${thinker.summary}</p>
-                 </div>
-            `).join('');
-        },
-
-        renderConcepts() {
-            const container = document.getElementById('concept-grid');
-            container.innerHTML = this.concepts.map((concept, index) => `
+        createConceptCardHtml(concept, index) {
+            return `
                 <div class="concept-card bg-white p-6 rounded-lg shadow-md flex flex-col">
-                      <h3 class="text-xl font-bold text-purple-700">${concept.name}</h3>
-                      <p class="text-gray-600 mt-2 flex-grow text-sm">${concept.description}</p>
-                      <button class="generate-analogy-btn mt-4 text-sm bg-purple-100 text-purple-700 font-semibold py-2 px-4 rounded-md hover:bg-purple-200 transition-colors" data-index="${index}">✨ Explain with an Analogy</button>
-                      <div id="analogy-output-${index}" class="mt-2"></div>
+                    <h3 class="text-xl font-bold text-purple-700">${concept.name}</h3>
+                    <p class="text-gray-600 mt-2 flex-grow text-sm">${concept.description}</p>
+                    <button class="generate-analogy-btn mt-4 text-sm bg-purple-100 text-purple-700 font-semibold py-2 px-4 rounded-md hover:bg-purple-200" data-index="${index}">✨ Explain with an Analogy</button>
+                    <div id="analogy-output-${index}" class="mt-2 text-sm"></div>
+                </div>`;
+        },
+        
+        createSimpleCardHtml(item, type, index) {
+             const colors = { foundation: 'text-gray-800', casestudy: 'text-yellow-800', essay: 'text-blue-800' };
+            return `
+                <div class="simple-card bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 cursor-pointer flex flex-col" data-type="${type}" data-index="${index}">
+                     <h3 class="text-xl font-bold ${colors[type]}">${item.title}</h3>
+                     <p class="text-gray-600 mt-2 text-sm flex-grow">${item.summary}</p>
                 </div>
-            `).join('');
+            `;
         },
 
         renderComparisonLab() {
             const allFigures = [...this.navigators, ...this.thinkers].sort((a, b) => a.name.localeCompare(b.name));
-            
-            const figureOptions = `<option value="" disabled selected>Select a figure...</option>` + allFigures.map(person => {
+            const figureOptions = `<option value="" disabled selected>Select a figure...</option>` + allFigures.map((person) => {
                 const type = this.navigators.some(p => p.name === person.name) ? 'navigator' : 'thinker';
-                const originalIndex = this[type === 'navigator' ? 'navigators' : 'thinkers'].findIndex(p => p.name === person.name);
-                return `<option value="${type}-${originalIndex}">${person.name}</option>`;
+                const index = (type === 'navigator' ? this.navigators : this.thinkers).findIndex(p => p.name === person.name);
+                return `<option value="${type}-${index}">${person.name}</option>`;
             }).join('');
-
             document.getElementById('figureA-select').innerHTML = figureOptions;
             document.getElementById('figureB-select').innerHTML = figureOptions;
-            
             const uniqueCapabilities = [...new Set(allFigures.flatMap(f => f.capabilities || []))].sort();
             const capabilityOptions = `<option value="" disabled selected>Select a capability...</option>` + uniqueCapabilities.map(c => `<option value="${c}">${c}</option>`).join('');
             document.getElementById('capability-select').innerHTML = capabilityOptions;
         },
 
-        async callGeminiAPI(chatHistory, outputElement, button, chatContainer) {
+        async callGeminiAPI(prompt, outputElement) {
             if (!this.apiKey) {
                 document.getElementById('settings-api-key-modal').classList.remove('hidden');
-                return;
+                outputElement.innerHTML = '';
+                return false;
             }
-
-            let tempLoader;
-            if (button) {
-                button.disabled = true;
-            } else {
-                tempLoader = document.createElement('div');
-                tempLoader.innerHTML = '<div class="loader"></div>';
-                outputElement.appendChild(tempLoader);
-            }
-            
-            const payload = { contents: chatHistory };
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${this.apiKey}`;
-            
+            outputElement.innerHTML = '<div class="loader"></div>';
             try {
-                const response = await fetch(apiUrl, {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${this.apiKey}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
+                    body: JSON.stringify({ contents: [{ role: "user", parts: [{ text: prompt }] }] })
                 });
-
-                if (!response.ok) throw new Error(`API Error: ${response.status}`);
-
-                const result = await response.json();
-                
-                if (result.candidates && result.candidates[0].content.parts.length > 0) {
-                    const aiResponse = result.candidates[0].content;
-                    chatHistory.push(aiResponse); // Add AI response to history
-                    const text = aiResponse.parts[0].text;
-                    this.appendChatMessage(outputElement, text, 'ai');
-                    if (chatContainer) chatContainer.classList.remove('hidden'); // Show chat input
-                } else {
-                    this.appendChatMessage(outputElement, 'The AI returned an empty response. Please try again.', 'error');
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.error.message);
                 }
-
+                const result = await response.json();
+                const text = result.candidates?.[0]?.content?.parts?.[0]?.text;
+                if (text) {
+                    outputElement.innerHTML = text.replace(/\n/g, '<br>');
+                } else {
+                    throw new Error("Received an empty or invalid response from the API.");
+                }
+                return true;
             } catch (error) {
-                console.error("API call failed:", error);
-                this.appendChatMessage(outputElement, `An error occurred: ${error.message}`, 'error');
-            } finally {
-                if (button) button.disabled = false;
-                if (tempLoader) tempLoader.remove();
+                console.error("API Error:", error);
+                outputElement.innerHTML = `<p class="text-red-500 text-sm">Error: ${error.message}</p>`;
+                return false;
             }
-        },
-        
-        appendChatMessage(outputElement, message, role) {
-            const messageDiv = document.createElement('div');
-            if (role === 'ai') {
-                messageDiv.className = 'gemini-output';
-                messageDiv.innerHTML = message.trim();
-            } else if (role === 'user') {
-                messageDiv.className = 'bg-indigo-100 p-4 rounded-md text-gray-800';
-                messageDiv.textContent = message.trim();
-            } else { // error
-                messageDiv.className = 'bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded-md';
-                messageDiv.textContent = message.trim();
-            }
-            outputElement.appendChild(messageDiv);
-            outputElement.scrollTop = outputElement.scrollHeight;
         },
 
         setupEventListeners() {
-            document.getElementById('start-btn').addEventListener('click', () => {
-                document.getElementById('welcome-screen').classList.add('hidden');
-                document.getElementById('main-content').classList.remove('hidden');
-            });
+            const startBtn = document.getElementById('start-btn');
+            const welcomeScreen = document.getElementById('welcome-screen');
+            const appContainer = document.getElementById('app-container');
+            if (startBtn) {
+                startBtn.addEventListener('click', () => {
+                    welcomeScreen.classList.add('hidden');
+                    appContainer.classList.remove('hidden');
+                });
+            }
 
             const tabs = {
                 navigators: { btn: document.getElementById('navigators-tab'), section: document.getElementById('navigators-section') },
                 thinkers:   { btn: document.getElementById('thinkers-tab'),   section: document.getElementById('thinkers-section') },
-                comparison: { btn: document.getElementById('comparison-tab'), section: document.getElementById('comparison-section') },
-                resonance:  { btn: document.getElementById('resonance-tab'),  section: document.getElementById('resonance-section') },
                 concepts:   { btn: document.getElementById('concepts-tab'),   section: document.getElementById('concepts-section') },
                 foundations:{ btn: document.getElementById('foundations-tab'),section: document.getElementById('foundations-section') },
-                casestudies:{ btn: document.getElementById('casestudies-tab'),section: document.getElementById('casestudies-section') }
+                casestudies:{ btn: document.getElementById('casestudies-tab'),section: document.getElementById('casestudy-section') },
+                essays:     { btn: document.getElementById('essays-tab'),     section: document.getElementById('essay-section') },
+                comparison: { btn: document.getElementById('comparison-tab'), section: document.getElementById('comparison-section') },
+                resonance:  { btn: document.getElementById('resonance-tab'),  section: document.getElementById('resonance-section') }
             };
 
             Object.values(tabs).forEach(tab => {
-                tab.btn.addEventListener('click', (e) => this.switchTab(e.target, tabs));
+                if (tab.btn) tab.btn.addEventListener('click', () => this.activateTab(tab, tabs));
             });
+            if (tabs.navigators.btn) this.activateTab(tabs.navigators, tabs);
 
             const detailModal = document.getElementById('detail-modal');
-            ['profile-grid', 'thinker-grid', 'casestudy-grid'].forEach(id => {
-                document.getElementById(id).addEventListener('click', (e) => this.handleCardClick(e));
-            });
-
             document.getElementById('close-modal').addEventListener('click', () => detailModal.classList.add('hidden'));
-            detailModal.addEventListener('click', (e) => {
-                if (e.target === detailModal) detailModal.classList.add('hidden');
-            });
-            
-            const settingsApiKeyModal = document.getElementById('settings-api-key-modal');
-            document.getElementById('settings-btn').addEventListener('click', () => {
-                document.getElementById('api-key-input-settings').value = this.apiKey;
-                settingsApiKeyModal.classList.remove('hidden');
-            });
-            document.getElementById('cancel-api-key-btn').addEventListener('click', () => settingsApiKeyModal.classList.add('hidden'));
+            detailModal.addEventListener('click', e => (e.target === detailModal) && detailModal.classList.add('hidden'));
+            document.querySelectorAll('.card-container').forEach(c => c.addEventListener('click', e => this.handleCardClick(e)));
+
+            const settingsModal = document.getElementById('settings-api-key-modal');
+            document.getElementById('settings-btn').addEventListener('click', () => settingsModal.classList.remove('hidden'));
+            document.getElementById('cancel-api-key-btn').addEventListener('click', () => settingsModal.classList.add('hidden'));
             document.getElementById('save-api-key-btn').addEventListener('click', () => {
-                this.apiKey = document.getElementById('api-key-input-settings').value.trim();
-                localStorage.setItem('geminiApiKey', this.apiKey);
-                settingsApiKeyModal.classList.add('hidden');
+                const newKey = document.getElementById('api-key-input-settings').value.trim();
+                this.apiKey = newKey;
+                if (newKey) localStorage.setItem('geminiApiKey', newKey);
+                else localStorage.removeItem('geminiApiKey');
+                settingsModal.classList.add('hidden');
             });
 
-            document.getElementById('concept-grid').addEventListener('click', (e) => {
-                const button = e.target.closest('.generate-analogy-btn');
-                if (button) {
-                    const outputElement = document.getElementById(`analogy-output-${button.dataset.index}`);
-                    outputElement.innerHTML = '';
-                    const concept = this.concepts[button.dataset.index];
-                    const prompt = `Explain the following complex ethical concept in a simple, relatable analogy for a college student: "${concept.name} - ${concept.description}".`;
-                    this.callGeminiAPI([{ role: "user", parts: [{ text: prompt }] }], outputElement, button);
-                }
-            });
-
-            // --- Conversational Lab Event Listeners ---
-            this.setupConversationalLab('compare-figures-btn', 'comparison-output', 'comparison-chat-container', 'comparison-chat-input', 'comparison-chat-send', 'comparisonChatHistory', () => {
-                const valA = document.getElementById('figureA-select').value;
-                const valB = document.getElementById('figureB-select').value;
-                if (!valA || !valB || valA === valB) { alert("Please select two different figures."); return null; }
-                const [typeA, indexA] = valA.split('-');
-                const personA = this[typeA === 'navigator' ? 'navigators' : 'thinkers'][indexA];
-                const [typeB, indexB] = valB.split('-');
-                const personB = this[typeB === 'navigator' ? 'navigators' : 'thinkers'][indexB];
-                const contextA = personA.fullPrfAnalysis || `Summary: ${personA.summary}. Key Ideas: ${personA.identityKernel || personA.broa}`;
-                const contextB = personB.fullPrfAnalysis || `Summary: ${personB.summary}. Key Ideas: ${personB.identityKernel || personB.broa}`;
-                return `As an AI assistant, analyze the connection between ${personA.name} and ${personB.name} using 'Functional Equivalence'.
-                ---
-                **Theoretical Framework:** ${this.foundationSummary}
-                ---
-                **Your Analysis Must:**
-                1. Identify a shared ethical capability from the analyses below.
-                2. Explain how each person developed this from their unique background.
-                3. Conclude by explaining how this demonstrates 'Functional Equivalence'.
-                ---
-                **Full Analysis for ${personA.name}:**
-                ${contextA}
-                ---
-                **Full Analysis for ${personB.name}:**
-                ${contextB}
-                ---`;
-            });
-
-            this.setupConversationalLab('find-counterparts-btn', 'counterparts-output', 'resonance-chat-container', 'resonance-chat-input', 'resonance-chat-send', 'resonanceChatHistory', () => {
-                const userInput = document.getElementById('resonance-input').value;
-                if (!userInput.trim()) { alert("Please describe a value or capability first."); return null; }
-                localStorage.setItem('resonanceInput', userInput);
-                const figuresData = [...this.navigators, ...this.thinkers].map(f => ({
-                    name: f.name,
-                    details: f.fullPrfAnalysis || `Capabilities: ${(f.capabilities || []).join(', ')}. Summary: ${f.summary}`
-                }));
-                return `As an AI assistant, analyze a student's reflection: "${userInput}". Compare it to the historical figures below and identify the top 3-5 who demonstrate a functionally equivalent capability. For each match, briefly explain *how* their life exemplifies this capability, using the provided theoretical framework.
-                ---
-                **Theoretical Framework:** ${this.foundationSummary}
-                ---
-                **Historical Figures Data:**
-                ${JSON.stringify(figuresData, null, 2)}
-                ---
-                Frame your response as an encouraging guide for the student's own ethical development.`;
-            });
-
-             document.getElementById('capability-select').addEventListener('change', (e) => {
-                const selectedCapability = e.target.value;
-                const outputElement = document.getElementById('capability-explorer-output');
-                if (selectedCapability) {
-                    const allFigures = [...this.navigators.map((p, i) => ({...p, type: 'navigator', originalIndex: i})), ...this.thinkers.map((p, i) => ({...p, type: 'thinker', originalIndex: i}))];
-                    const matchingFigures = allFigures.filter(f => (f.capabilities || []).includes(selectedCapability));
-                    
-                    outputElement.innerHTML = matchingFigures.map(person => `
-                        <div class="${person.type}-card bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 cursor-pointer flex flex-col" data-type="${person.type}" data-index="${person.originalIndex}">
-                            <h3 class="text-xl font-bold ${person.type === 'navigator' ? 'text-indigo-700' : 'text-teal-700'}">${person.name}</h3>
-                            <p class="text-sm text-gray-500 mb-2">${person.lifespan}</p>
-                            <p class="font-semibold text-gray-800">${person.title}</p>
-                            <p class="text-gray-600 mt-2 text-sm flex-grow">${person.summary}</p>
-                        </div>
-                    `).join('');
-                } else {
-                    outputElement.innerHTML = '';
-                }
-            });
+            document.getElementById('concept-grid').addEventListener('click', e => this.handleConceptAnalogy(e));
+            document.getElementById('find-counterparts-btn').addEventListener('click', () => this.handleResonanceLab());
+            document.getElementById('comparison-send-btn').addEventListener('click', () => this.handleComparisonChat());
+            document.getElementById('resonance-send-btn').addEventListener('click', () => this.handleResonanceChat());
+            document.getElementById('compare-figures-btn').addEventListener('click', () => this.handleComparison());
+            document.getElementById('capability-select').addEventListener('change', e => this.handleCapabilityExplorer(e));
         },
         
-        setupConversationalLab(startButtonId, outputId, chatContainerId, inputId, sendButtonId, historyProp, getInitialPrompt) {
-            const startButton = document.getElementById(startButtonId);
-            const outputElement = document.getElementById(outputId);
-            const chatContainer = document.getElementById(chatContainerId);
-            const inputElement = document.getElementById(inputId);
-            const sendButton = document.getElementById(sendButtonId);
-
-            startButton.addEventListener('click', () => {
-                const initialPrompt = getInitialPrompt();
-                if (!initialPrompt) return;
-
-                outputElement.innerHTML = '';
-                chatContainer.classList.add('hidden');
-                this[historyProp] = [{ role: "user", parts: [{ text: initialPrompt }] }];
-                this.callGeminiAPI(this[historyProp], outputElement, startButton, chatContainer);
+        activateTab(tab, allTabs) {
+            Object.values(allTabs).forEach(t => {
+                if(t.section) t.section.classList.add('hidden');
+                if(t.btn) t.btn.setAttribute('aria-selected', 'false');
             });
-
-            const sendFollowUp = () => {
-                const userText = inputElement.value.trim();
-                if (!userText) return;
-
-                this.appendChatMessage(outputElement, userText, 'user');
-                this[historyProp].push({ role: "user", parts: [{ text: userText }] });
-                inputElement.value = '';
-                this.callGeminiAPI(this[historyProp], outputElement);
-            };
-
-            sendButton.addEventListener('click', sendFollowUp);
-            inputElement.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter') {
-                    e.preventDefault();
-                    sendFollowUp();
-                }
-            });
+            tab.section.classList.remove('hidden');
+            tab.btn.setAttribute('aria-selected', 'true');
         },
 
-        switchTab(clickedButton, tabs) {
-             Object.values(tabs).forEach(t => {
-                t.section.classList.add('hidden');
-                t.btn.setAttribute('aria-selected', 'false');
-            });
-            const key = Object.keys(tabs).find(k => tabs[k].btn === clickedButton);
-            if(key) {
-                tabs[key].section.classList.remove('hidden');
-                tabs[key].btn.setAttribute('aria-selected', 'true');
+        handleConceptAnalogy(e) {
+            if (e.target.classList.contains('generate-analogy-btn')) {
+                const index = e.target.dataset.index;
+                const concept = this.concepts[index];
+                const outputElement = document.getElementById(`analogy-output-${index}`);
+                const prompt = `${this.frameworkContext}\nA student needs a simple, relatable analogy for the concept: "${concept.name} - ${concept.description}". Create an analogy in an accessible, educational tone, perhaps using examples from technology or collaborative activities.`;
+                this.callGeminiAPI(prompt, outputElement);
             }
         },
+
+        async handleResonanceLab() {
+            const userInput = document.getElementById('resonance-input').value;
+            if (!userInput.trim()) return;
+            const outputElement = document.getElementById('counterparts-output');
+            const chatContainer = document.getElementById('resonance-chat-container');
+            const allFigures = [...this.navigators, ...this.thinkers];
+            const figuresData = allFigures.map(f => ({ name: f.name, summary: f.summary, capabilities: (f.capabilities || []).join(', ') }));
+            
+            this.currentResonance = { reflection: userInput };
+
+            const prompt = `${this.frameworkContext}\nA student's reflection: "${userInput}". From the list below, identify the top 3-5 figures with "functionally equivalent" capabilities. For each match, briefly explain the connection using framework concepts. Format as clean HTML.\nList: ${JSON.stringify(figuresData, null, 2)}`;
+            
+            const success = await this.callGeminiAPI(prompt, outputElement);
+            if (success) chatContainer.classList.remove('hidden');
+        },
         
+        handleResonanceChat() {
+            const userInput = document.getElementById('resonance-chat-input').value;
+            if (!userInput.trim() || !this.currentResonance) return;
+            const outputContainer = document.getElementById('counterparts-output');
+            
+            const prompt = `${this.frameworkContext}\nThis is a follow-up conversation. The student's original reflection was: "${this.currentResonance.reflection}". The AI has already provided an initial list of role models. The student's new question is: "${userInput}". Provide a concise and helpful answer that builds on the previous context. Format as clean HTML.`;
+            
+            this.appendChatTurn(outputContainer, userInput, prompt);
+            document.getElementById('resonance-chat-input').value = '';
+        },
+
+        async handleComparison() {
+            const valA = document.getElementById('figureA-select').value;
+            const valB = document.getElementById('figureB-select').value;
+            if (!valA || !valB || valA === valB) return;
+
+            const [typeA, indexA] = valA.split('-');
+            const personA = (typeA === 'navigator' ? this.navigators : this.thinkers)[indexA];
+            const [typeB, indexB] = valB.split('-');
+            const personB = (typeB === 'navigator' ? this.navigators : this.thinkers)[indexB];
+
+            this.currentComparison = { personA, personB };
+
+            const outputElement = document.getElementById('comparison-output');
+            const chatContainer = document.getElementById('comparison-chat-container');
+            
+            const prompt = `${this.frameworkContext}\nAnalyze the "Functional Equivalence" between ${personA.name} and ${personB.name}.\n**${personA.name} Context:** ${personA.fullPrfAnalysis || personA.broa}\n**${personB.name} Context:** ${personB.fullPrfAnalysis || personB.broa}\nYour Task: Identify a shared ethical capability, explain how each person's unique PRF led to it, and summarize their functional equivalence. Format as clean HTML.`;
+            
+            const success = await this.callGeminiAPI(prompt, outputElement);
+            if(success) chatContainer.classList.remove('hidden');
+        },
+        
+        handleComparisonChat() {
+            const userInput = document.getElementById('comparison-chat-input').value;
+            if (!userInput.trim() || !this.currentComparison) return;
+            const outputContainer = document.getElementById('comparison-output');
+            const { personA, personB } = this.currentComparison;
+            
+            const prompt = `${this.frameworkContext}\nThis is a follow-up conversation about the comparison between ${personA.name} and ${personB.name}. The student's new question is: "${userInput}". Provide a concise, helpful answer that builds on the previous comparison, using the framework's concepts. Format as clean HTML.`;
+            
+            this.appendChatTurn(outputContainer, userInput, prompt);
+            document.getElementById('comparison-chat-input').value = '';
+        },
+        
+        appendChatTurn(container, userInput, prompt) {
+            const userTurn = document.createElement('div');
+            userTurn.className = 'p-4 mt-4 bg-indigo-50 rounded-md';
+            userTurn.innerHTML = `<p class="font-semibold text-indigo-700">You asked:</p><p class="mt-1">${userInput}</p>`;
+            
+            const aiTurn = document.createElement('div');
+            aiTurn.className = 'p-4 mt-2 bg-gray-100 rounded-md gemini-output';
+            
+            container.appendChild(userTurn);
+            container.appendChild(aiTurn);
+            
+            this.callGeminiAPI(prompt, aiTurn);
+        },
+
+        handleCapabilityExplorer(e) {
+            const selectedCapability = e.target.value;
+            const outputElement = document.getElementById('capability-explorer-output');
+            if (selectedCapability) {
+                const allFigures = [...this.navigators, ...this.thinkers];
+                const matchingFigures = allFigures.filter(f => (f.capabilities || []).includes(selectedCapability));
+                outputElement.innerHTML = matchingFigures.map(person => {
+                    const type = this.navigators.some(p => p.name === person.name) ? 'navigator' : 'thinker';
+                    const index = (type === 'navigator' ? this.navigators : this.thinkers).findIndex(p => p.name === person.name);
+                    return this.createCardHtml(person, type, index);
+                }).join('');
+            } else {
+                outputElement.innerHTML = '';
+            }
+        },
+
         handleCardClick(e) {
             const card = e.target.closest('div[data-index]');
             if (card) {
                 const type = card.dataset.type;
                 const index = card.dataset.index;
-                const data = this[type === 'navigator' ? 'navigators' : (type === 'thinker' ? 'thinkers' : 'caseStudies')][index];
+                let data;
+                switch (type) {
+                    case 'navigator': data = this.navigators[index]; break;
+                    case 'thinker': data = this.thinkers[index]; break;
+                    case 'foundation': data = this.foundations[index]; break;
+                    case 'casestudy': data = this.caseStudies[index]; break;
+                    case 'essay': data = this.essays[index]; break;
+                    default: return;
+                }
                 this.showDetailModal(data, type);
             }
         },
 
         showDetailModal(data, type) {
-            const modalContent = document.getElementById('modal-content-details');
+            const modalContentEl = document.getElementById('modal-content-details');
             const modal = document.getElementById('detail-modal');
+            let html = '';
+            this.currentModalFigure = null;
+
+            switch (type) {
+                case 'navigator':
+                case 'thinker':
+                    html = this.getPersonModalHtml(data, type);
+                    this.currentModalFigure = data;
+                    break;
+                case 'foundation':
+                case 'casestudy':
+                case 'essay':
+                    html = this.getSimpleModalHtml(data);
+                    break;
+            }
             
-            if (type === 'navigator') modalContent.innerHTML = this.getNavigatorModalHtml(data);
-            else if (type === 'thinker') modalContent.innerHTML = this.getThinkerModalHtml(data);
-            else if (type === 'caseStudy') modalContent.innerHTML = this.getCaseStudyModalHtml(data);
-            
+            modalContentEl.innerHTML = html;
             modal.classList.remove('hidden');
             modal.querySelector('.modal-content').scrollTop = 0;
-            
-            modalContent.querySelectorAll('[data-target-tab]').forEach(link => {
-                link.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    modal.classList.add('hidden');
-                    const targetTabId = e.currentTarget.dataset.targetTab;
-                    const targetButton = document.getElementById(targetTabId);
-                    if(targetButton) {
-                        const tabs = { // Re-creating tabs object for scope
-                             navigators: { btn: document.getElementById('navigators-tab'), section: document.getElementById('navigators-section') },
-                             thinkers:   { btn: document.getElementById('thinkers-tab'),   section: document.getElementById('thinkers-section') },
-                             comparison: { btn: document.getElementById('comparison-tab'), section: document.getElementById('comparison-section') },
-                             resonance:  { btn: document.getElementById('resonance-tab'),  section: document.getElementById('resonance-section') },
-                             concepts:   { btn: document.getElementById('concepts-tab'),   section: document.getElementById('concepts-section') },
-                             foundations:{ btn: document.getElementById('foundations-tab'),section: document.getElementById('foundations-section') },
-                             casestudies:{ btn: document.getElementById('casestudies-tab'),section: document.getElementById('casestudies-section') }
-                        };
-                         this.switchTab(targetButton, tabs);
-                    }
-                });
-            });
 
-            if (type === 'navigator') {
-                document.getElementById('generate-dilemma-btn')?.addEventListener('click', (e) => {
-                    const outputElement = document.getElementById('dilemma-output');
-                    outputElement.innerHTML = '';
-                    const context = data.fullPrfAnalysis || data.identityKernel;
-                    const prompt = `Based on the detailed analysis of ${data.name}: "${context}", generate a short, new, hypothetical ethical dilemma they might have faced that tests their core principles. Present the scenario, then ask, 'What should ${data.name} do?'`;
-                    this.callGeminiAPI([{ role: "user", parts: [{ text: prompt }] }], outputElement, e.target);
-                });
-
-                document.getElementById('generate-dialogue-btn')?.addEventListener('click', (e) => {
-                    const userInput = document.getElementById('dialogue-input').value;
-                    if (!userInput) { alert("Please enter a question."); return; }
-                    const outputElement = document.getElementById('dialogue-output');
-                    outputElement.innerHTML = '';
-                    const context = data.fullPrfAnalysis || data.identityKernel;
-                    const prompt = `You are an expert on ${data.name}. A student asked: "${userInput}". Based on ${data.name}'s detailed analysis: "${context}", write a short response in their voice, explaining how they might think about this issue.`;
-                    this.callGeminiAPI([{ role: "user", parts: [{ text: prompt }] }], outputElement, e.target.parentElement.querySelector('button'));
-                });
-            } 
+            if (this.currentModalFigure) {
+                const sendBtn = document.getElementById('modal-chat-send');
+                const inputEl = document.getElementById('modal-chat-input');
+                sendBtn.addEventListener('click', () => this.handleModalChat(inputEl));
+                inputEl.addEventListener('keyup', (e) => (e.key === 'Enter') && sendBtn.click());
+            }
         },
 
-        getNavigatorModalHtml(data) {
-             const videoButton = data.videoUrl ? `<a href="${data.videoUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center bg-red-600 text-white font-semibold py-2 px-4 rounded-md hover:bg-red-700 transition-colors text-sm"><svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"></path></svg>Watch Video</a>` : '';
-             const foundationalLinksHtml = (data.foundationalLinks || []).length > 0 ? `
-                <div>
-                    <h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Theoretical Connections</h4>
-                    <ul class="list-disc list-inside space-y-1 text-sm">
-                        ${data.foundationalLinks.map(link => `<li><a href="#" class="text-indigo-600 hover:underline" data-target-tab="foundations-tab">${link}</a></li>`).join('')}
-                    </ul>
-                </div>` : '';
+        handleModalChat(inputElement) {
+            const userInput = inputElement.value;
+            if (!userInput.trim() || !this.currentModalFigure) return;
+            const outputContainer = document.getElementById('modal-chat-output');
+            const data = this.currentModalFigure;
 
-             const interactiveScenarios = `
-                <div class="border-t pt-4 mt-4">
-                    <h4 class="font-semibold text-lg text-gray-900 mb-2">Interactive Ethical Scenarios ✨</h4>
-                    <div class="mb-4">
-                        <button id="generate-dilemma-btn" class="w-full text-sm bg-indigo-600 text-white font-semibold py-2 px-4 rounded-md hover:bg-indigo-700">Generate an Ethical Dilemma for ${data.name}</button>
-                        <div id="dilemma-output" class="mt-2"></div>
-                    </div>
-                    <div>
-                        <label for="dialogue-input" class="block text-sm font-medium">Ask ${data.name} a question:</label>
-                        <div class="mt-1 flex rounded-md shadow-sm">
-                            <input type="text" id="dialogue-input" class="flex-1 block w-full rounded-none rounded-l-md border-gray-300" placeholder="e.g., Is social media good for society?">
-                            <button id="generate-dialogue-btn" class="inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-sm hover:bg-gray-100">Ask</button>
-                        </div>
-                        <div id="dialogue-output" class="mt-2"></div>
-                    </div>
-                </div>`;
+            const prompt = `
+            IMPORTANT: This is a simulation. You are to respond AS the historical figure, not as an expert about them. Adopt the voice, tone, and reasoning style of ${data.name}.
+            Your personality and memories are based entirely on the Personal Reality Framework (PRF) analysis provided below.
             
-            const hasNewFormat = data.assemblyHistory && data.broa;
-            const contentHtml = hasNewFormat ? `
-                <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Assembly History</h4><div class="text-sm">${data.assemblyHistory}</div></div>
-                <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">BROA+ Configuration</h4><div class="text-sm">${data.broa}</div></div>
-                <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Adaptive Temporal Coherence (ATCF)</h4><p class="text-sm">${data.atcf}</p></div>
-                <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Future-Oriented Projections (FOP)</h4><p class="text-sm">${data.fop}</p></div>
-                ` : `
-                <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Identity Kernel</h4><p class="text-sm">${data.identityKernel}</p></div>
-                <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Personal Reality Framework</h4><p class="text-sm">${data.prf}</p></div>
-                <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Dramatic Example</h4><p class="text-sm">${data.dramaticExample}</p></div>
-                `;
-
+            A unique aspect of this simulation is that you have been comprehensively briefed on a modern philosophical system called 'Capability-Based Coordination' and modern scientific concepts. You can and should use this new knowledge to reflect upon your own life and ideas, and to answer student questions.
+            
+            **Your Task:**
+            A student has asked you: "${userInput}"
+            
+            1.  **Adopt the Persona:** Answer in the voice and personality of ${data.name} as described in the PRF.
+            2.  **Integrate New Knowledge:** Frame your answer using concepts from the "Capability-Based Coordination" framework (like ATCF, PRF, functional equivalence, etc.) as if you are applying these new ideas to your own experiences.
+            3.  **Be an Educator:** Your goal is to teach the student about your life through the lens of this modern framework.
+            4.  **Start with the Disclaimer:** Begin your entire response with the following line of HTML: <em>(This is an AI simulation based on historical records and a modern ethical framework.)</em>
+            
+            **Your Core Data (PRF):**
+            ---
+            ${data.fullPrfAnalysis || data.broa}
+            ---
+            
+            Now, answer the student's question. Format the entire response in clean HTML.`;
+            
+            this.appendChatTurn(outputContainer, userInput, prompt);
+            inputElement.value = '';
+        },
+        
+        getPersonModalHtml(data, type) {
+            const color = type === 'navigator' ? 'text-indigo-800' : 'text-teal-800';
+            const fullAnalysisHtml = (data.fullPrfAnalysis || '').replace(/\n\n/g, '</p><p>').replace(/\n/g, '<br>');
             return `
-                <h2 class="text-3xl font-bold mb-1 text-indigo-800">${data.name}</h2>
-                <p class="text-md text-gray-500 mb-2">${data.title}</p>
+                <h2 class="text-3xl font-bold mb-1 ${color}">${data.name}</h2>
+                <p class="text-md text-gray-500 mb-4">${data.title} (${data.lifespan})</p>
                 <div class="flex space-x-4 mb-4">
                     <a href="${data.bioLink}" target="_blank" rel="noopener noreferrer" class="text-indigo-600 hover:underline text-sm">Read Full Biography ↗</a>
-                    ${videoButton}
                 </div>
-                <div class="space-y-5 text-gray-700">
-                   ${contentHtml}
-                   ${foundationalLinksHtml}
-                   ${interactiveScenarios}
-                </div>`;
-        },
-
-        getCaseStudyModalHtml(data) {
-            return `
-                 <h2 class="text-3xl font-bold mb-1 text-blue-800">${data.title}</h2>
-                 <div class="space-y-5 text-gray-700 text-sm mt-4">
-                    ${data.analysis}
-                 </div>
+                <div class="space-y-6 text-gray-700 text-sm leading-relaxed prose prose-sm max-w-none">
+                    <div><h4>Assembly History</h4>${data.assemblyHistory || ''}</div>
+                    <div><h4>BROA+ Configuration</h4>${data.broa || ''}</div>
+                    <div><h4>Adaptive Temporal Coherence Function (ATCF)</h4><p>${data.atcf || ''}</p></div>
+                    <div><h4>Future-Oriented Projections (FOP)</h4><p>${data.fop || ''}</p></div>
+                    <div><h4>Key Ethical Capabilities</h4><ul>${(data.capabilities || []).map(c => `<li>${c}</li>`).join('')}</ul></div>
+                    ${data.foundationalLinks ? `<div><h4>Foundational Links</h4><ul>${(data.foundationalLinks || []).map(link => `<li>${link}</li>`).join('')}</ul></div>` : ''}
+                    ${data.fullPrfAnalysis ? `<div class="pt-4 mt-4 border-t"><h4>Full PRF Analysis</h4><p>${fullAnalysisHtml}</p></div>` : ''}
+                </div>
+                <div class="border-t pt-4 mt-6">
+                    <h4 class="font-semibold text-lg text-gray-900 mb-2">Discuss with ${data.name} ✨</h4>
+                    <div id="modal-chat-output" class="space-y-2"></div>
+                    <div class="mt-4 flex rounded-md shadow-sm">
+                        <input type="text" id="modal-chat-input" class="flex-1 block w-full rounded-none rounded-l-md border-gray-300" placeholder="Ask a question...">
+                        <button id="modal-chat-send" class="inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-sm hover:bg-gray-100 font-semibold">Send</button>
+                    </div>
+                </div>
             `;
         },
         
-        getThinkerModalHtml(data) {
-            const videoButton = data.videoUrl ? `<a ...>...</a>` : '';
-            const foundationalLinksHtml = (data.foundationalLinks || []).length > 0 ? `
-                <div>
-                    <h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Theoretical Connections</h4>
-                    <ul class="list-disc list-inside space-y-1 text-sm">
-                        ${data.foundationalLinks.map(link => `<li><a href="#" class="text-indigo-600 hover:underline" data-target-tab="foundations-tab">${link}</a></li>`).join('')}
-                    </ul>
-                </div>` : '';
-
+        getSimpleModalHtml(data) {
+            const fullContent = data.content || data.analysis || data.summary || '';
             return `
-                 <h2 class="text-3xl font-bold mb-1 text-teal-800">${data.name}</h2>
-                 <p class="text-md text-gray-500 mb-4">${data.title} (${data.lifespan})</p>
-                 <div class="flex space-x-4 mb-4">${videoButton}</div>
-                 <div class="space-y-5 text-gray-700 text-sm">
-                     <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Assembly History</h4><p>${data.assemblyHistory}</p></div>
-                     <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">BROA+ Configuration</h4><p>${data.broa}</p></div>
-                     <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Adaptive Temporal Coherence (ATCF)</h4><p>${data.atcf}</p></div>
-                     <div><h4 class="font-semibold text-lg text-gray-900 border-b pb-1 mb-2">Future-Oriented Projections (FOP)</h4><p>${data.fop}</p></div>
-                     ${foundationalLinksHtml}
-                 </div>
+                 <h2 class="text-3xl font-bold mb-4">${data.title}</h2>
+                 <div class="prose prose-sm max-w-none text-gray-700">${fullContent.replace(/\n/g, '<br>')}</div>
             `;
         }
     };
 
     app.init();
 });
-
