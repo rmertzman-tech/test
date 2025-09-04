@@ -49,7 +49,8 @@ const appData = {
         <p class="mt-2">These groups demonstrated <strong>Capability Equivalence</strong>. Planting a tree (a local, tangible act) and securing international funding (a global, abstract act) were functionally equivalent because both advanced the same shared network-goal[cite: 36, 656]. The movement's success shows how ethical authority can emerge from demonstrated competence in advancing collective objectives, creating sustainable, democratic, and effective social change[cite: 9, 769].</p>
     `
 },
-    
+
+        
 {
     title: "Dutch Water Boards: 800 Years of Network-Goal Coordination",
     summary: "The Dutch Water Boards ('waterschappen') are a historical testament to network-goal persistence, coordinating farmers, merchants, and experts around the shared goal of 'regional flood protection' for over eight centuries.",
@@ -62,6 +63,7 @@ const appData = {
             <li><strong>Merchants & Political Representatives</strong> provided the financial resources and regulatory frameworks necessary to fund and govern the system on a larger scale[cite: 745].</li>
         </ul>
         <p class="mt-2">A farmer noticing a weak spot in a local dike and an engineer designing a new pumping station were performing functionally equivalent actions—both were advancing the same, unambiguous network-goal of flood protection[cite: 36]. This system persisted because the shared objective remained non-negotiable, allowing the methods and technologies to adapt over centuries without breaking the cooperative framework[cite: 746].</p>
+    
     `
 }
     ],
