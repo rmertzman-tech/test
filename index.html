@@ -21,7 +21,7 @@
             </button>
         </div>
 
-        <div id="main-content" class="hidden">
+        <div id="app-container" class="hidden">
             <header class="text-center mb-10 relative">
                 <h1 class="text-4xl md:text-5xl font-bold text-gray-900">Ethical Cartography Lab</h1>
                 <p class="mt-2 text-lg text-gray-600">Ethics as a Practice of Cultivating Capabilities</p>
@@ -30,17 +30,20 @@
                 </button>
             </header>
 
-            <main>
-                <div class="mb-8 border-b border-gray-200">
-                    <nav class="flex flex-wrap -mb-px" aria-label="Tabs">
-                        <button id="navigators-tab" class="tab-btn px-3 py-2 font-medium text-sm rounded-t-md" aria-selected="true">Ethical Navigators</button>
-                        <button id="thinkers-tab" class="tab-btn px-3 py-2 font-medium text-sm rounded-t-md" aria-selected="false">Philosophers & Thinkers</button>
-                        <button id="comparison-tab" class="tab-btn px-3 py-2 font-medium text-sm rounded-t-md" aria-selected="false">Capability & Comparison Lab</button>
-                        <button id="resonance-tab" class="tab-btn px-3 py-2 font-medium text-sm rounded-t-md" aria-selected="false">Personal Resonance Lab</button>
-                        <button id="concepts-tab" class="tab-btn px-3 py-2 font-medium text-sm rounded-t-md" aria-selected="false">Core Concepts</button>
-                    </nav>
-                </div>
+            <div class="mb-8 border-b border-gray-200">
+                <nav class="flex flex-wrap -mb-px" aria-label="Tabs">
+                    <button id="navigators-tab" class="tab-btn px-3 py-2 font-medium text-sm rounded-t-md" aria-selected="true">Ethical Navigators</button>
+                    <button id="thinkers-tab" class="tab-btn px-3 py-2 font-medium text-sm rounded-t-md" aria-selected="false">Philosophers & Thinkers</button>
+                    <button id="concepts-tab" class="tab-btn px-3 py-2 font-medium text-sm rounded-t-md" aria-selected="false">Core Concepts</button>
+                    <button id="foundations-tab" class="tab-btn px-3 py-2 font-medium text-sm rounded-t-md" aria-selected="false">Foundations</button>
+                    <button id="casestudies-tab" class="tab-btn px-3 py-2 font-medium text-sm rounded-t-md" aria-selected="false">Case Studies</button>
+                    <button id="essays-tab" class="tab-btn px-3 py-2 font-medium text-sm rounded-t-md" aria-selected="false">Essays & Deeper Dives</button>
+                    <button id="comparison-tab" class="tab-btn px-3 py-2 font-medium text-sm rounded-t-md" aria-selected="false">Comparison Lab</button>
+                    <button id="resonance-tab" class="tab-btn px-3 py-2 font-medium text-sm rounded-t-md" aria-selected="false">Personal Resonance Lab</button>
+                </nav>
+            </div>
 
+            <main id="main-content-area">
                 <div id="navigators-section">
                     <h2 class="text-2xl font-bold mb-6 text-gray-900">Ethical Navigators in Action</h2>
                     <div id="profile-grid" class="card-container"></div>
@@ -50,7 +53,28 @@
                     <h2 class="text-2xl font-bold mb-6 text-gray-900">Foundational Philosophers & Scientists</h2>
                     <div id="thinker-grid" class="card-container"></div>
                 </div>
+
+                <div id="concepts-section" class="hidden">
+                     <h2 class="text-2xl font-bold mb-6 text-gray-900">Core Analytical Concepts</h2>
+                     <div id="concept-grid" class="card-container"></div>
+                </div>
+
+                <div id="foundations-section" class="hidden">
+                    <h2 class="text-2xl font-bold mb-4 text-gray-900">Theoretical Foundations</h2>
+                    <p id="disclaimer-text" class="text-sm text-gray-600 mb-6 max-w-3xl bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-r-lg"></p>
+                    <div id="foundation-grid" class="card-container"></div>
+                </div>
+
+                <div id="casestudy-section" class="hidden">
+                    <h2 class="text-2xl font-bold mb-6 text-gray-900">Case Studies in Action</h2>
+                    <div id="casestudy-grid" class="card-container"></div>
+                </div>
                 
+                <div id="essay-section" class="hidden">
+                    <h2 class="text-2xl font-bold mb-6 text-gray-900">Essays & Deeper Dives</h2>
+                    <div id="essay-grid" class="card-container"></div>
+                </div>
+
                 <div id="comparison-section" class="hidden">
                     <h2 class="text-2xl font-bold mb-4 text-gray-900">Capability & Comparison Lab</h2>
                     <p class="text-gray-600 mb-6 max-w-3xl">Explore "Functional Equivalence" by comparing any two figures side-by-side, or discover surprising connections by exploring a shared ethical capability.</p>
@@ -69,6 +93,12 @@
                         </div>
                         <button id="compare-figures-btn" class="mt-4 w-full bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-indigo-700 transition-colors">✨ Analyze Functional Equivalence</button>
                         <div id="comparison-output" class="mt-4"></div>
+                        <div id="comparison-chat-container" class="hidden mt-4">
+                            <div class="flex">
+                                <input type="text" id="comparison-chat-input" class="flex-1 block w-full rounded-none rounded-l-md border-gray-300 shadow-sm" placeholder="Ask a follow-up question...">
+                                <button id="comparison-send-btn" class="inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-sm hover:bg-gray-100 font-bold">Send</button>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="bg-white p-6 rounded-lg shadow-md mt-8">
@@ -91,55 +121,29 @@
                             ✨ Discover Role Models for Your Ethical Journey
                         </button>
                         <div id="counterparts-output" class="mt-4"></div>
+                         <div id="resonance-chat-container" class="hidden mt-4">
+                            <div class="flex">
+                                <input type="text" id="resonance-chat-input" class="flex-1 block w-full rounded-none rounded-l-md border-gray-300 shadow-sm" placeholder="Ask a follow-up question...">
+                                <button id="resonance-send-btn" class="inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-sm hover:bg-gray-100 font-bold">Send</button>
+                            </div>
+                        </div>
                     </div>
-                </div>
-
-                <div id="concepts-section" class="hidden">
-                     <h2 class="text-2xl font-bold mb-6 text-gray-900">Core Analytical Concepts</h2>
-                     <div id="concept-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
                 </div>
             </main>
         </div>
 
-        <div id="privacy-modal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-75 h-full w-full z-50 flex items-center justify-center p-4">
-            <div class="relative w-full max-w-2xl shadow-lg rounded-lg bg-white">
-                <div class="modal-content p-6">
-                    <h2 class="text-2xl font-bold text-gray-900 mb-4">Your Privacy & Psychological Safety</h2>
-                    <div class="text-gray-700 space-y-4 text-sm">
-                        <p>This tool is designed for deep, personal reflection. Before you begin, please review the following.</p>
-                        <div>
-                            <h3 class="font-semibold">1. Local Data Storage</h3>
-                            <p>All text you enter is saved only in your browser's local storage. It is not sent to any server and is not visible to anyone else. To resume your work, use the same computer and browser.</p>
-                        </div>
-                        <div>
-                            <h3 class="font-semibold">2. AI Analysis & API Key</h3>
-                            <p class="mb-2">To use the AI-powered features (marked with ✨), you need a Gemini API Key. When you use these features, your text is sent securely to Google's servers for processing and is not stored or used for training.</p>
-                            <div class="bg-gray-100 p-3 rounded-lg">
-                                <label for="api-key-input-modal" class="block text-sm font-medium text-gray-700">Enter your Gemini API Key</label>
-                                <input type="password" id="api-key-input-modal" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" placeholder="Enter your key here">
-                                <p class="text-xs text-gray-500 mt-1">You can get a free key from <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" class="text-indigo-600 hover:underline">Google AI Studio ↗</a>.</p>
-                            </div>
-                        </div>
-                         <div>
-                            <h3 class="font-semibold">3. Advice for Your Psychological Safety</h3>
-                             <ul class="list-disc list-inside mt-1 space-y-1">
-                                <li><strong>Be Mindful:</strong> You are in complete control of what you write.</li>
-                                <li><strong>Generalize If Needed:</strong> Consider describing sensitive experiences in general terms.</li>
-                                <li><strong>Protect Others' Privacy:</strong> Avoid using real names or identifying information of others.</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="mt-6 text-right">
-                        <button id="continue-btn" class="bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-indigo-700 transition-colors">I Understand & Continue</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <div id="settings-api-key-modal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-75 h-full w-full z-50 flex items-center justify-center p-4">
             <div class="relative w-full max-w-md shadow-lg rounded-lg bg-white p-6">
-                <h2 class="text-2xl font-bold text-gray-900 mb-4">Gemini API Key</h2>
-                <p class="text-gray-700 mb-4 text-sm">To use AI features, please provide your Gemini API Key. You can get a key from <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" class="text-indigo-600 hover:underline">Google AI Studio ↗</a>.</p>
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">Google Gemini API Key</h2>
+                <p class="text-gray-700 mb-4 text-sm">To use the AI features, the app needs a Google Gemini API key. It's free and easy to get:</p>
+                
+                <ol class="list-decimal list-inside text-sm text-gray-600 space-y-2 mb-4">
+                    <li>Go to <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" class="text-indigo-600 hover:underline font-semibold">Google AI Studio ↗</a>.</li>
+                    <li>Sign in with your Google Account.</li>
+                    <li>Click <strong class="font-semibold text-gray-800">"Get API key"</strong>, then <strong class="font-semibold text-gray-800">"Create API key"</strong>.</li>
+                    <li>Copy the new key and paste it in the field below.</li>
+                </ol>
+
                 <div>
                     <label for="api-key-input-settings" class="block text-sm font-medium text-gray-700">Your API Key</label>
                     <input type="password" id="api-key-input-settings" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
