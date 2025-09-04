@@ -1199,7 +1199,8 @@ Contemplative-Social Action Integration: Exceptional ability to coordinate inten
 Traditional-Modern Buddhist Synthesis: Sophisticated capacity for preserving essential Buddhist contemplative wisdom while adapting teaching methods for contemporary Western and international audiences, creating accessible frameworks that maintained depth while enabling cross-cultural understanding.
 Individual-Community Development Coordination: Advanced ability to support individual contemplative development while building sustainable spiritual communities that could serve both personal spiritual growth and broader social transformation through mindful living and compassionate action.
 Inter-Faith-Secular Dialogue Integration: Demonstrated capacity for engaging diverse religious traditions and secular contexts while maintaining authentic Buddhist identity and practice, creating frameworks for spiritual cooperation and shared contemplative understanding across cultural boundaries.`
-        },{
+        },
+        {
     name: "Roger Boisjoly",
     lifespan: "1938-2012",
     title: "A PRF Analysis of Engineering Ethics and Professional Moral Courage",
