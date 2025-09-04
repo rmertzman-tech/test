@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
             1.  **Personal Reality Framework (PRF):** Each person has a unique architecture for organizing experience (Beliefs, Rules, Ontology, Authenticity).
             2.  **Capability-Based Coordination & Functional Equivalence:** People can coordinate by developing "functionally equivalent" capabilities to achieve shared goals, even with different beliefs.
             3.  **Adaptive Temporal Coherence Function (ATCF):** A measure of a coherent identity over time.
-            4.  **Bootstrap Authority:** Normative authority emerges from demonstrated competence.
+            4.  **Bootstrap Authority:** Normative legitimacy emerges from demonstrated competence.
             5.  **Two Operating Systems:** People can use OS1 (Truth-Commitment) for personal meaning and OS2 (Capability-Coordination) for practical cooperation.
         `,
 
@@ -369,11 +369,19 @@ document.addEventListener('DOMContentLoaded', () => {
         getPersonModalHtml(data, type) {
             const color = type === 'navigator' ? 'text-indigo-800' : 'text-teal-800';
             const fullAnalysisHtml = (data.fullPrfAnalysis || '').replace(/\n\n/g, '</p><p>').replace(/\n/g, '<br>');
+            
+            // This new line creates the video link button ONLY if a videoUrl exists
+            const videoLinkHtml = data.videoUrl ? `<a href="${data.videoUrl}" target="_blank" rel="noopener noreferrer" class="text-indigo-600 hover:underline text-sm">Watch Video ↗</a>` : '';
+        
             return `
                 <h2 class="text-3xl font-bold mb-1 ${color}">${data.name}</h2>
                 <p class="text-md text-gray-500 mb-4">${data.title} (${data.lifespan})</p>
                 <div class="flex space-x-4 mb-4">
                     <a href="${data.bioLink}" target="_blank" rel="noopener noreferrer" class="text-indigo-600 hover:underline text-sm">Read Full Biography ↗</a>
+                    
+                    <!-- The new video link will appear here -->
+                    ${videoLinkHtml}
+        
                 </div>
                 <div class="space-y-6 text-gray-700 text-sm leading-relaxed prose prose-sm max-w-none">
                     <div><h4>Assembly History</h4>${data.assemblyHistory || ''}</div>
