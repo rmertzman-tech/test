@@ -380,19 +380,70 @@ Movement Coordination Under Opposition: Demonstrated capacity for maintaining Ca
             foundationalLinks: ["Cross-Scale Information Organization"]
         },
         {
-            name: "Sophie Scholl",
-            lifespan: "1921-1943",
-            title: "The Conscientious Resister",
-            summary: "A member of the White Rose non-violent resistance group in Nazi Germany, executed for distributing anti-war leaflets.",
-            bioLink: "https://www.britannica.com/biography/Sophie-Scholl",
-            videoUrl: null,
-            assemblyHistory: "<p>Raised in a Christian family opposed to Nazism, her framework was shaped by a profound dissonance between state propaganda and her personal ethics. An initial period in the Hitler Youth awakened her to this conflict, leading her to join the White Rose resistance group with her brother Hans.</p>",
-            broa: "<p><strong>Beliefs:</strong> A principled conscience and profound moral courage, believing ordinary citizens had a duty to speak out against evil. <strong>Rules:</strong> Act according to conscience, regardless of personal risk. Use non-violent means to awaken the public. <strong>Ontology:</strong> A moral reality that transcends state power. <strong>Authenticity:</strong> Aligning one's actions with one's deepest moral convictions, even unto death.</p>",
-            atcf: "Her calm defiance during her trial for treason, where she refused to recant her beliefs, was a dramatic example of her commitment to her principles, demonstrating perfect coherence between her past development and her final actions.",
-            fop: "Her actions were aimed at a future Germany free from tyranny. Her legacy serves as an enduring projection of the power of individual conscience against oppressive regimes.",
-            fullPrfAnalysis: "Sophie Scholl's PRF was defined by a principled conscience and profound moral courage. Raised in a Christian family opposed to Nazism, she believed ordinary citizens had a duty to speak out against evil. Her reality was the oppressive Nazi regime. After an initial period in the Hitler Youth, she experienced a profound dissonance between Nazi propaganda and her Christian ethics, which awakened her resistance. She acted with the hope of a future Germany free from tyranny. Her calm defiance during her trial for treason, where she refused to recant her beliefs, was a dramatic example of her commitment to her principles.",
-            capabilities: ["Capability for Youth Activism and Dissent", "Capability for Articulating Moral Conscience", "Capability for Ultimate Sacrifice for Principle"]
-        },
+    name: "Sophie Scholl",
+    lifespan: "1921-1943",
+    title: "A PRF Analysis of Moral Courage and Principled Resistance",
+    summary: "A German student and member of the White Rose resistance group whose PRF shows a powerful transformation from youthful idealism within the Nazi system to an unwavering commitment to resistance based on conscience and human dignity.",
+    bioLink: "https://www.britannica.com/biography/Sophie-Scholl",
+    videoUrl: null,
+    assemblyHistory: `<p><strong>Initial Nazi Enthusiasm (1933-1937):</strong> Her PRF was initially shaped by a Protestant upbringing and an idealistic commitment to the collective purpose offered by the League of German Girls (BDM).</p><p><strong>Critical Awakening (1937-1942):</strong> Influenced by her family's liberal democratic values and exposure to forbidden literature, she experienced a growing disillusionment with the Nazi regime's brutality. Her studies in biology and philosophy at the University of Munich provided the intellectual tools for a systematic critique of totalitarianism.</p><p><strong>Principled Resistance (1942-1943):</strong> Joining her brother Hans in the White Rose, she translated her moral convictions into direct, non-violent action by co-writing and distributing anti-Nazi leaflets. Her calm defiance during her trial and subsequent execution cemented her legacy as a martyr for freedom of conscience.</p>`,
+    broa: `<p><strong>Beliefs:</strong> Every human possesses an inherent dignity that transcends state power. Truth and intellectual honesty are fundamental moral obligations. Individual conscience is the ultimate authority for moral judgment.</p><p><strong>Rules:</strong> Act according to conscience, regardless of personal risk. Use non-violent, intellectual, and moral persuasion to resist injustice. Expose political lies and propaganda with factual truth.</p><p><strong>Ontology:</strong> A moral reality grounded in Christian ethics and universal human values exists independently of and holds authority over political power. Individual moral choices have an eternal significance.</p><p><strong>Authenticity:</strong> The unwavering alignment of one's actions with one's deepest moral convictions, even in the face of death.</p>`,
+    atcf: "Demonstrated remarkable and rapid temporal coherence, transforming from an enthusiastic participant in the Nazi youth movement to a principled opponent. Her final actions at her trial were in perfect alignment with her fully developed convictions, showing a complete integration of her moral awakening with her ultimate sacrifice.",
+    fop: "Her actions were oriented toward a future Germany free from tyranny and grounded in human dignity. Her legacy serves as an enduring projection of the power of individual and collective conscience to bear witness against oppressive regimes, aiming to inspire future generations to similar moral courage.",
+    capabilities: ["Capability for Youth Activism and Dissent", "Capability for Articulating Moral Conscience", "Capability for Ultimate Sacrifice for Principle", "Moral-Political Integration"],
+    fullPrfAnalysis: `
+        <h4 class="font-bold mb-2">Assembly History: From Hitler Youth Enthusiasm to Resistance Martyrdom</h4>
+        
+        <h5 class="font-semibold mt-3 mb-1">Early Formation and Initial Nazi Enthusiasm (1921-1937 CE)</h5>
+        <p class="mb-2">Sophie Scholl's Personal Reality Framework emerged from the intersection of German middle-class Protestant values, Nazi ideological indoctrination, and strong family intellectual traditions. Born in Forchtenberg to a liberal-minded mayor, her PRF initially developed within contexts of moral earnestness and civic responsibility. Her initial enthusiasm for the Bund Deutscher Mädel (League of German Girls) demonstrated a capacity for idealistic commitment to collective causes, providing direct experience of how totalitarian movements could exploit genuine human needs for belonging and purpose.</p>
+        
+        <h5 class="font-semibold mt-3 mb-1">Disillusionment and Critical Awakening (1937-1940 CE)</h5>
+        <p class="mb-2">Her gradual recognition of Nazi brutality required a fundamental reconstruction of her worldview. This was heavily influenced by her father's anti-Nazi views and the family's access to forbidden literature. Her mandatory labor service provided direct experience of Nazi institutional control, while her Protestant faith provided resources for moral resistance, enabling a systematic critique of Nazi ideology through Christian ethical principles.</p>
+        
+        <h5 class="font-semibold mt-3 mb-1">University Education and Intellectual Formation (1940-1942 CE)</h5>
+        <p class="mb-2">Her biology and philosophy studies at Ludwig Maximilian University in Munich provided systematic intellectual development and the social context for meeting like-minded students. Her introduction to the White Rose resistance group through her brother Hans provided a framework for translating individual moral conviction into collective political action. Her engagement with Christian theology and German philosophy provided the theoretical foundations for her resistance work.</p>
+
+        <h5 class="font-semibold mt-3 mb-1">Active Resistance and Final Sacrifice (1942-1943 CE)</h5>
+        <p class="mb-2">Her participation in writing, producing, and distributing anti-Nazi leaflets demonstrated her capacity for translating moral conviction into effective political communication. Her work to extend the White Rose network required a sophisticated understanding of security and organization. Her behavior during her arrest, interrogation, and show trial demonstrated an exceptional integration of moral conviction with practical courage, providing a final, powerful testimony to her unwavering commitment to truth and human dignity.</p>
+        
+        <h4 class="font-bold mb-2 mt-4">Personal Reality Framework Configuration</h4>
+        <h5 class="font-semibold mt-3 mb-1">BROA+ (Beliefs, Rules, Ontological Commitments, Authenticity Criteria)</h5>
+        <p class="mb-2"><strong>Belief System (B):</strong></p>
+        <ul class="list-disc list-inside space-y-1 text-sm">
+            <li><strong>Human Dignity and Universal Moral Law:</strong> A profound conviction that every human possesses inherent dignity that cannot be subordinated to political ideology, making individual conscience the ultimate moral authority.</li>
+            <li><strong>Truth and Intellectual Honesty:</strong> A core understanding that truth-seeking is a fundamental human obligation that cannot be compromised for political advantage or social conformity.</li>
+            <li><strong>Individual Responsibility and Collective Action:</strong> A systematic belief that individual moral obligation extends to collective political responsibility for opposing systematic injustice.</li>
+            <li><strong>Christian Faith and Moral Resistance:</strong> An integration of Protestant Christianity with active political opposition, understanding that authentic faith requires a practical commitment to justice.</li>
+        </ul>
+        <p class="mt-2 mb-2"><strong>Rule System (R):</strong></p>
+        <ul class="list-disc list-inside space-y-1 text-sm">
+            <li><strong>Conscience-Based Moral Decision Making:</strong> Consistently apply individual moral judgment informed by Christian ethics and rational reflection, rather than political authority.</li>
+            <li><strong>Truth-Telling and Anti-Propaganda Activity:</strong> Actively commit to exposing political lies through the systematic distribution of factual information and moral critique.</li>
+            <li><strong>Solidarity and Collaborative Resistance:</strong> Systematically coordinate individual moral conviction with collective political action through participation in resistance groups.</li>
+            <li><strong>Non-Violent Resistance and Moral Witness:</strong> Consistently apply non-violent methods of opposition that prioritize moral integrity and intellectual persuasion over violent confrontation.</li>
+        </ul>
+        <p class="mt-2 mb-2"><strong>Ontological Commitments (O):</strong></p>
+        <ul class="list-disc list-inside space-y-1 text-sm">
+            <li><strong>Truth-Power Relationship:</strong> A framework where truth possesses ultimate authority over political claims, making intellectual honesty and critique of authority essential.</li>
+            <li><strong>Temporal-Eternal Moral Significance:</strong> A conviction that individual moral choices have both immediate political consequences and eternal moral significance, making principled resistance meaningful regardless of tactical success.</li>
+            <li><strong>Individual-Community Responsibility:</strong> An understanding that personal moral development and community welfare are mutually enhancing through a shared commitment to human dignity and truth.</li>
+        </ul>
+        <p class="mt-2 mb-2"><strong>Authenticity Criteria (A+):</strong></p>
+        <ul class="list-disc list-inside space-y-1 text-sm">
+            <li><strong>Moral-Political Integration:</strong> Authentic ethical life required coordinating individual moral conviction with active political engagement against injustice.</li>
+            <li><strong>Truth-Courage Synthesis:</strong> Genuine integrity demanded coordinating systematic truth-seeking with the practical courage to act on one's convictions despite personal danger.</li>
+            <li><strong>Individual-Collaborative Balance:</strong> Authentic resistance involved coordinating personal moral development with effective collective action, maintaining both personal integrity and collaborative solidarity.</li>
+        </ul>
+
+        <h4 class="font-bold mb-2 mt-4">Coordination Capabilities (C)</h4>
+        <ul class="list-disc list-inside space-y-1 text-sm">
+            <li><strong>Moral-Political Integration:</strong> Exceptional ability to coordinate individual ethical development with effective collective political resistance, translating moral conviction into practical action.</li>
+            <li><strong>Intellectual-Practical Resistance:</strong> Sophisticated capacity for coordinating a systematic critique of totalitarian ideology with practical resistance activity like leaflet campaigns.</li>
+            <li><strong>Individual-Community Action:</strong> Advanced ability to coordinate personal moral development with collaborative resistance organizing while maintaining both individual conscience and collective solidarity.</li>
+            <li><strong>Temporal-Eternal Significance:</strong> Demonstrated capacity for coordinating immediate political action with ultimate moral principles, maintaining both practical effectiveness and spiritual integrity.</li>
+        </ul>
+    `
+},  
         {
             name: "Oskar Schindler",
             lifespan: "1908–1974",
