@@ -2039,17 +2039,70 @@ Present-Future Consequence Integration: Demonstrated capacity for coordinating a
             videoUrl: null
         },
         {
-            name: "Kwame Anthony Appiah",
-            lifespan: "1954-Present",
-            title: "The Rooted Cosmopolitan",
-            summary: "A British-Ghanaian philosopher whose work on identity, culture, and cosmopolitanism argues for a world where universal moral concern coexists with respect for particular cultural identities.",
-            assemblyHistory: "His unique bicultural upbringing—son of an Asante royal and politician in Ghana and a British aristocrat and author in England—provided him with a direct, lived experience of navigating multiple identities. His education at Cambridge grounded him in the analytical tradition of philosophy, which he then applied to questions of race, culture, and postcolonial identity.",
-            broa: "His BROA+ is defined by 'rooted cosmopolitanism.' Beliefs: We have moral obligations to all human beings, but our particular identities and cultural affiliations also have real value. Identity is not an essence but something we choose and construct from available cultural 'scripts.' Rules: Engage in respectful dialogue across cultures; respect individual choices about identity. Ontology: Race is a social construct, not a biological reality, but it has real-world effects. Authenticity: A life that coherently integrates one's multiple cultural affiliations and moral commitments, embracing complexity over purity.",
-            atcf: "Appiah's life and work show a consistent effort to bridge divides—between cultures, between academic philosophy and public discourse, and between universal ethics and particular identities. He has maintained a coherent philosophical project while adapting to different institutional and cultural contexts in Ghana, the UK, and the US.",
-            fop: "He projects a future of global conversation, where people can learn from different cultural traditions without abandoning their own. His work aims to provide the philosophical tools for a globalized world to manage cultural difference peacefully and productively.",
-            capabilities: ["Capability for Cross-Cultural Translation", "Capability for Public Intellectual Integration", "Capability for Deconstructing Essentialist Identities"],
-            videoUrl: null
-        }
+    name: "Kwame Anthony Appiah",
+    lifespan: "1954-present",
+    title: "A PRF Analysis of Cosmopolitan Ethics and Cultural Identity",
+    summary: "A philosopher whose unique bicultural heritage and analytical rigor led him to develop 'rooted cosmopolitanism,' a framework for coordinating universal moral obligations with respect for particular cultural identities in a globalized world.",
+    bioLink: "https://en.wikipedia.org/wiki/Kwame_Anthony_Appiah",
+    videoUrl: null,
+    assemblyHistory: `<p><strong>Unprecedented Cultural Synthesis (1954-1981):</strong> Born in London to an Asante royal and Ghanaian politician and a British aristocrat and author, his PRF was forged by direct experience navigating multiple cultural worlds. His education at Cambridge grounded him in analytical philosophy, providing the tools to systematically investigate the complex questions of identity he lived.</p><p><strong>Identity & Race Deconstruction (1981-2002):</strong> His early academic work deconstructed the biological basis for race while affirming its powerful social reality. He integrated African literature and philosophy into mainstream philosophical discourse, challenging the essentialist assumptions of both Western and postcolonial theory.</p><p><strong>Cosmopolitan Ethics (2002-present):</strong> In works like *Cosmopolitanism*, he systematically developed his vision of "rooted cosmopolitanism." As a prominent public intellectual, he has applied this framework to contemporary issues of honor, cultural change, and moral progress, becoming a crucial voice in global ethical debates.</p>`,
+    broa: `<p><strong>Beliefs:</strong> All humans share a moral status deserving equal concern (universalism), but our particular cultural identities and affiliations have real value and are essential to a good life (particularity). Identity is not a fixed essence but is composed of multiple, overlapping, and chosen "scripts."</p><p><strong>Rules:</strong> Engage in respectful dialogue across cultures to foster mutual learning. Support individual freedom to choose and shape cultural identities. Base moral progress on conversation and cultural evolution, not imposition.</p><p><strong>Ontology:</strong> Race is a social construct, not a biological reality, but it has real-world effects. Cultural value is real but not essentialist; cultures are not pure, monolithic entities.</p><p><strong>Authenticity:</strong> A life that coherently integrates one's multiple cultural affiliations with universal moral commitments, embracing complexity and conversation over purity and dogma.</p>`,
+    atcf: "Successfully integrated his postcolonial Ghanaian heritage, Asante royal culture, and British analytical training into a coherent philosophical identity. He has consistently applied his core cosmopolitan principles across diverse fields, from literary theory to applied ethics, while maintaining his role as a cultural and intellectual bridge-builder.",
+    fop: "His work is oriented toward establishing a philosophical foundation for a peaceful and productive globalized future. He projects a world where people can learn from different cultural traditions without abandoning their own, using the tools of 'rooted cosmopolitanism' to manage cultural difference through conversation, not conflict.",
+    capabilities: ["Capability for Cross-Cultural Translation", "Capability for Public Intellectual Integration", "Capability for Deconstructing Essentialist Identities", "Traditional-Modern Cultural Bridge-Building"],
+    fullPrfAnalysis: `
+        <h4 class="font-bold mb-2">Assembly History: From Postcolonial Ghana to Global Philosophy</h4>
+
+        <h5 class="font-semibold mt-3 mb-1">Early Formation and Unprecedented Cultural Synthesis (1954-1972 CE)</h5>
+        <p class="mb-2">Kwame Anthony Appiah's Personal Reality Framework emerged from the unprecedented cultural synthesis of postcolonial Ghana, British intellectual traditions, and Asante royal heritage. Born in London to Joe Appiah, a Ghanaian lawyer from an Asante royal family, and Peggy Cripps, a British aristocrat, his PRF was shaped by direct experience navigating multiple cultural worlds during Ghana's independence period. His childhood in Kumasi provided deep immersion in Asante culture, while his education at Lancing College and Cambridge University provided rigorous training in Western analytical philosophy. This created the foundational patterns for his later work on coordinating universal dignity with respect for cultural particularity.</p>
+
+        <h5 class="font-semibold mt-3 mb-1">Cambridge Formation and Analytical Philosophy Mastery (1972-1981 CE)</h5>
+        <p class="mb-2">His training at Clare College, Cambridge, provided a rigorous foundation in analytical philosophy, which he began to apply to questions of identity, race, and culture. His PhD work on probability theory honed his technical skills, while his engagement with African philosophical traditions created an awareness of how diverse intellectual traditions could contribute to a universal philosophical conversation, challenging Western assumptions about rationality and cultural development.</p>
+
+        <h5 class="font-semibold mt-3 mb-1">Academic Development and Identity Theory Innovation (1981-2002 CE)</h5>
+        <p class="mb-2">His groundbreaking early work deconstructed the concept of race, using philosophical and historical analysis to show that racial categories lack a biological foundation while acknowledging their powerful social reality. He became a key figure in integrating African literature and philosophy into the mainstream, creating frameworks for cross-cultural dialogue that avoided both cultural imperialism and essentialist nationalism. His innovative work on identity argued that identities are multiple, chosen, and socially constructed from cultural "scripts" rather than being fixed essences.</p>
+
+        <h5 class="font-semibold mt-3 mb-1">Public Philosophy and Cosmopolitan Ethics Development (2002-present CE)</h5>
+        <p class="mb-2">Appiah systematically developed his ethical framework in major works like *Cosmopolitanism: Ethics in a World of Strangers*. This work provides a comprehensive framework for coordinating universal moral obligations with particular cultural attachments, arguing that global citizenship and local belonging can and should enhance each other. As a prominent public intellectual, he has applied these insights to contemporary issues in works like *The Honor Code*, exploring how cultural practices change and how moral progress occurs through cross-cultural dialogue and internal cultural evolution.</p>
+
+        <h4 class="font-bold mb-2 mt-4">Personal Reality Framework Configuration</h4>
+        <h5 class="font-semibold mt-3 mb-1">BROA+ (Beliefs, Rules, Ontological Commitments, Authenticity Criteria)</h5>
+        <p class="mb-2"><strong>Belief System (B):</strong></p>
+        <ul class="list-disc list-inside space-y-1 text-sm">
+            <li><strong>Cosmopolitan Universalism and Cultural Particularity:</strong> A profound conviction that all humans share a moral status deserving equal concern, but this universalism must be realized through respect for particular cultural attachments, not a global monoculture.</li>
+            <li><strong>Identity Multiplicity and Chosen Belonging:</strong> A core understanding that identities are multiple, overlapping, and chosen, not fixed essences. This allows for authentic participation in multiple cultural traditions.</li>
+            <li><strong>Cultural Value Without Essentialism:</strong> A systematic belief that cultures have genuine value without being pure or monolithic, making cultural appreciation compatible with cultural criticism and cross-cultural learning.</li>
+            <li><strong>Moral Progress Through Cross-Cultural Dialogue:</strong> An integration of the understanding that human morality can improve over time through respectful engagement, dialogue, and practical experience with diverse ways of life.</li>
+        </ul>
+        <p class="mt-2 mb-2"><strong>Rule System (R):</strong></p>
+        <ul class="list-disc list-inside space-y-1 text-sm">
+            <li><strong>Universal Moral Concern with Cultural Sensitivity:</strong> Consistently apply universal principles of human dignity through careful attention to cultural context and local knowledge.</li>
+            <li><strong>Identity Choice and Cultural Participation:</strong> Actively support individual freedom to choose and shape cultural identities while maintaining respect for cultural traditions and communities.</li>
+            <li><strong>Cross-Cultural Dialogue and Mutual Learning:</strong> Systematically engage in dialogue across cultural boundaries that seeks mutual understanding rather than domination or relativism.</li>
+            <li><strong>Public Philosophy and Democratic Engagement:</strong> Consistently translate complex philosophical insights into accessible public discourse to serve democratic deliberation.</li>
+        </ul>
+        <p class="mt-2 mb-2"><strong>Ontological Commitments (O):</strong></p>
+        <ul class="list-disc list-inside space-y-1 text-sm">
+            <li><strong>Universal-Particular Human Dignity:</strong> An understanding that humans share a fundamental moral status that is expressed through diverse cultural forms.</li>
+            <li><strong>Individual-Community Identity Formation:</strong> A framework where personal identity and community culture are mutually enhancing through chosen belonging and respectful participation.</li>
+            <li><strong>Reason-Culture Integration:</strong> A conviction that rational investigation and cultural wisdom are not opposed but are coordinated through practical engagement and dialogue.</li>
+        </ul>
+        <p class="mt-2 mb-2"><strong>Authenticity Criteria (A+):</strong></p>
+        <ul class="list-disc list-inside space-y-1 text-sm">
+            <li><strong>Universal-Cultural Balance:</strong> Authentic moral philosophy requires coordinating universal human dignity with respectful attention to cultural particularity, avoiding both cultural imperialism and moral relativism.</li>
+            <li><strong>Individual-Community Identity Integration:</strong> Genuine personal identity demands coordinating individual choice with cultural belonging, embracing both personal freedom and community continuity.</li>
+            <li><strong>Philosophical-Public Synthesis:</strong> Authentic intellectual achievement involves coordinating rigorous philosophical analysis with accessible public communication that can serve democratic deliberation.</li>
+        </ul>
+
+        <h4 class="font-bold mb-2 mt-4">Coordination Capabilities (C)</h4>
+        <ul class="list-disc list-inside space-y-1 text-sm">
+            <li><strong>Cross-Cultural-Philosophical Integration:</strong> Exceptional ability to coordinate systematic philosophical analysis with sensitive cross-cultural understanding, maintaining both intellectual rigor and cultural humility.</li>
+            <li><strong>Identity-Universality Synthesis:</strong> Sophisticated capacity for coordinating the experience of multiple cultural identities with a commitment to cosmopolitan moral principles.</li>
+            <li><strong>Academic-Public Philosophy Coordination:</strong> Advanced ability to coordinate rigorous scholarly investigation with accessible public intellectual engagement.</li>
+            <li><strong>Traditional-Modern Cultural Bridge-Building:</strong> Demonstrated capacity for coordinating respect for traditional cultural wisdom with engagement with modern institutional arrangements and global challenges.</li>
+        </ul>
+    `
+}
     ],
     concepts: [
         {
