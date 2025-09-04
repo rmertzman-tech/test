@@ -1016,6 +1016,7 @@ Abstract-Concrete Reasoning Synthesis: Sophisticated capacity for coordinating s
 Individual-Institutional Academic Navigation: Advanced ability to build successful academic career while challenging institutional structures and philosophical orthodoxies, creating space for feminist philosophical development while maintaining scholarly credibility and institutional influence.
 Interdisciplinary-Disciplinary Coordination: Demonstrated capacity for engaging multiple academic disciplines while maintaining philosophical identity and theoretical coherence, building care ethics through coordination with empirical research while preserving philosophical analytical methods and systematic approach.`
         },
+        
 {
     name: "Roger Boisjoly",
     lifespan: "1938-2012",
@@ -1082,7 +1083,8 @@ Interdisciplinary-Disciplinary Coordination: Demonstrated capacity for engaging 
             <li><strong>Present-Future Safety Advocacy:</strong> Demonstrated capacity for coordinating immediate technical work with long-term safety implications.</li>
         </ul>
     `
-}
+},
+        
         {
             name: "Wangari Maathai",
             lifespan: "1940-2011",
