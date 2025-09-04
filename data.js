@@ -1302,7 +1302,7 @@ Inter-Faith-Secular Dialogue Integration: Demonstrated capacity for engaging div
             <li><strong>Present-Future Safety Advocacy:</strong> Demonstrated capacity for coordinating immediate technical work with long-term safety implications.</li>
         </ul>
     `
-        }
+        },
         
     ],
     thinkers: [
