@@ -6,16 +6,19 @@ const appData = {
             title: "Cross-Scale Information Organization",
             summary: "Establishes that normative reasoning in logic and ethics operates through universal information organization principles validated across biological, technological, and entertainment media systems.",
             keyConcepts: ["Capability-Based Propositions", "Temporal Coherence Functions", "Cross-Scale Markup Organization"]
+            paperUrl: null
         },
         {
             title: "Capability-Based Coordination & Bootstrap Authority",
             summary: "Argues that normative authority emerges from the practical necessity of temporal agency—the 'bootstrap resolution'. It enables coordination across diverse Personal Reality Frameworks through universal principles.",
             keyConcepts: ["Bootstrap Resolution of Normative Authority", "Personal Reality Framework (PRF)", "Capability-Based Coordination"]
+            paperUrl: "https://rmertzman-tech.github.io/CRC-Bootstrap-Normative-Authority-essay/"
         },
         {
             title: "Capability-Based Coordination in Practice",
             summary: "Analyzes the NFL's CTE crisis as a real-world example of multi-stakeholder coordination failure and transformation, illustrating 'capability equivalence' and 'bootstrap authority' in action.",
             keyConcepts: ["Capability Equivalence", "Network-Goal Coordination", "Bootstrap Authority"]
+            paperUrl: null
         }
     ],
 
