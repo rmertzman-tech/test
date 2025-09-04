@@ -1200,6 +1200,7 @@ Traditional-Modern Buddhist Synthesis: Sophisticated capacity for preserving ess
 Individual-Community Development Coordination: Advanced ability to support individual contemplative development while building sustainable spiritual communities that could serve both personal spiritual growth and broader social transformation through mindful living and compassionate action.
 Inter-Faith-Secular Dialogue Integration: Demonstrated capacity for engaging diverse religious traditions and secular contexts while maintaining authentic Buddhist identity and practice, creating frameworks for spiritual cooperation and shared contemplative understanding across cultural boundaries.`
         },
+        
         {
     name: "Roger Boisjoly",
     lifespan: "1938-2012",
@@ -1266,7 +1267,8 @@ Inter-Faith-Secular Dialogue Integration: Demonstrated capacity for engaging div
             <li><strong>Present-Future Safety Advocacy:</strong> Demonstrated capacity for coordinating immediate technical work with long-term safety implications.</li>
         </ul>
     `
-},
+        }
+        
     ],
     thinkers: [
         {
