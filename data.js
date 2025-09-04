@@ -33,7 +33,22 @@ const appData = {
                 </ul>
                 <p class="mt-2">These groups demonstrated <strong>Capability Equivalence</strong>. They used different methods (testimony, research, reporting) but all advanced the same shared objective. Their coordination was not based on agreeing on a single method, but on recognizing that their different capabilities were functionally equivalent in pursuing the network goal. This case study shows how ethical authority can emerge from demonstrated competence and how diverse groups can achieve powerful coordination without needing to abandon their unique approaches.</p>
             `
-        }
+        },
+        
+{
+    title: "The Green Belt Movement: A Study in Ecological Coordination",
+    summary: "Wangari Maathai's Green Belt Movement in Kenya illustrates how a genuine network-goal ('environmental sustainability and resilience') can coordinate diverse stakeholders—from rural women to international bodies—through functionally equivalent capabilities.",
+    analysis: `
+        <p class="mb-2">The Green Belt Movement, founded by Wangari Maathai, serves as a powerful example of successful, long-term network-goal coordination[cite: 3]. Unlike many environmental coalitions that fragment when individual interests diverge, the Green Belt Movement united diverse actors around the shared network-goal of <strong>'environmental sustainability and community empowerment.'</strong></p>
+        <p class="mb-2">This was a genuine network-goal because different stakeholders could advance it using their unique, authentic capabilities without conflict:</p>
+        <ul class="list-disc list-inside space-y-2 mt-2 text-sm">
+            <li><strong>Rural Women & Farmers</strong> contributed through sustainable land management, tree planting, and applying traditional ecological knowledge. Their lived experience gave them <strong>Bootstrap Authority</strong> on local environmental issues[cite: 54].</li>
+            <li><strong>Scientists & Researchers</strong> contributed by providing ecological data, monitoring biodiversity, and validating the environmental impact of the conservation efforts[cite: 651].</li>
+            <li><strong>Government Agencies & International Bodies</strong> contributed through policy frameworks, funding mechanisms, and technical support, integrating the grassroots movement into national and global sustainability efforts[cite: 652, 653].</li>
+        </ul>
+        <p class="mt-2">These groups demonstrated <strong>Capability Equivalence</strong>. Planting a tree (a local, tangible act) and securing international funding (a global, abstract act) were functionally equivalent because both advanced the same shared network-goal[cite: 36, 656]. The movement's success shows how ethical authority can emerge from demonstrated competence in advancing collective objectives, creating sustainable, democratic, and effective social change[cite: 9, 769].</p>
+    `
+}
     ],
 
     essays: [
