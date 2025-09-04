@@ -28,10 +28,16 @@ document.addEventListener('DOMContentLoaded', () => {
             this.setupEventListeners();
         },
 
+        // UPDATED FUNCTION
         loadApiKey() {
-            const savedKey = localStorage.getItem('geminiApiKey');
-            if (savedKey) {
-                this.apiKey = savedKey;
+            try {
+                // This 'try...catch' block prevents the app from crashing if localStorage is blocked.
+                const savedKey = localStorage.getItem('geminiApiKey');
+                if (savedKey) {
+                    this.apiKey = savedKey;
+                }
+            } catch (e) {
+                console.error("Could not access localStorage. This is expected in some private browsing modes.", e);
             }
         },
         
