@@ -370,7 +370,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const color = type === 'navigator' ? 'text-indigo-800' : 'text-teal-800';
             const fullAnalysisHtml = (data.fullPrfAnalysis || '').replace(/\n\n/g, '</p><p>').replace(/\n/g, '<br>');
             
-            // This new line creates the video link button ONLY if a videoUrl exists
+            // This logic creates the video link button ONLY if a videoUrl exists
             const videoLinkHtml = data.videoUrl ? `<a href="${data.videoUrl}" target="_blank" rel="noopener noreferrer" class="text-indigo-600 hover:underline text-sm">Watch Video ↗</a>` : '';
         
             return `
@@ -378,10 +378,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <p class="text-md text-gray-500 mb-4">${data.title} (${data.lifespan})</p>
                 <div class="flex space-x-4 mb-4">
                     <a href="${data.bioLink}" target="_blank" rel="noopener noreferrer" class="text-indigo-600 hover:underline text-sm">Read Full Biography ↗</a>
-                    
-                    <!-- The new video link will appear here -->
                     ${videoLinkHtml}
-        
                 </div>
                 <div class="space-y-6 text-gray-700 text-sm leading-relaxed prose prose-sm max-w-none">
                     <div><h4>Assembly History</h4>${data.assemblyHistory || ''}</div>
@@ -414,3 +411,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
     app.init();
 });
+
