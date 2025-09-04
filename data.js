@@ -19,51 +19,51 @@ const appData = {
         }
     ],
 
-    caseStudies: [
-        {
-            title: "The NFL's CTE Crisis: A Study in Coordination",
-            summary: "The shift from the NFL's monopolistic control to a distributed network of scientists, families, and media illustrates how diverse stakeholders can coordinate through 'capability equivalence' to advance a shared goal: establishing truth and preventing harm.",
-            analysis: `
-                <p class="mb-2">The NFL's chronic traumatic encephalopathy (CTE) crisis serves as a powerful real-world example of the principles outlined in this lab. Initially, the NFL operated with a monopolistic goal: protecting the league's institutional interests. This failed to align with other stakeholders.</p>
-                <p class="mb-2">A transformation occurred when a diverse network of actors began to coordinate around a shared network-goal: <strong>'establishing the truth about CTE and preventing future harm.'</strong></p>
-                <ul class="list-disc list-inside space-y-2 mt-2 text-sm">
-                    <li><strong>Families</strong> demonstrated <strong>Bootstrap Authority</strong>. Without formal credentials, their lived experience and moral testimony gave them the legitimacy to demand action.</li>
-                    <li><strong>Scientists</strong> (like Dr. Bennet Omalu and Dr. Ann McKee) provided the empirical evidence.</li>
-                    <li><strong>Journalists</strong> amplified the findings and stories, creating public pressure.</li>
-                </ul>
-                <p class="mt-2">These groups demonstrated <strong>Capability Equivalence</strong>. They used different methods (testimony, research, reporting) but all advanced the same shared objective. Their coordination was not based on agreeing on a single method, but on recognizing that their different capabilities were functionally equivalent in pursuing the network goal. This case study shows how ethical authority can emerge from demonstrated competence and how diverse groups can achieve powerful coordination without needing to abandon their unique approaches.</p>
-            `
-        },
-{
-    title: "The Green Belt Movement: A Study in Ecological Coordination",
-    summary: "Wangari Maathai's Green Belt Movement in Kenya illustrates how a genuine network-goal ('environmental sustainability and resilience') can coordinate diverse stakeholders—from rural women to international bodies—through functionally equivalent capabilities.",
-    analysis: `
-        <p class="mb-2">The Green Belt Movement, founded by Wangari Maathai, serves as a powerful example of successful, long-term network-goal coordination[cite: 3]. Unlike many environmental coalitions that fragment when individual interests diverge, the Green Belt Movement united diverse actors around the shared network-goal of <strong>'environmental sustainability and community empowerment.'</strong></p>
-        <p class="mb-2">This was a genuine network-goal because different stakeholders could advance it using their unique, authentic capabilities without conflict:</p>
-        <ul class="list-disc list-inside space-y-2 mt-2 text-sm">
-            <li><strong>Rural Women & Farmers</strong> contributed through sustainable land management, tree planting, and applying traditional ecological knowledge. Their lived experience gave them <strong>Bootstrap Authority</strong> on local environmental issues[cite: 54].</li>
-            <li><strong>Scientists & Researchers</strong> contributed by providing ecological data, monitoring biodiversity, and validating the environmental impact of the conservation efforts[cite: 651].</li>
-            <li><strong>Government Agencies & International Bodies</strong> contributed through policy frameworks, funding mechanisms, and technical support, integrating the grassroots movement into national and global sustainability efforts[cite: 652, 653].</li>
-        </ul>
-        <p class="mt-2">These groups demonstrated <strong>Capability Equivalence</strong>. Planting a tree (a local, tangible act) and securing international funding (a global, abstract act) were functionally equivalent because both advanced the same shared network-goal[cite: 36, 656]. The movement's success shows how ethical authority can emerge from demonstrated competence in advancing collective objectives, creating sustainable, democratic, and effective social change[cite: 9, 769].</p>
-    `
-},
-        
-{
-    title: "Dutch Water Boards: 800 Years of Network-Goal Coordination",
-    summary: "The Dutch Water Boards ('waterschappen') are a historical testament to network-goal persistence, coordinating farmers, merchants, and experts around the shared goal of 'regional flood protection' for over eight centuries.",
-    analysis: `
-        <p class="mb-2">For over 800 years, the Dutch Water Boards have exemplified network-goal coordination, surviving massive political, technological, and environmental shifts[cite: 745]. Their longevity stands in contrast to temporary alliances based on aligned interests. Their success is rooted in a clear and persistent network-goal: <strong>'regional flood protection and water management.'</strong></p>
-        <p class="mb-2">This goal allowed for a durable system of <strong>Capability Equivalence</strong>:</p>
-        <ul class="list-disc list-inside space-y-2 mt-2 text-sm">
-            <li><strong>Local Farmers & Landowners</strong> possessed deep, experiential knowledge of their specific landscape. Their capability was in day-to-day observation and maintenance, giving them practical <strong>Bootstrap Authority</strong>[cite: 716].</li>
-            <li><strong>Technical Experts & Engineers</strong> contributed systematic knowledge of hydrology, dike construction, and large-scale water systems[cite: 745].</li>
-            <li><strong>Merchants & Political Representatives</strong> provided the financial resources and regulatory frameworks necessary to fund and govern the system on a larger scale[cite: 745].</li>
-        </ul>
-        <p class="mt-2">A farmer noticing a weak spot in a local dike and an engineer designing a new pumping station were performing functionally equivalent actions—both were advancing the same, unambiguous network-goal of flood protection[cite: 36]. This system persisted because the shared objective remained non-negotiable, allowing the methods and technologies to adapt over centuries without breaking the cooperative framework[cite: 746].</p>
-    `
-},
-    ],
+caseStudies: [
+    {
+        title: "The NFL's CTE Crisis: A Study in Coordination",
+        summary: "The shift from the NFL's monopolistic control to a distributed network of scientists, families, and media illustrates how diverse stakeholders can coordinate through 'capability equivalence' to advance a shared goal: establishing truth and preventing harm.",
+        analysis: `
+            <p class="mb-2">The NFL's chronic traumatic encephalopathy (CTE) crisis serves as a powerful real-world example of the principles outlined in this lab. Initially, the NFL operated with a monopolistic goal: protecting the league's institutional interests. This failed to align with other stakeholders.</p>
+            <p class="mb-2">A transformation occurred when a diverse network of actors began to coordinate around a shared network-goal: <strong>'establishing the truth about CTE and preventing future harm.'</strong></p>
+            <ul class="list-disc list-inside space-y-2 mt-2 text-sm">
+                <li><strong>Families</strong> demonstrated <strong>Bootstrap Authority</strong>. Without formal credentials, their lived experience and moral testimony gave them the legitimacy to demand action.</li>
+                <li><strong>Scientists</strong> (like Dr. Bennet Omalu and Dr. Ann McKee) provided the empirical evidence.</li>
+                <li><strong>Journalists</strong> amplified the findings and stories, creating public pressure.</li>
+            </ul>
+            <p class="mt-2">These groups demonstrated <strong>Capability Equivalence</strong>. They used different methods (testimony, research, reporting) but all advanced the same shared objective. Their coordination was not based on agreeing on a single method, but on recognizing that their different capabilities were functionally equivalent in pursuing the network goal. This case study shows how ethical authority can emerge from demonstrated competence and how diverse groups can achieve powerful coordination without needing to abandon their unique approaches.</p>
+        `
+    },
+    {
+        title: "The Green Belt Movement: A Study in Ecological Coordination",
+        summary: "Wangari Maathai's Green Belt Movement in Kenya illustrates how a genuine network-goal ('environmental sustainability and resilience') can coordinate diverse stakeholders—from rural women to international bodies—through functionally equivalent capabilities.",
+        analysis: `
+            <p class="mb-2">The Green Belt Movement, founded by Wangari Maathai, serves as a powerful example of successful, long-term network-goal coordination. Unlike many environmental coalitions that fragment when individual interests diverge, the Green Belt Movement united diverse actors around the shared network-goal of <strong>'environmental sustainability and community empowerment.'</strong></p>
+            <p class="mb-2">This was a genuine network-goal because different stakeholders could advance it using their unique, authentic capabilities without conflict:</p>
+            <ul class="list-disc list-inside space-y-2 mt-2 text-sm">
+                <li><strong>Rural Women & Farmers</strong> contributed through sustainable land management, tree planting, and applying traditional ecological knowledge. Their lived experience gave them <strong>Bootstrap Authority</strong> on local environmental issues.</li>
+                <li><strong>Scientists & Researchers</strong> contributed by providing ecological data, monitoring biodiversity, and validating the environmental impact of the conservation efforts.</li>
+                <li><strong>Government Agencies & International Bodies</strong> contributed through policy frameworks, funding mechanisms, and technical support, integrating the grassroots movement into national and global sustainability efforts.</li>
+            </ul>
+            <p class="mt-2">These groups demonstrated <strong>Capability Equivalence</strong>. Planting a tree (a local, tangible act) and securing international funding (a global, abstract act) were functionally equivalent because both advanced the same shared network-goal. The movement's success shows how ethical authority can emerge from demonstrated competence in advancing collective objectives, creating sustainable, democratic, and effective social change.</p>
+        `
+    },
+    {
+        title: "Dutch Water Boards: 800 Years of Network-Goal Coordination",
+        summary: "The Dutch Water Boards ('waterschappen') are a historical testament to network-goal persistence, coordinating farmers, merchants, and experts around the shared goal of 'regional flood protection' for over eight centuries.",
+        analysis: `
+            <p class="mb-2">For over 800 years, the Dutch Water Boards have exemplified network-goal coordination, surviving massive political, technological, and environmental shifts. Their longevity stands in contrast to temporary alliances based on aligned interests. Their success is rooted in a clear and persistent network-goal: <strong>'regional flood protection and water management.'</strong></p>
+            <p class="mb-2">This goal allowed for a durable system of <strong>Capability Equivalence</strong>:</p>
+            <ul class="list-disc list-inside space-y-2 mt-2 text-sm">
+                <li><strong>Local Farmers & Landowners</strong> possessed deep, experiential knowledge of their specific landscape. Their capability was in day-to-day observation and maintenance, giving them practical <strong>Bootstrap Authority</strong>.</li>
+                <li><strong>Technical Experts & Engineers</strong> contributed systematic knowledge of hydrology, dike construction, and large-scale water systems.</li>
+                <li><strong>Merchants & Political Representatives</strong> provided the financial resources and regulatory frameworks necessary to fund and govern the system on a larger scale.</li>
+            </ul>
+            <p class="mt-2">A farmer noticing a weak spot in a local dike and an engineer designing a new pumping station were performing functionally equivalent actions—both were advancing the same, unambiguous network-goal of flood protection. This system persisted because the shared objective remained non-negotiable, allowing the methods and technologies to adapt over centuries without breaking the cooperative framework.</p>
+        `
+    }
+],
+
 
     essays: [
         {
