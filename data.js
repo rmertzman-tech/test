@@ -34,7 +34,6 @@ const appData = {
                 <p class="mt-2">These groups demonstrated <strong>Capability Equivalence</strong>. They used different methods (testimony, research, reporting) but all advanced the same shared objective. Their coordination was not based on agreeing on a single method, but on recognizing that their different capabilities were functionally equivalent in pursuing the network goal. This case study shows how ethical authority can emerge from demonstrated competence and how diverse groups can achieve powerful coordination without needing to abandon their unique approaches.</p>
             `
         },
-       
 {
     title: "The Green Belt Movement: A Study in Ecological Coordination",
     summary: "Wangari Maathai's Green Belt Movement in Kenya illustrates how a genuine network-goal ('environmental sustainability and resilience') can coordinate diverse stakeholders—from rural women to international bodies—through functionally equivalent capabilities.",
