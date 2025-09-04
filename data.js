@@ -379,6 +379,7 @@ Organizational Leadership Through Service: Advanced ability to exercise leadersh
 Movement Coordination Under Opposition: Demonstrated capacity for maintaining Catholic Worker movement coherence and growth despite consistent opposition from church hierarchy, government surveillance, and cultural hostility throughout multiple decades.`,
             foundationalLinks: ["Cross-Scale Information Organization"]
         },
+        
         {
     name: "Sophie Scholl",
     lifespan: "1921-1943",
@@ -444,6 +445,7 @@ Movement Coordination Under Opposition: Demonstrated capacity for maintaining Ca
         </ul>
     `
 },  
+        
         {
             name: "Oskar Schindler",
             lifespan: "1908–1974",
