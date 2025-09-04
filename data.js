@@ -1015,9 +1015,8 @@ Traditional-Feminist Philosophy Integration: Exceptional ability to master tradi
 Abstract-Concrete Reasoning Synthesis: Sophisticated capacity for coordinating systematic theoretical development with attention to particular caring relationships and practical moral challenges, maintaining philosophical rigor while grounding theory in actual human experience and moral practice.
 Individual-Institutional Academic Navigation: Advanced ability to build successful academic career while challenging institutional structures and philosophical orthodoxies, creating space for feminist philosophical development while maintaining scholarly credibility and institutional influence.
 Interdisciplinary-Disciplinary Coordination: Demonstrated capacity for engaging multiple academic disciplines while maintaining philosophical identity and theoretical coherence, building care ethics through coordination with empirical research while preserving philosophical analytical methods and systematic approach.`
-        },
-        
-{
+        },   
+        {
     name: "Roger Boisjoly",
     lifespan: "1938-2012",
     title: "A PRF Analysis of Engineering Ethics and Professional Moral Courage",
@@ -1082,9 +1081,8 @@ Interdisciplinary-Disciplinary Coordination: Demonstrated capacity for engaging 
             <li><strong>Expert-Public Communication:</strong> Advanced ability to coordinate technical expertise with accessible public education, maintaining both scientific accuracy and democratic accountability.</li>
             <li><strong>Present-Future Safety Advocacy:</strong> Demonstrated capacity for coordinating immediate technical work with long-term safety implications.</li>
         </ul>
-    `
-},
-        
+
+        },
         {
             name: "Wangari Maathai",
             lifespan: "1940-2011",
