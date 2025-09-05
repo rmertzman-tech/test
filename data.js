@@ -64,8 +64,6 @@ caseStudies: [
     }
 ],
 
-
-    essays: [
         essays: [
     {
         title: "The Recursive Foundation: How We Use Our Framework to Understand Ourselves",
