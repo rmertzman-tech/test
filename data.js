@@ -113,7 +113,7 @@ const appData = {
     {
         title: "Two Operating Systems for Truth: Why We Need Both Eternal Foundations and Practical Coordination",
         summary: "Discusses the deep human need for ultimate Truth and the modern practical need for cooperation across different 'truth-communities,' proposing a dual-operating-system model.",
-        paperUrl: null, // <-- ADD YOUR URL HERE
+        paperUrl: "https://rmertzman-tech.github.io/Two-Operating-Systems/",
         content: `
             <h2 class="text-2xl font-bold mb-4">Two Operating Systems for Truth</h2>
             <p class="italic text-gray-600 mb-4">Why We Need Both Eternal Foundations and Practical Coordination</p>
