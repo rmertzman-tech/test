@@ -161,7 +161,7 @@ caseStudies: [
             </ul>
             <p class="mb-4">Together, these tools form an integrated system for more robust, actionable, and collaborative reasoning in complex, real-world situations, transforming logic from a purely academic exercise into a practical instrument for human flourishing.</p>
         `
-    }
+    },
 ]
 
 
