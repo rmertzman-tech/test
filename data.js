@@ -95,7 +95,7 @@ const appData = {
     {
         title: "The Integrative Storyline: From Cultural Evolution to Capability-Based Coordination",
         summary: "A strategic narrative explaining how human psychological diversity is a feature to be leveraged, not a bug to be fixed, through capability-based coordination.",
-        paperUrl: null, // <-- ADD YOUR URL HERE
+        paperUrl: "https://rmertzman-tech.github.io/Integrative-Story/",
         content: `
             <h2 class="text-2xl font-bold mb-4">The Integrative Storyline: From Cultural Evolution to Capability-Based Coordination</h2>
             <p class="italic text-gray-600 mb-4">A Strategic Narrative for Logic, Ethics, and Societal Development</p>
