@@ -6,7 +6,7 @@ const appData = {
             title: "Cross-Scale Information Organization",
             summary: "Establishes that normative reasoning in logic and ethics operates through universal information organization principles validated across biological, technological, and entertainment media systems.",
             keyConcepts: ["Capability-Based Propositions", "Temporal Coherence Functions", "Cross-Scale Markup Organization"],
-            paperUrl: "https://rmertzman-tech.github.io/Cross-scale-1/"
+            paperUrl: null
         },
         {
             title: "Capability-Based Coordination & Bootstrap Authority",
