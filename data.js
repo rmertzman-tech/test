@@ -131,7 +131,7 @@ const appData = {
     {
         title: "The Architecture of Ethical Reasoning: A Unified Framework for Applied Ethics",
         summary: "Integrates Cross-Scale Information Organization, Capability-Based Propositions, and Temporal Coherence into a unified framework for ethical analysis and 'Ethical Cartography'.",
-        paperUrl: null, // <-- ADD YOUR URL HERE
+        paperUrl: "https://rmertzman-tech.github.io/Ethical-Reasoning-Architecture/",
         content: `
             <h2 class="text-2xl font-bold mb-4">The Architecture of Ethical Reasoning</h2>
             <p class="italic text-gray-600 mb-4">A Unified Framework for Applied Ethics</p>
