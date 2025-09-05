@@ -71,7 +71,7 @@ const appData = {
     {
         title: "The Recursive Foundation: How We Use Our Framework to Understand Ourselves",
         summary: "Exploring the 'mirror problem' in ethics and how the PRF's recursive structure allows us to evaluate our own reasoning frameworks.",
-        paperUrl: null, // <-- ADD YOUR URL HERE
+        paperUrl: "https://rmertzman-tech.github.io/Recursive-Foundation-/"
         content: `
             <h2 class="text-2xl font-bold mb-4">The Recursive Foundation: How We Use Our Framework to Understand Ourselves</h2>
             <p class="italic text-gray-600 mb-4">Meta-Constructor Capabilities and the Architecture of Self-Understanding</p>
