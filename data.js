@@ -153,7 +153,7 @@ const appData = {
     {
         title: "The Logical Toolkit: How Formal Tools Enable Capability-Based Reasoning",
         summary: "An explanation of the mathematical and logical framework behind practical, capability-based reasoning, including ATL, STIT, and the Temporal Coherence Framework.",
-        paperUrl: null, // <-- ADD YOUR URL HERE
+        paperUrl: "https://rmertzman-tech.github.io/Logical-Toolkit/",
         content: `
             <h2 class="text-2xl font-bold mb-4">The Logical Toolkit: How Formal Tools Enable Capability-Based Reasoning</h2>
             <p class="italic text-gray-600 mb-4">Understanding the Mathematical Framework Behind Practical Logic</p>
