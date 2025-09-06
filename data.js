@@ -23,6 +23,8 @@ const appData = {
         paperUrl: "https://rmertzman-tech.github.io/Cap-Coordination-Practice-for-everyone/",
         videoUrl: null  // Add URL for the video intro here
     },
+
+    ],
 ],
 
     caseStudies: [
