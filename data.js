@@ -20,7 +20,7 @@ const appData = {
         title: "Capability-Based Coordination in Practice",
         summary: "Analyzes the NFL's CTE crisis as a real-world example of multi-stakeholder coordination failure and transformation, illustrating 'capability equivalence' and 'bootstrap authority' in action.",
         keyConcepts: ["Capability Equivalence", "Network-Goal Coordination", "Bootstrap Authority"],
-        paperUrl: null, // Add URL for the paper here
+        paperUrl: "https://rmertzman-tech.github.io/Cap-Coordination-Practice-for-everyone/",
         videoUrl: null  // Add URL for the video intro here
     }
 ],
