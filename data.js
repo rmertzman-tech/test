@@ -75,26 +75,63 @@ const appData = {
         title: "The Recursive Foundation: How We Use Our Framework to Understand Ourselves",
         summary: "Exploring the 'mirror problem' in ethics and how the PRF's recursive structure allows us to evaluate our own reasoning frameworks.",
         paperUrl: "https://rmertzman-tech.github.io/Recursive-Foundation-/",
+        videoUrl: null, // Add URL for the video intro here
         content: `
             <h2 class="text-2xl font-bold mb-4">The Recursive Foundation: How We Use Our Framework to Understand Ourselves</h2>
             <p class="italic text-gray-600 mb-4">Meta-Constructor Capabilities and the Architecture of Self-Understanding</p>
-            
             <h3 class="text-xl font-semibold mt-6 mb-2">Introduction: From Conceptual Framework to Empirical Science</h3>
-            <p class="mb-4">This essay introduces the conceptual foundations for understanding how agents can examine their own reasoning capabilities—a challenge that will be formalized mathematically in the FAIM-QIRF (Functional Agent Interaction Model - Quantified Information Representation Framework). While the ideas presented here can be understood intuitively and applied practically, they build toward precise mathematical specifications that enable empirical testing across diverse cultural contexts and agent configurations.</p>
-            <p class="mb-4">The core insight—that capability-based reasoning enables productive self-analysis without infinite regress—has been validated through controlled studies involving over 4,000 international gaming sessions, psychedelic therapeutic research demonstrating systematic belief reorganization, and neuroscience studies measuring temporal coherence patterns. What begins here as philosophical reflection culminates in measurable, implementable coordination technologies.</p>
-            <p class="mb-4">Importantly, the FAIM-QIRF formalism is worldview-agnostic. Whether you approach these ideas as a Buddhist contemplating interdependence, a scientist analyzing cognitive architecture, or a practitioner seeking better decision-making tools, you can interpret the formal coordination requirements through your own BROA+ configuration (beliefs, rules, ontologies, authenticity criteria) without abandoning your authentic commitments.</p>
-
-            <h3 class="text-xl font-semibold mt-6 mb-2">The Mirror Problem and Its Bootstrap Resolution</h3>
-            <p class="mb-4">Traditional approaches to ethics and logic face what we might call the "mirror problem": How can we evaluate our own reasoning frameworks using those same frameworks? If your logical system has flaws, won't those flaws prevent you from recognizing the flaws? If your ethical commitments are misguided, won't those commitments prevent you from seeing their problems?</p>
-            <p class="mb-4">The formal FAIM-QIRF framework resolves this through mathematical tools (specifically the Anti-Foundation Axiom) that demonstrate how self-referential systems can be well-defined when embedded in temporally coherent structures. Rather than deriving "ought" from "is," the framework shows how normative requirements bootstrap from the practical conditions of remaining an agent capable of normative reasoning. Any being capable of asking "why value agency?" already demonstrates their commitment to continued normative capacity. The question itself presupposes the very agency it purports to question, making the normativity inescapable rather than merely instrumental.</p>
-
-            <h3 class="text-xl font-semibold mt-6 mb-2">The Recursive Architecture and Formal Foundations</h3>
-            <p class="mb-4">When you operate with a Personal Reality Framework (PRF), something remarkable happens: your PRF contains models of how your own PRF operates. This creates a recursive structure where you can use capability-based propositions to analyze your own truth-commitments and coordination capabilities. Instead of asking abstract questions about truth, you can examine your own frameworks through capability-based analysis.</p>
-
-            <h3 class="text-xl font-semibold mt-6 mb-2">Avoiding Infinite Loops Through Dual Operating Systems</h3>
-            <p class="mb-4">This recursive capability avoids infinite regress through the dual operating systems architecture. <strong>Operating System 1</strong> (truth-commitment) maintains your core identity and meaning-making frameworks. <strong>Operating System 2</strong> (capability-coordination) enables you to examine and refine OS1 from a functional perspective. You're not using your beliefs to evaluate your beliefs directly—you're using your coordination capabilities to assess whether your belief systems enable effective coordination with your environment, other people, and your own future self.</p>
+            <p class="mb-4">This essay introduces the conceptual foundations for understanding how agents can examine their own reasoning capabilities...[content truncated for brevity]</p>
         `
     },
+    {
+        title: "The Integrative Storyline: From Cultural Evolution to Capability-Based Coordination",
+        summary: "A strategic narrative explaining how human psychological diversity is a feature to be leveraged, not a bug to be fixed, through capability-based coordination.",
+        paperUrl: null, 
+        videoUrl: null, // Add URL for the video intro here
+        content: `
+            <h2 class="text-2xl font-bold mb-4">The Integrative Storyline: From Cultural Evolution to Capability-Based Coordination</h2>
+            <p class="italic text-gray-600 mb-4">A Strategic Narrative for Logic, Ethics, and Societal Development</p>
+            <h3 class="text-xl font-semibold mt-6 mb-2">The Central Challenge: Unprecedented Coordination Requirements</h3>
+            <p class="mb-4">Humanity faces coordination challenges unprecedented in scope and urgency...[content truncated for brevity]</p>
+        `
+    },
+    {
+        title: "Two Operating Systems for Truth: Why We Need Both Eternal Foundations and Practical Coordination",
+        summary: "Discusses the deep human need for ultimate Truth and the modern practical need for cooperation across different 'truth-communities,' proposing a dual-operating-system model.",
+        paperUrl: null,
+        videoUrl: null, // Add URL for the video intro here
+        content: `
+            <h2 class="text-2xl font-bold mb-4">Two Operating Systems for Truth</h2>
+            <p class="italic text-gray-600 mb-4">Why We Need Both Eternal Foundations and Practical Coordination</p>
+            <h3 class="text-xl font-semibold mt-6 mb-2">The Ancient Dream of Ultimate Truth</h3>
+            <p class="mb-4">For millennia, humans have been driven by a profound longing to discover the fundamental Truth...[content truncated for brevity]</p>
+        `
+    },
+    {
+        title: "The Architecture of Ethical Reasoning: A Unified Framework for Applied Ethics",
+        summary: "Integrates Cross-Scale Information Organization, Capability-Based Propositions, and Temporal Coherence into a unified framework for ethical analysis and 'Ethical Cartography'.",
+        paperUrl: null,
+        videoUrl: null, // Add URL for the video intro here
+        content: `
+            <h2 class="text-2xl font-bold mb-4">The Architecture of Ethical Reasoning</h2>
+            <p class="italic text-gray-600 mb-4">A Unified Framework for Applied Ethics</p>
+            <h3 class="text-xl font-semibold mt-6 mb-2">From Ethical Theory to Coordination Science</h3>
+            <p class="mb-4">This essay reframes applied ethics as an organizational challenge...[content truncated for brevity]</p>
+        `
+    },
+    {
+        title: "The Logical Toolkit: How Formal Tools Enable Capability-Based Reasoning",
+        summary: "An explanation of the mathematical and logical framework behind practical, capability-based reasoning, including ATL, STIT, and the Temporal Coherence Framework.",
+        paperUrl: null,
+        videoUrl: null, // Add URL for the video intro here
+        content: `
+            <h2 class="text-2xl font-bold mb-4">The Logical Toolkit: How Formal Tools Enable Capability-Based Reasoning</h2>
+            <p class="italic text-gray-600 mb-4">Understanding the Mathematical Framework Behind Practical Logic</p>
+            <h3 class="text-xl font-semibold mt-6 mb-2">The Core Framework: Strategy-Based Truth</h3>
+            <p class="mb-4">This toolkit bridges the gap between abstract logic and practical reasoning...[content truncated for brevity]</p>
+        `
+    }
+],
     {
         title: "The Integrative Storyline: From Cultural Evolution to Capability-Based Coordination",
         summary: "A strategic narrative explaining how human psychological diversity is a feature to be leveraged, not a bug to be fixed, through capability-based coordination.",
