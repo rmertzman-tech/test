@@ -81,7 +81,7 @@ const appData = {
             <h3 class="text-xl font-semibold mt-6 mb-2">Introduction: From Conceptual Framework to Empirical Science</h3>
             <p class="mb-4">This essay introduces the conceptual foundations for understanding how agents can examine their own reasoning capabilities...[content truncated for brevity]</p>
        
-    }.
+    },
     {
         title: "The Integrative Storyline: From Cultural Evolution to Capability-Based Coordination",
         summary: "A strategic narrative explaining how human psychological diversity is a feature to be leveraged, not a bug to be fixed, through capability-based coordination.",
