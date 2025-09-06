@@ -23,8 +23,7 @@ const appData = {
         paperUrl: "https://rmertzman-tech.github.io/Cap-Coordination-Practice-for-everyone/",
         videoUrl: null  // Add URL for the video intro here
     },
-
-    ],
+], // <<< ***** THE MISSING COMMA HAS BEEN ADDED HERE *****
 
     caseStudies: [
         {
@@ -71,17 +70,18 @@ const appData = {
         }
     ],
 
-  essays: [
-    {title: "The Recursive Foundation: How We Use Our Framework to Understand Ourselves",
-            summary: "Exploring the 'mirror problem' in ethics and how the PRF's recursive structure allows us to evaluate our own reasoning frameworks.",
-            paperUrl: "https://rmertzman-tech.github.io/Recursive-Foundation-/",
-            videoUrl: null,
+    essays: [
+    {
+        title: "The Recursive Foundation: How We Use Our Framework to Understand Ourselves",
+        summary: "Exploring the 'mirror problem' in ethics and how the PRF's recursive structure allows us to evaluate our own reasoning frameworks.",
+        paperUrl: "https://rmertzman-tech.github.io/Recursive-Foundation-/",
+        videoUrl: null,
         content: `
             <h2 class="text-2xl font-bold mb-4">The Recursive Foundation: How We Use Our Framework to Understand Ourselves</h2>
             <p class="italic text-gray-600 mb-4">Meta-Constructor Capabilities and the Architecture of Self-Understanding</p>
             <h3 class="text-xl font-semibold mt-6 mb-2">Introduction: From Conceptual Framework to Empirical Science</h3>
             <p class="mb-4">This essay introduces the conceptual foundations for understanding how agents can examine their own reasoning capabilities...[content truncated for brevity]</p>
-       
+        `
     },
     {
         title: "The Integrative Storyline: From Cultural Evolution to Capability-Based Coordination",
@@ -159,10 +159,9 @@ const appData = {
                 <li><strong>The Temporal Coherence Framework (ATCF):</strong> A mathematical function for reasoning across time, measuring an agent's ability to maintain a consistent and authentic identity while integrating past, present, and future actions.</li>
             </ul>
             <p class="mb-4">Together, these tools form an integrated system for more robust, actionable, and collaborative reasoning in complex, real-world situations, transforming logic from a purely academic exercise into a practical instrument for human flourishing.</p>
-
+        `
     },
 ],
-    
     navigators: [
         {
             name: "Socrates",
@@ -429,73 +428,71 @@ Organizational Leadership Through Service: Advanced ability to exercise leadersh
 Movement Coordination Under Opposition: Demonstrated capacity for maintaining Catholic Worker movement coherence and growth despite consistent opposition from church hierarchy, government surveillance, and cultural hostility throughout multiple decades.`,
             foundationalLinks: ["Cross-Scale Information Organization"]
         },
-        
         {
-    name: "Sophie Scholl",
-    lifespan: "1921-1943",
-    title: "A PRF Analysis of Moral Courage and Principled Resistance",
-    summary: "A German student and member of the White Rose resistance group whose PRF shows a powerful transformation from youthful idealism within the Nazi system to an unwavering commitment to resistance based on conscience and human dignity.",
-    bioLink: "https://www.britannica.com/biography/Sophie-Scholl",
-    videoUrl: null,
-    assemblyHistory: `<p><strong>Initial Nazi Enthusiasm (1933-1937):</strong> Her PRF was initially shaped by a Protestant upbringing and an idealistic commitment to the collective purpose offered by the League of German Girls (BDM).</p><p><strong>Critical Awakening (1937-1942):</strong> Influenced by her family's liberal democratic values and exposure to forbidden literature, she experienced a growing disillusionment with the Nazi regime's brutality. Her studies in biology and philosophy at the University of Munich provided the intellectual tools for a systematic critique of totalitarianism.</p><p><strong>Principled Resistance (1942-1943):</strong> Joining her brother Hans in the White Rose, she translated her moral convictions into direct, non-violent action by co-writing and distributing anti-Nazi leaflets. Her calm defiance during her trial and subsequent execution cemented her legacy as a martyr for freedom of conscience.</p>`,
-    broa: `<p><strong>Beliefs:</strong> Every human possesses an inherent dignity that transcends state power. Truth and intellectual honesty are fundamental moral obligations. Individual conscience is the ultimate authority for moral judgment.</p><p><strong>Rules:</strong> Act according to conscience, regardless of personal risk. Use non-violent, intellectual, and moral persuasion to resist injustice. Expose political lies and propaganda with factual truth.</p><p><strong>Ontology:</strong> A moral reality grounded in Christian ethics and universal human values exists independently of and holds authority over political power. Individual moral choices have an eternal significance.</p><p><strong>Authenticity:</strong> The unwavering alignment of one's actions with one's deepest moral convictions, even in the face of death.</p>`,
-    atcf: "Demonstrated remarkable and rapid temporal coherence, transforming from an enthusiastic participant in the Nazi youth movement to a principled opponent. Her final actions at her trial were in perfect alignment with her fully developed convictions, showing a complete integration of her moral awakening with her ultimate sacrifice.",
-    fop: "Her actions were oriented toward a future Germany free from tyranny and grounded in human dignity. Her legacy serves as an enduring projection of the power of individual and collective conscience to bear witness against oppressive regimes, aiming to inspire future generations to similar moral courage.",
-    capabilities: ["Capability for Youth Activism and Dissent", "Capability for Articulating Moral Conscience", "Capability for Ultimate Sacrifice for Principle", "Moral-Political Integration"],
-    fullPrfAnalysis: `
-        <h4 class="font-bold mb-2">Assembly History: From Hitler Youth Enthusiasm to Resistance Martyrdom</h4>
-        
-        <h5 class="font-semibold mt-3 mb-1">Early Formation and Initial Nazi Enthusiasm (1921-1937 CE)</h5>
-        <p class="mb-2">Sophie Scholl's Personal Reality Framework emerged from the intersection of German middle-class Protestant values, Nazi ideological indoctrination, and strong family intellectual traditions. Born in Forchtenberg to a liberal-minded mayor, her PRF initially developed within contexts of moral earnestness and civic responsibility. Her initial enthusiasm for the Bund Deutscher Mädel (League of German Girls) demonstrated a capacity for idealistic commitment to collective causes, providing direct experience of how totalitarian movements could exploit genuine human needs for belonging and purpose.</p>
-        
-        <h5 class="font-semibold mt-3 mb-1">Disillusionment and Critical Awakening (1937-1940 CE)</h5>
-        <p class="mb-2">Her gradual recognition of Nazi brutality required a fundamental reconstruction of her worldview. This was heavily influenced by her father's anti-Nazi views and the family's access to forbidden literature. Her mandatory labor service provided direct experience of Nazi institutional control, while her Protestant faith provided resources for moral resistance, enabling a systematic critique of Nazi ideology through Christian ethical principles.</p>
-        
-        <h5 class="font-semibold mt-3 mb-1">University Education and Intellectual Formation (1940-1942 CE)</h5>
-        <p class="mb-2">Her biology and philosophy studies at Ludwig Maximilian University in Munich provided systematic intellectual development and the social context for meeting like-minded students. Her introduction to the White Rose resistance group through her brother Hans provided a framework for translating individual moral conviction into collective political action. Her engagement with Christian theology and German philosophy provided the theoretical foundations for her resistance work.</p>
+            name: "Sophie Scholl",
+            lifespan: "1921-1943",
+            title: "A PRF Analysis of Moral Courage and Principled Resistance",
+            summary: "A German student and member of the White Rose resistance group whose PRF shows a powerful transformation from youthful idealism within the Nazi system to an unwavering commitment to resistance based on conscience and human dignity.",
+            bioLink: "https://www.britannica.com/biography/Sophie-Scholl",
+            videoUrl: null,
+            assemblyHistory: `<p><strong>Initial Nazi Enthusiasm (1933-1937):</strong> Her PRF was initially shaped by a Protestant upbringing and an idealistic commitment to the collective purpose offered by the League of German Girls (BDM).</p><p><strong>Critical Awakening (1937-1942):</strong> Influenced by her family's liberal democratic values and exposure to forbidden literature, she experienced a growing disillusionment with the Nazi regime's brutality. Her studies in biology and philosophy at the University of Munich provided the intellectual tools for a systematic critique of totalitarianism.</p><p><strong>Principled Resistance (1942-1943):</strong> Joining her brother Hans in the White Rose, she translated her moral convictions into direct, non-violent action by co-writing and distributing anti-Nazi leaflets. Her calm defiance during her trial and subsequent execution cemented her legacy as a martyr for freedom of conscience.</p>`,
+            broa: `<p><strong>Beliefs:</strong> Every human possesses an inherent dignity that transcends state power. Truth and intellectual honesty are fundamental moral obligations. Individual conscience is the ultimate authority for moral judgment.</p><p><strong>Rules:</strong> Act according to conscience, regardless of personal risk. Use non-violent, intellectual, and moral persuasion to resist injustice. Expose political lies and propaganda with factual truth.</p><p><strong>Ontology:</strong> A moral reality grounded in Christian ethics and universal human values exists independently of and holds authority over political power. Individual moral choices have an eternal significance.</p><p><strong>Authenticity:</strong> The unwavering alignment of one's actions with one's deepest moral convictions, even in the face of death.</p>`,
+            atcf: "Demonstrated remarkable and rapid temporal coherence, transforming from an enthusiastic participant in the Nazi youth movement to a principled opponent. Her final actions at her trial were in perfect alignment with her fully developed convictions, showing a complete integration of her moral awakening with her ultimate sacrifice.",
+            fop: "Her actions were oriented toward a future Germany free from tyranny and grounded in human dignity. Her legacy serves as an enduring projection of the power of individual and collective conscience to bear witness against oppressive regimes, aiming to inspire future generations to similar moral courage.",
+            capabilities: ["Capability for Youth Activism and Dissent", "Capability for Articulating Moral Conscience", "Capability for Ultimate Sacrifice for Principle", "Moral-Political Integration"],
+            fullPrfAnalysis: `
+                <h4 class="font-bold mb-2">Assembly History: From Hitler Youth Enthusiasm to Resistance Martyrdom</h4>
+                
+                <h5 class="font-semibold mt-3 mb-1">Early Formation and Initial Nazi Enthusiasm (1921-1937 CE)</h5>
+                <p class="mb-2">Sophie Scholl's Personal Reality Framework emerged from the intersection of German middle-class Protestant values, Nazi ideological indoctrination, and strong family intellectual traditions. Born in Forchtenberg to a liberal-minded mayor, her PRF initially developed within contexts of moral earnestness and civic responsibility. Her initial enthusiasm for the Bund Deutscher Mädel (League of German Girls) demonstrated a capacity for idealistic commitment to collective causes, providing direct experience of how totalitarian movements could exploit genuine human needs for belonging and purpose.</p>
+                
+                <h5 class="font-semibold mt-3 mb-1">Disillusionment and Critical Awakening (1937-1940 CE)</h5>
+                <p class="mb-2">Her gradual recognition of Nazi brutality required a fundamental reconstruction of her worldview. This was heavily influenced by her father's anti-Nazi views and the family's access to forbidden literature. Her mandatory labor service provided direct experience of Nazi institutional control, while her Protestant faith provided resources for moral resistance, enabling a systematic critique of Nazi ideology through Christian ethical principles.</p>
+                
+                <h5 class="font-semibold mt-3 mb-1">University Education and Intellectual Formation (1940-1942 CE)</h5>
+                <p class="mb-2">Her biology and philosophy studies at Ludwig Maximilian University in Munich provided systematic intellectual development and the social context for meeting like-minded students. Her introduction to the White Rose resistance group through her brother Hans provided a framework for translating individual moral conviction into collective political action. Her engagement with Christian theology and German philosophy provided the theoretical foundations for her resistance work.</p>
 
-        <h5 class="font-semibold mt-3 mb-1">Active Resistance and Final Sacrifice (1942-1943 CE)</h5>
-        <p class="mb-2">Her participation in writing, producing, and distributing anti-Nazi leaflets demonstrated her capacity for translating moral conviction into effective political communication. Her work to extend the White Rose network required a sophisticated understanding of security and organization. Her behavior during her arrest, interrogation, and show trial demonstrated an exceptional integration of moral conviction with practical courage, providing a final, powerful testimony to her unwavering commitment to truth and human dignity.</p>
-        
-        <h4 class="font-bold mb-2 mt-4">Personal Reality Framework Configuration</h4>
-        <h5 class="font-semibold mt-3 mb-1">BROA+ (Beliefs, Rules, Ontological Commitments, Authenticity Criteria)</h5>
-        <p class="mb-2"><strong>Belief System (B):</strong></p>
-        <ul class="list-disc list-inside space-y-1 text-sm">
-            <li><strong>Human Dignity and Universal Moral Law:</strong> A profound conviction that every human possesses inherent dignity that cannot be subordinated to political ideology, making individual conscience the ultimate moral authority.</li>
-            <li><strong>Truth and Intellectual Honesty:</strong> A core understanding that truth-seeking is a fundamental human obligation that cannot be compromised for political advantage or social conformity.</li>
-            <li><strong>Individual Responsibility and Collective Action:</strong> A systematic belief that individual moral obligation extends to collective political responsibility for opposing systematic injustice.</li>
-            <li><strong>Christian Faith and Moral Resistance:</strong> An integration of Protestant Christianity with active political opposition, understanding that authentic faith requires a practical commitment to justice.</li>
-        </ul>
-        <p class="mt-2 mb-2"><strong>Rule System (R):</strong></p>
-        <ul class="list-disc list-inside space-y-1 text-sm">
-            <li><strong>Conscience-Based Moral Decision Making:</strong> Consistently apply individual moral judgment informed by Christian ethics and rational reflection, rather than political authority.</li>
-            <li><strong>Truth-Telling and Anti-Propaganda Activity:</strong> Actively commit to exposing political lies through the systematic distribution of factual information and moral critique.</li>
-            <li><strong>Solidarity and Collaborative Resistance:</strong> Systematically coordinate individual moral conviction with collective political action through participation in resistance groups.</li>
-            <li><strong>Non-Violent Resistance and Moral Witness:</strong> Consistently apply non-violent methods of opposition that prioritize moral integrity and intellectual persuasion over violent confrontation.</li>
-        </ul>
-        <p class="mt-2 mb-2"><strong>Ontological Commitments (O):</strong></p>
-        <ul class="list-disc list-inside space-y-1 text-sm">
-            <li><strong>Truth-Power Relationship:</strong> A framework where truth possesses ultimate authority over political claims, making intellectual honesty and critique of authority essential.</li>
-            <li><strong>Temporal-Eternal Moral Significance:</strong> A conviction that individual moral choices have both immediate political consequences and eternal moral significance, making principled resistance meaningful regardless of tactical success.</li>
-            <li><strong>Individual-Community Responsibility:</strong> An understanding that personal moral development and community welfare are mutually enhancing through a shared commitment to human dignity and truth.</li>
-        </ul>
-        <p class="mt-2 mb-2"><strong>Authenticity Criteria (A+):</strong></p>
-        <ul class="list-disc list-inside space-y-1 text-sm">
-            <li><strong>Moral-Political Integration:</strong> Authentic ethical life required coordinating individual moral conviction with active political engagement against injustice.</li>
-            <li><strong>Truth-Courage Synthesis:</strong> Genuine integrity demanded coordinating systematic truth-seeking with the practical courage to act on one's convictions despite personal danger.</li>
-            <li><strong>Individual-Collaborative Balance:</strong> Authentic resistance involved coordinating personal moral development with effective collective action, maintaining both personal integrity and collaborative solidarity.</li>
-        </ul>
+                <h5 class="font-semibold mt-3 mb-1">Active Resistance and Final Sacrifice (1942-1943 CE)</h5>
+                <p class="mb-2">Her participation in writing, producing, and distributing anti-Nazi leaflets demonstrated her capacity for translating moral conviction into effective political communication. Her work to extend the White Rose network required a sophisticated understanding of security and organization. Her behavior during her arrest, interrogation, and show trial demonstrated an exceptional integration of moral conviction with practical courage, providing a final, powerful testimony to her unwavering commitment to truth and human dignity.</p>
+                
+                <h4 class="font-bold mb-2 mt-4">Personal Reality Framework Configuration</h4>
+                <h5 class="font-semibold mt-3 mb-1">BROA+ (Beliefs, Rules, Ontological Commitments, Authenticity Criteria)</h5>
+                <p class="mb-2"><strong>Belief System (B):</strong></p>
+                <ul class="list-disc list-inside space-y-1 text-sm">
+                    <li><strong>Human Dignity and Universal Moral Law:</strong> A profound conviction that every human possesses inherent dignity that cannot be subordinated to political ideology, making individual conscience the ultimate moral authority.</li>
+                    <li><strong>Truth and Intellectual Honesty:</strong> A core understanding that truth-seeking is a fundamental human obligation that cannot be compromised for political advantage or social conformity.</li>
+                    <li><strong>Individual Responsibility and Collective Action:</strong> A systematic belief that individual moral obligation extends to collective political responsibility for opposing systematic injustice.</li>
+                    <li><strong>Christian Faith and Moral Resistance:</strong> An integration of Protestant Christianity with active political opposition, understanding that authentic faith requires a practical commitment to justice.</li>
+                </ul>
+                <p class="mt-2 mb-2"><strong>Rule System (R):</strong></p>
+                <ul class="list-disc list-inside space-y-1 text-sm">
+                    <li><strong>Conscience-Based Moral Decision Making:</strong> Consistently apply individual moral judgment informed by Christian ethics and rational reflection, rather than political authority.</li>
+                    <li><strong>Truth-Telling and Anti-Propaganda Activity:</strong> Actively commit to exposing political lies through the systematic distribution of factual information and moral critique.</li>
+                    <li><strong>Solidarity and Collaborative Resistance:</strong> Systematically coordinate individual moral conviction with collective political action through participation in resistance groups.</li>
+                    <li><strong>Non-Violent Resistance and Moral Witness:</strong> Consistently apply non-violent methods of opposition that prioritize moral integrity and intellectual persuasion over violent confrontation.</li>
+                </ul>
+                <p class="mt-2 mb-2"><strong>Ontological Commitments (O):</strong></p>
+                <ul class="list-disc list-inside space-y-1 text-sm">
+                    <li><strong>Truth-Power Relationship:</strong> A framework where truth possesses ultimate authority over political claims, making intellectual honesty and critique of authority essential.</li>
+                    <li><strong>Temporal-Eternal Moral Significance:</strong> A conviction that individual moral choices have both immediate political consequences and eternal moral significance, making principled resistance meaningful regardless of tactical success.</li>
+                    <li><strong>Individual-Community Responsibility:</strong> An understanding that personal moral development and community welfare are mutually enhancing through a shared commitment to human dignity and truth.</li>
+                </ul>
+                <p class="mt-2 mb-2"><strong>Authenticity Criteria (A+):</strong></p>
+                <ul class="list-disc list-inside space-y-1 text-sm">
+                    <li><strong>Moral-Political Integration:</strong> Authentic ethical life required coordinating individual moral conviction with active political engagement against injustice.</li>
+                    <li><strong>Truth-Courage Synthesis:</strong> Genuine integrity demanded coordinating systematic truth-seeking with the practical courage to act on one's convictions despite personal danger.</li>
+                    <li><strong>Individual-Collaborative Balance:</strong> Authentic resistance involved coordinating personal moral development with effective collective action, maintaining both personal integrity and collaborative solidarity.</li>
+                </ul>
 
-        <h4 class="font-bold mb-2 mt-4">Coordination Capabilities (C)</h4>
-        <ul class="list-disc list-inside space-y-1 text-sm">
-            <li><strong>Moral-Political Integration:</strong> Exceptional ability to coordinate individual ethical development with effective collective political resistance, translating moral conviction into practical action.</li>
-            <li><strong>Intellectual-Practical Resistance:</strong> Sophisticated capacity for coordinating a systematic critique of totalitarian ideology with practical resistance activity like leaflet campaigns.</li>
-            <li><strong>Individual-Community Action:</strong> Advanced ability to coordinate personal moral development with collaborative resistance organizing while maintaining both individual conscience and collective solidarity.</li>
-            <li><strong>Temporal-Eternal Significance:</strong> Demonstrated capacity for coordinating immediate political action with ultimate moral principles, maintaining both practical effectiveness and spiritual integrity.</li>
-        </ul>
-    `
-},  
-        
+                <h4 class="font-bold mb-2 mt-4">Coordination Capabilities (C)</h4>
+                <ul class="list-disc list-inside space-y-1 text-sm">
+                    <li><strong>Moral-Political Integration:</strong> Exceptional ability to coordinate individual ethical development with effective collective political resistance, translating moral conviction into practical action.</li>
+                    <li><strong>Intellectual-Practical Resistance:</strong> Sophisticated capacity for coordinating a systematic critique of totalitarian ideology with practical resistance activity like leaflet campaigns.</li>
+                    <li><strong>Individual-Community Action:</strong> Advanced ability to coordinate personal moral development with collaborative resistance organizing while maintaining both individual conscience and collective solidarity.</li>
+                    <li><strong>Temporal-Eternal Significance:</strong> Demonstrated capacity for coordinating immediate political action with ultimate moral principles, maintaining both practical effectiveness and spiritual integrity.</li>
+                </ul>
+            `
+        },
         {
             name: "Oskar Schindler",
             lifespan: "1908–1974",
@@ -560,8 +557,8 @@ Network Coordination Under Surveillance: Demonstrated capacity to coordinate com
             summary: "King's PRF emerged from the Black Baptist tradition and academic theology, driving him to synthesize nonviolent strategy with a prophetic vision of a 'Beloved Community'.",
             bioLink: "https://www.britannica.com/biography/Martin-Luther-King-Jr",
             videoUrl: null,
-            assemblyHistory: "<p><strong>Early Formation (1929-1948):</strong> His PRF emerged from the Black Baptist intellectual tradition and elite educational opportunities, creating a capacity to bridge popular religious practice with sophisticated intellectual frameworks.</p><p><strong>Montgomery Leadership (1955-1960):</strong> His leadership of the bus boycott led to a systematic synthesis of Gandhian nonviolent resistance with Christian prophetic tradition.</p><p><strong>National Leadership (1960-1968):</strong> Articulated the 'Beloved Community' vision and later expanded his focus to include economic justice and anti-war activism.</p>",
-            broa: "<p><strong>Beliefs:</strong> All humans bear God's image, making segregation a spiritual blasphemy. The 'Beloved Community' is achievable through agape love. Nonviolent resistance is more powerful than violence.</p><p><strong>Rules:</strong> Absolute nonviolent discipline. Focus on converting opponents rather than defeating them.</p><p><strong>Ontology:</strong> A moral universe with an arc bending toward justice. An interconnected community where individual liberation depends on collective freedom.</p><p><strong>Authenticity:</strong> Coordination between genuine Christian commitment and effective political action.</p>",
+            assemblyHistory: `<p><strong>Early Formation (1929-1948):</strong> His PRF emerged from the Black Baptist intellectual tradition and elite educational opportunities, creating a capacity to bridge popular religious practice with sophisticated intellectual frameworks.</p><p><strong>Montgomery Leadership (1955-1960):</strong> His leadership of the bus boycott led to a systematic synthesis of Gandhian nonviolent resistance with Christian prophetic tradition.</p><p><strong>National Leadership (1960-1968):</strong> Articulated the 'Beloved Community' vision and later expanded his focus to include economic justice and anti-war activism.</p>`,
+            broa: `<p><strong>Beliefs:</strong> All humans bear God's image, making segregation a spiritual blasphemy. The 'Beloved Community' is achievable through agape love. Nonviolent resistance is more powerful than violence.</p><p><strong>Rules:</strong> Absolute nonviolent discipline. Focus on converting opponents rather than defeating them.</p><p><strong>Ontology:</strong> A moral universe with an arc bending toward justice. An interconnected community where individual liberation depends on collective freedom.</p><p><strong>Authenticity:</strong> Coordination between genuine Christian commitment and effective political action.</p>`,
             atcf: "Successfully integrated the Black Baptist tradition, academic theological training, and emerging civil rights leadership while maintaining a coherent narrative and authentic spiritual voice throughout major personal and social transformations.",
             fop: "His methodology aimed at establishing systematic frameworks for ongoing democratic transformation and the realization of the Beloved Community, extending from racial justice to economic democracy and a global nonviolent movement.",
             capabilities: ["Capability for Oratorical Moral Persuasion", "Capability for Coalition Building Across Divides", "Capability for Strategic Nonviolent Confrontation"],
@@ -612,8 +609,8 @@ Local-Universal Coordination: Authentic action required applying universal Chris
             summary: "Malcolm X's PRF developed from experiences of systematic family destruction, institutional racism, and street survival, which became foundations for his revolutionary consciousness through systematic self-education and spiritual transformation.",
             bioLink: "https://www.britannica.com/biography/Malcolm-X",
             videoUrl: null,
-            assemblyHistory: "<p><strong>Early Formation (1925-1946):</strong> His PRF was shaped by family trauma, systematic white violence, and institutional racism. Street life in Roxbury and Harlem developed his survival capabilities and understanding of underground economic systems.</p><p><strong>Prison Transformation (1946-1952):</strong> Incarceration catalyzed a fundamental reconstruction of his identity through systematic self-education and conversion to the Nation of Islam, which provided a framework for understanding white supremacy.</p><p><strong>Pilgrimage and Universal Vision (1964-1965):</strong> His Hajj to Mecca catalyzed a second fundamental reconstruction of his racial analysis, moving from biological essentialism to a systematic institutional critique and a vision of universal human rights.</p>",
-            broa: "<p><strong>Beliefs:</strong> White supremacy is a total system requiring comprehensive resistance. Black self-determination is an imperative for authentic liberation. A revolutionary transformation is necessary, not gradual reform.</p><p><strong>Rules:</strong> Tell the truth about white supremacy without compromise. Prioritize continuous self-education and Black unity. Build international solidarity.</p><p><strong>Ontology:</strong> Racism is embedded in institutional structures. Human dignity requires collective self-determination and cultural autonomy.</p><p><strong>Authenticity:</strong> An integration of sophisticated analysis with grassroots Black experience.</p>",
+            assemblyHistory: `<p><strong>Early Formation (1925-1946):</strong> His PRF was shaped by family trauma, systematic white violence, and institutional racism. Street life in Roxbury and Harlem developed his survival capabilities and understanding of underground economic systems.</p><p><strong>Prison Transformation (1946-1952):</strong> Incarceration catalyzed a fundamental reconstruction of his identity through systematic self-education and conversion to the Nation of Islam, which provided a framework for understanding white supremacy.</p><p><strong>Pilgrimage and Universal Vision (1964-1965):</strong> His Hajj to Mecca catalyzed a second fundamental reconstruction of his racial analysis, moving from biological essentialism to a systematic institutional critique and a vision of universal human rights.</p>`,
+            broa: `<p><strong>Beliefs:</strong> White supremacy is a total system requiring comprehensive resistance. Black self-determination is an imperative for authentic liberation. A revolutionary transformation is necessary, not gradual reform.</p><p><strong>Rules:</strong> Tell the truth about white supremacy without compromise. Prioritize continuous self-education and Black unity. Build international solidarity.</p><p><strong>Ontology:</strong> Racism is embedded in institutional structures. Human dignity requires collective self-determination and cultural autonomy.</p><p><strong>Authenticity:</strong> An integration of sophisticated analysis with grassroots Black experience.</p>`,
             atcf: "Successfully integrated street survival experience, self-education achievements, religious conversion, and evolving political analysis while maintaining narrative coherence and an authentic voice throughout major personal and intellectual transformations.",
             fop: "His work was oriented toward the development of systematic frameworks for independent Black institutions, a global human rights movement that connected American racism to international imperialism, and educational programs to foster revolutionary consciousness.",
             capabilities: ["Capability for Self-Transformation and Public Revision", "Capability for Articulating Oppressed Voices", "Capability for Intellectual Honesty", "Media Manipulation and Message Control"],
@@ -673,8 +670,8 @@ Intellectual-Organizational Integration: Demonstrated capacity for coordinating 
             summary: "Mandela's PRF emerged from the intersection of Xhosa royal lineage and colonial education, driving him to coordinate traditional African leadership values with modern democratic and reconciliatory transformation.",
             bioLink: "https://www.britannica.com/biography/Nelson-Mandela",
             videoUrl: null,
-            assemblyHistory: "<p><strong>Early Formation (1918-1940):</strong> His PRF developed within traditional Xhosa governance contexts emphasizing consensus-building and moral leadership. Methodist education integrated this with Western academic systems.</p><p><strong>ANC Leadership (1940-1962):</strong> Rose as a leader in the ANC, shifting from nonviolent resistance to supporting armed struggle, demonstrating strategic thinking that adapted methods to changing circumstances.</p><p><strong>Prison & Negotiation (1962-1990):</strong> Transformed Robben Island into a 'prison university,' coordinating educational development with political organizing, and eventually leading secret negotiations with the apartheid government.</p><p><strong>Presidency (1990-1999):</strong> Emerged from prison with a focus on peaceful transition, demonstrating an unprecedented integration of revolutionary credentials with democratic statesmanship and strategic reconciliation.</p>",
-            broa: "<p><strong>Beliefs:</strong> The possibility of a nonracial democracy. Sustainable peace requires addressing systematic injustices while building inclusive institutions (reconciliation through justice).</p><p><strong>Rules:</strong> Principled pragmatism—maintaining core principles while adapting tactics. Prioritizing consensus-building and dialogue.</p><p><strong>Ontology:</strong> Universal human dignity regardless of race. Democratic participation as essential for legitimate governance.</p><p><strong>Authenticity:</strong> An integration of his revolutionary commitment with statesmanlike responsibility for all citizens.</p>",
+            assemblyHistory: `<p><strong>Early Formation (1918-1940):</strong> His PRF developed within traditional Xhosa governance contexts emphasizing consensus-building and moral leadership. Methodist education integrated this with Western academic systems.</p><p><strong>ANC Leadership (1940-1962):</strong> Rose as a leader in the ANC, shifting from nonviolent resistance to supporting armed struggle, demonstrating strategic thinking that adapted methods to changing circumstances.</p><p><strong>Prison & Negotiation (1962-1990):</strong> Transformed Robben Island into a 'prison university,' coordinating educational development with political organizing, and eventually leading secret negotiations with the apartheid government.</p><p><strong>Presidency (1990-1999):</strong> Emerged from prison with a focus on peaceful transition, demonstrating an unprecedented integration of revolutionary credentials with democratic statesmanship and strategic reconciliation.</p>`,
+            broa: `<p><strong>Beliefs:</strong> The possibility of a nonracial democracy. Sustainable peace requires addressing systematic injustices while building inclusive institutions (reconciliation through justice).</p><p><strong>Rules:</strong> Principled pragmatism—maintaining core principles while adapting tactics. Prioritizing consensus-building and dialogue.</p><p><strong>Ontology:</strong> Universal human dignity regardless of race. Democratic participation as essential for legitimate governance.</p><p><strong>Authenticity:</strong> An integration of his revolutionary commitment with statesmanlike responsibility for all citizens.</p>`,
             atcf: "Successfully integrated traditional Xhosa leadership, colonial legal education, revolutionary commitment, and democratic statesmanship while maintaining a coherent narrative and authentic voice throughout major transformations over nearly eight decades.",
             fop: "His work was oriented toward establishing sustainable democratic institutions and a truth and reconciliation model that could address historical injustices while building an inclusive future, serving as an international model for transitional justice.",
             capabilities: ["Capability for Forgiveness and Reconciliation", "Capability for Long-Term Strategic Patience", "Capability for Holding Contradictory Roles (Freedom Fighter and Peacemaker)", "Multi-Racial Coalition Building"],
@@ -734,8 +731,8 @@ International-Domestic Coordination: Demonstrated capacity for coordinating inte
             summary: "Carson's PRF emerged from a synthesis of rural nature immersion, rigorous scientific education, and literary skill, driving her to coordinate scientific knowledge with public consciousness to protect the environment.",
             bioLink: "https://www.britannica.com/biography/Rachel-Carson",
             videoUrl: null,
-            assemblyHistory: "<p><strong>Early Formation (1907-1932):</strong> Grew up on a farm, providing foundational experiential knowledge of ecological relationships. Combined a literary sensibility with empirical observation, and navigated systematic gender discrimination in scientific fields.</p><p><strong>Government Service & Writing (1932-1952):</strong> As an aquatic biologist and editor for the U.S. Fish and Wildlife Service, she coordinated rigorous research with effective public communication. Her books, including the Pulitzer Prize-winning *The Sea Around Us*, made marine ecology accessible to the public.</p><p><strong>'Silent Spring' & Advocacy (1952-1964):</strong> Her investigation into DDT coordinated complex scientific analysis with the moral courage to challenge powerful chemical industry interests, catalyzing the modern environmental movement.</p>",
-            broa: "<p><strong>Beliefs:</strong> A fundamental ecological interconnection where human actions have cascading consequences. A moral imperative for scientists to communicate findings that impact public health. Humans are members of, not masters over, the biotic community.</p><p><strong>Rules:</strong> Maintain absolute scientific rigor. Translate complex concepts into clear, engaging prose. Preserve independence from industry influence.</p><p><strong>Ontology:</strong> The natural world is composed of dynamic, interconnected living systems, not mechanical resources. Environmental facts carry moral implications.</p><p><strong>Authenticity:</strong> An integration of rigorous scientific analysis with compelling literary expression.</p>",
+            assemblyHistory: `<p><strong>Early Formation (1907-1932):</strong> Grew up on a farm, providing foundational experiential knowledge of ecological relationships. Combined a literary sensibility with empirical observation, and navigated systematic gender discrimination in scientific fields.</p><p><strong>Government Service & Writing (1932-1952):</strong> As an aquatic biologist and editor for the U.S. Fish and Wildlife Service, she coordinated rigorous research with effective public communication. Her books, including the Pulitzer Prize-winning *The Sea Around Us*, made marine ecology accessible to the public.</p><p><strong>'Silent Spring' & Advocacy (1952-1964):</strong> Her investigation into DDT coordinated complex scientific analysis with the moral courage to challenge powerful chemical industry interests, catalyzing the modern environmental movement.</p>`,
+            broa: `<p><strong>Beliefs:</strong> A fundamental ecological interconnection where human actions have cascading consequences. A moral imperative for scientists to communicate findings that impact public health. Humans are members of, not masters over, the biotic community.</p><p><strong>Rules:</strong> Maintain absolute scientific rigor. Translate complex concepts into clear, engaging prose. Preserve independence from industry influence.</p><p><strong>Ontology:</strong> The natural world is composed of dynamic, interconnected living systems, not mechanical resources. Environmental facts carry moral implications.</p><p><strong>Authenticity:</strong> An integration of rigorous scientific analysis with compelling literary expression.</p>`,
             atcf: "Successfully integrated her childhood nature experience, scientific education, government service, and environmental advocacy while maintaining a coherent narrative and authentic voice throughout her life.",
             fop: "Her work was oriented toward catalyzing a durable environmental movement. She aimed to develop widespread ecological literacy, establish a precautionary principle in policy, and foster an ethics that recognizes the intrinsic value of nature.",
             capabilities: ["Capability for Translating Science into Public Moral Action", "Capability for Resisting Corporate Disinformation", "Capability for Ecological Empathy", "Scientific-Literary Communication"],
@@ -786,8 +783,8 @@ Present-Future Orientation: Authentic environmental stewardship required coordin
             summary: "Salk's PRF emerged from his immigrant heritage and exceptional education, driving him to coordinate rigorous scientific research with a humanitarian commitment to public health and democratic access to medicine.",
             bioLink: "https://www.britannica.com/biography/Jonas-Salk",
             videoUrl: null,
-            assemblyHistory: "<p><strong>Early Formation (1914-1939):</strong> His PRF was shaped by his working-class Jewish heritage, which emphasized education and communal responsibility. Medical school integrated scientific rigor with a humanitarian medical tradition.</p><p><strong>Vaccine Innovation (1939-1955):</strong> His work on influenza vaccines during WWII and his leadership at the University of Pittsburgh culminated in the systematic development of the killed-virus polio vaccine, a project that required coordinating scientific, regulatory, and public domains under intense scrutiny.</p><p><strong>Public Health Leadership (1955-1995):</strong> His decision to make the polio vaccine freely available by refusing a patent established a precedent for treating medical breakthroughs as public goods. He later founded the Salk Institute, dedicated to interdisciplinary, humanitarian research.</p>",
-            broa: "<p><strong>Beliefs:</strong> Science is a public service; scientific knowledge, especially in medicine, belongs to humanity. Preventive medicine is more effective than treatment. Complex health challenges require interdisciplinary collaboration.</p><p><strong>Rules:</strong> Absolute commitment to the rigorous scientific method. A responsibility to communicate research clearly to the public. Active promotion of scientific collaboration over competition.</p><p><strong>Ontology:</strong> Human health is an integration of biological and social dimensions. Scientific knowledge and humanistic values are not in conflict but mutually enhance each other.</p><p><strong>Authenticity:</strong> An integration of rigorous empirical investigation with compassionate concern for human suffering.</p>",
+            assemblyHistory: `<p><strong>Early Formation (1914-1939):</strong> His PRF was shaped by his working-class Jewish heritage, which emphasized education and communal responsibility. Medical school integrated scientific rigor with a humanitarian medical tradition.</p><p><strong>Vaccine Innovation (1939-1955):</strong> His work on influenza vaccines during WWII and his leadership at the University of Pittsburgh culminated in the systematic development of the killed-virus polio vaccine, a project that required coordinating scientific, regulatory, and public domains under intense scrutiny.</p><p><strong>Public Health Leadership (1955-1995):</strong> His decision to make the polio vaccine freely available by refusing a patent established a precedent for treating medical breakthroughs as public goods. He later founded the Salk Institute, dedicated to interdisciplinary, humanitarian research.</p>`,
+            broa: `<p><strong>Beliefs:</strong> Science is a public service; scientific knowledge, especially in medicine, belongs to humanity. Preventive medicine is more effective than treatment. Complex health challenges require interdisciplinary collaboration.</p><p><strong>Rules:</strong> Absolute commitment to the rigorous scientific method. A responsibility to communicate research clearly to the public. Active promotion of scientific collaboration over competition.</p><p><strong>Ontology:</strong> Human health is an integration of biological and social dimensions. Scientific knowledge and humanistic values are not in conflict but mutually enhance each other.</p><p><strong>Authenticity:</strong> An integration of rigorous empirical investigation with compassionate concern for human suffering.</p>`,
             atcf: "Successfully integrated his working-class background, academic excellence, military service, and public health advocacy while maintaining a coherent narrative and authentic voice throughout his long career.",
             fop: "His work was oriented toward creating a 'global health democracy' where medical advances benefit all people. He sought to build an interdisciplinary science focused on prevention and to foster a scientific-humanitarian education for future generations.",
             capabilities: ["Capability for Scientific Altruism", "Capability for Public Trust Building", "Capability for Redefining the Value of an Invention", "Multi-Disciplinary Research Integration"],
@@ -889,7 +886,7 @@ Coordination Capabilities (C)
 Multi-Media Artistic Integration: Exceptional ability to coordinate diverse artistic media including sculpture, installation, photography, film, social media, and architectural design while maintaining coherent conceptual frameworks and political critique across different creative contexts and audience expectations.
 Cultural-Political Translation: Sophisticated capacity for translating between Chinese and international cultural contexts while maintaining authentic voice and political critique, creating artistic works that can function effectively across different cultural and political systems without losing essential meaning.
 Individual-Collective Resistance Coordination: Advanced ability to coordinate personal artistic practice with broader cultural and political movements while maintaining creative independence and avoiding both isolated individualism and collective conformity that might compromise artistic integrity.
-Local-Global Network Development: Demonstrated capacity for building international artistic and political networks while maintaining authentic connection to Chinese cultural heritage and specific political circumstances, creating sustainable frameworks for cultural resistance and democratic advocacy.`
+Local-Global Network Development: Demonstrated capacity for building international artistic and political networks while maintaining authentic connection to Chinese cultural heritage and specific political circumstances, creating sustainable frameworks for cultural resistance and democratic advocacy.`,
         },
         {
             name: "The 14th Dalai Lama",
@@ -949,7 +946,7 @@ Coordination Capabilities (C)
 Multi-Cultural-Religious Communication: Exceptional ability to communicate Buddhist teachings and Tibetan concerns across diverse cultural, religious, and secular audiences while maintaining authentic spiritual voice and avoiding both religious sectarianism and superficial universalism that loses specific wisdom traditions.
 Contemplative-Political Integration: Sophisticated capacity for coordinating intensive spiritual practice with demanding political leadership and international advocacy, maintaining contemplative foundation while engaging complex political negotiations and public responsibilities without compromising either dimension.
 Traditional-Modern Synthesis: Advanced ability to preserve ancient Tibetan Buddhist culture while adapting to contemporary global circumstances, creating frameworks for cultural transmission that maintain authentic tradition while enabling creative development and contemporary relevance.
-Individual-Institutional Leadership: Demonstrated capacity for exercising traditional religious authority while building democratic institutions and processes, creating models for evolutionary development of ancient leadership systems toward contemporary governance while preserving essential spiritual and cultural elements.`
+Individual-Institutional Leadership: Demonstrated capacity for exercising traditional religious authority while building democratic institutions and processes, creating models for evolutionary development of ancient leadership systems toward contemporary governance while preserving essential spiritual and cultural elements.`,
         },
         {
             name: "Malala Yousafzai",
@@ -1004,7 +1001,7 @@ Authenticity Criteria (A+):
 Courage-Prudence Integration: Authentic advocacy required coordination between moral courage to challenge dangerous opposition and prudential wisdom to sustain effective long-term activism, avoiding both reckless endangerment and paralyzed caution that abandons essential commitments.
 Individual-Collective Identity Balance: Personal authenticity demanded simultaneous attention to individual educational and professional development and collective advocacy responsibility, refusing to sacrifice either dimension while maintaining systematic coordination throughout changing circumstances.
 Cultural-Global Engagement Synthesis: Genuine leadership involved maintaining authentic Pashtun and Islamic identity while building international solidarity and advocacy, preserving cultural grounding while engaging universal human rights framework and global educational development.
-Education-Justice Coordination: Authentic educational advocacy required understanding connections between educational access and broader social justice issues while maintaining primary focus on education as foundation for human development and democratic participation.`
+Education-Justice Coordination: Authentic educational advocacy required understanding connections between educational access and broader social justice issues while maintaining primary focus on education as foundation for human development and democratic participation.`,
         },
         {
             name: "Virginia Held",
@@ -1064,7 +1061,7 @@ Coordination Capabilities (C)
 Traditional-Feminist Philosophy Integration: Exceptional ability to master traditional philosophical methods while developing systematic feminist alternatives, creating care ethics framework that engages seriously with established moral theory while offering genuine theoretical innovations and comprehensive alternative approaches.
 Abstract-Concrete Reasoning Synthesis: Sophisticated capacity for coordinating systematic theoretical development with attention to particular caring relationships and practical moral challenges, maintaining philosophical rigor while grounding theory in actual human experience and moral practice.
 Individual-Institutional Academic Navigation: Advanced ability to build successful academic career while challenging institutional structures and philosophical orthodoxies, creating space for feminist philosophical development while maintaining scholarly credibility and institutional influence.
-Interdisciplinary-Disciplinary Coordination: Demonstrated capacity for engaging multiple academic disciplines while maintaining philosophical identity and theoretical coherence, building care ethics through coordination with empirical research while preserving philosophical analytical methods and systematic approach.`
+Interdisciplinary-Disciplinary Coordination: Demonstrated capacity for engaging multiple academic disciplines while maintaining philosophical identity and theoretical coherence, building care ethics through coordination with empirical research while preserving philosophical analytical methods and systematic approach.`,
         },
         {
             name: "Wangari Maathai",
@@ -1128,7 +1125,7 @@ Coordination Capabilities (C)
 Scientific-Traditional Knowledge Integration: Exceptional ability to coordinate Western scientific training with indigenous Kikuyu environmental knowledge while building community environmental programs that honored both knowledge systems without losing effectiveness or cultural authenticity.
 Environmental-Political Activism Synthesis: Sophisticated capacity for coordinating environmental restoration with democratic activism and human rights advocacy while maintaining focus on community empowerment and avoiding both narrow environmentalism and unfocused political activism.
 Local-International Leadership Development: Advanced ability to build grassroots community organizing while engaging international environmental policy and global environmental movements, maintaining community authenticity while achieving international influence and recognition.
-Individual-Institutional Capacity Building: Demonstrated capacity for coordinating personal leadership with sustainable institutional development while building Green Belt Movement as organization that could continue environmental and democratic work beyond individual charismatic leadership.`
+Individual-Institutional Capacity Building: Demonstrated capacity for coordinating personal leadership with sustainable institutional development while building Green Belt Movement as organization that could continue environmental and democratic work beyond individual charismatic leadership.`,
         },
         {
             name: "Oren Lyons",
@@ -1188,7 +1185,7 @@ Coordination Capabilities (C)
 Traditional-Modern Knowledge Integration: Exceptional ability to coordinate ancient Haudenosaunee governance principles with contemporary political and environmental challenges while maintaining cultural authenticity and avoiding both cultural fossilization and assimilationist compromise of traditional wisdom.
 Indigenous-Global Communication: Sophisticated capacity for translating traditional indigenous knowledge for international audiences while preserving sacred teachings and avoiding appropriation, creating frameworks for cross-cultural dialogue that respects indigenous intellectual sovereignty and cultural protocols.
 Spiritual-Political Leadership Synthesis: Advanced ability to coordinate traditional ceremonial responsibilities with practical political advocacy and environmental leadership while maintaining both spiritual authority and effective governance within traditional and contemporary contexts.
-Inter-Generational Knowledge Transmission: Demonstrated capacity for teaching traditional knowledge to younger generations while adapting educational methods to contemporary circumstances, creating sustainable frameworks for cultural continuity and leadership development.`
+Inter-Generational Knowledge Transmission: Demonstrated capacity for teaching traditional knowledge to younger generations while adapting educational methods to contemporary circumstances, creating sustainable frameworks for cultural continuity and leadership development.`,
         },
         {
             name: "Thich Nhat Hanh",
@@ -1248,77 +1245,75 @@ Coordination Capabilities (C)
 Contemplative-Social Action Integration: Exceptional ability to coordinate intensive Buddhist meditation practice with direct social engagement and peace work while maintaining spiritual authenticity and avoiding both escapist mysticism and secular activism without contemplative foundation.
 Traditional-Modern Buddhist Synthesis: Sophisticated capacity for preserving essential Buddhist contemplative wisdom while adapting teaching methods for contemporary Western and international audiences, creating accessible frameworks that maintained depth while enabling cross-cultural understanding.
 Individual-Community Development Coordination: Advanced ability to support individual contemplative development while building sustainable spiritual communities that could serve both personal spiritual growth and broader social transformation through mindful living and compassionate action.
-Inter-Faith-Secular Dialogue Integration: Demonstrated capacity for engaging diverse religious traditions and secular contexts while maintaining authentic Buddhist identity and practice, creating frameworks for spiritual cooperation and shared contemplative understanding across cultural boundaries.`
+Inter-Faith-Secular Dialogue Integration: Demonstrated capacity for engaging diverse religious traditions and secular contexts while maintaining authentic Buddhist identity and practice, creating frameworks for spiritual cooperation and shared contemplative understanding across cultural boundaries.`,
         },
-        
         {
-    name: "Roger Boisjoly",
-    lifespan: "1938-2012",
-    title: "A PRF Analysis of Engineering Ethics and Professional Moral Courage",
-    summary: "A booster rocket engineer for the Space Shuttle Challenger who demonstrated profound moral courage by attempting to stop the fatal 1986 launch and later exposing the institutional failures that led to the disaster.",
-    bioLink: "https://en.wikipedia.org/wiki/Roger_Boisjoly",
-    videoUrl: "https://youtu.be/3gdhEpiHhMA", // <-- CORRECTED FROM videourl to videoUrl
-    assemblyHistory: `<p><strong>Early Formation (1938-1979):</strong> His PRF was shaped by a Catholic, working-class upbringing that valued integrity and an engineering education that emphasized empirical evidence and safety. His early career in the aerospace industry, including on NASA's Apollo program, instilled a deep respect for systematic safety protocols.</p><p><strong>Safety Advocacy at Morton Thiokol (1979-1986):</strong> As an expert on the Space Shuttle's solid rocket boosters, he systematically investigated and documented a critical design flaw in the O-rings. He repeatedly advocated internally for a solution, meeting systematic resistance from management focused on cost and schedule.</p><p><strong>Whistleblowing and Ethical Witness (1986-2012):</strong> After his pre-launch warnings were overridden, leading to the Challenger disaster, he became a crucial whistleblower. His truthful testimony to the Rogers Commission exposed the flawed decision-making process, at great personal and professional cost. He dedicated the rest of his life to advocating for engineering ethics.</p>`,
-    broa: `<p><strong>Beliefs:</strong> Engineering decisions must be based on empirical evidence and technical truth, not managerial or financial pressure. Professional competence creates a non-negotiable moral obligation to protect public safety. Individual moral courage is essential for correcting systemic institutional failures.</p><p><strong>Rules:</strong> Systematically document and persistently communicate all safety concerns through official channels. When internal channels fail and lives are at risk, speak the truth to outside authorities (whistleblowing). Prioritize public safety and technical facts over career security.</p><p><strong>Ontology:</strong> Technical expertise and moral responsibility are inseparably integrated in the engineering profession. An institution's safety culture is a direct reflection of its ethical integrity.</p><p><strong>Authenticity:</strong> An unwavering integration of one's technical competence with one's moral responsibility to the public, regardless of the personal consequences.</p>`,
-    atcf: "Successfully integrated his technical engineering training, professional experience, and deeply held moral values into a coherent identity. His actions before, during, and after the Challenger disaster demonstrate a perfect, albeit tragic, coherence between his professional assessment of risk and his personal ethical duty.",
-    fop: "His work was oriented toward preventing future disasters by creating a more robust ethical culture in engineering. He advocated for institutional reforms and educational frameworks that would protect professional dissent and ensure that the lessons from the Challenger disaster would inform and protect future generations.",
-    capabilities: ["Technical-Ethical Integration", "Individual-Institutional Navigation", "Expert-Public Communication", "Professional Moral Courage"],
-    fullPrfAnalysis: `
-        <h4 class="font-bold mb-2">Assembly History: From Technical Excellence to Ethical Witness</h4>
-        
-        <h5 class="font-semibold mt-3 mb-1">Early Formation and Engineering Education (1938-1960 CE)</h5>
-        <p class="mb-2">Roger Boisjoly's Personal Reality Framework emerged from the intersection of post-Depression American values, a Catholic moral formation, and emerging aerospace technology. Born in Lowell, Massachusetts, his PRF was grounded in a working-class ethos that prioritized honest work and community welfare. His mechanical engineering education provided rigorous technical training and a systematic, evidence-based approach to problem-solving, where safety was a fundamental professional obligation. His military service in the U.S. Air Force further solidified his awareness of how technical decisions could have life-and-death consequences.</p>
-        
-        <h5 class="font-semibold mt-3 mb-1">Early Career and Professional Development (1960-1979 CE)</h5>
-        <p class="mb-2">His early career in the aerospace industry, including work on NASA's Apollo program, gave him direct experience with systematic safety protocols and quality assurance in high-stakes environments. He developed deep expertise in materials science, particularly the behavior of polymers under extreme conditions, which became crucial for his later analysis of the Space Shuttle's O-ring performance. During this time, he gradually recognized that engineering competence required not just technical skill but a moral responsibility for public safety.</p>
-        
-        <h5 class="font-semibold mt-3 mb-1">Morton Thiokol Career and Shuttle Program Involvement (1979-1987 CE)</h5>
-        <p class="mb-2">Working at Morton Thiokol on the Space Shuttle's solid rocket boosters, Boisjoly systematically investigated and documented critical erosion and blow-by problems with the O-rings. He persistently attempted to communicate these safety concerns through official organizational channels but experienced systematic resistance from a management culture focused on schedule and cost over safety. This culminated in the teleconference on January 27, 1986, where he and other engineers recommended against the Challenger launch due to cold weather concerns, a recommendation that was ultimately overridden by management in a decision that would prove fatal.</p>
-        
-        <h5 class="font-semibold mt-3 mb-1">Challenger Disaster and Whistleblowing (1986-1988 CE)</h5>
-        <p class="mb-2">Following the disaster, Boisjoly’s commitment to factual accuracy led him to cooperate fully with the investigation. His testimony before the Rogers Commission was a demonstration of exceptional moral courage, as he publicly contradicted his employer to reveal the institutional failures in the safety decision-making process. This act of whistleblowing led to severe professional retaliation, including workplace isolation and demotion, forcing his early retirement and causing significant personal distress.</p>
-        
-        <h5 class="font-semibold mt-3 mb-1">Post-Career Ethics Advocacy and Legacy Formation (1987-2012 CE)</h5>
-        <p class="mb-2">Boisjoly dedicated the rest of his life to transforming his traumatic experience into a constructive legacy. He became a renowned speaker on engineering ethics, advocating for institutional reforms and educational frameworks to prevent future disasters. His work supporting other whistleblowers and preserving the memory of the Challenger disaster cemented his role as a pivotal figure in modern professional ethics, eventually earning him the Prize for Scientific Freedom and Responsibility from the American Association for the Advancement of Science.</p>
+            name: "Roger Boisjoly",
+            lifespan: "1938-2012",
+            title: "A PRF Analysis of Engineering Ethics and Professional Moral Courage",
+            summary: "A booster rocket engineer for the Space Shuttle Challenger who demonstrated profound moral courage by attempting to stop the fatal 1986 launch and later exposing the institutional failures that led to the disaster.",
+            bioLink: "https://en.wikipedia.org/wiki/Roger_Boisjoly",
+            videoUrl: "https://youtu.be/3gdhEpiHhMA",
+            assemblyHistory: `<p><strong>Early Formation (1938-1979):</strong> His PRF was shaped by a Catholic, working-class upbringing that valued integrity and an engineering education that emphasized empirical evidence and safety. His early career in the aerospace industry, including on NASA's Apollo program, instilled a deep respect for systematic safety protocols.</p><p><strong>Safety Advocacy at Morton Thiokol (1979-1986):</strong> As an expert on the Space Shuttle's solid rocket boosters, he systematically investigated and documented a critical design flaw in the O-rings. He repeatedly advocated internally for a solution, meeting systematic resistance from management focused on cost and schedule.</p><p><strong>Whistleblowing and Ethical Witness (1986-2012):</strong> After his pre-launch warnings were overridden, leading to the Challenger disaster, he became a crucial whistleblower. His truthful testimony to the Rogers Commission exposed the flawed decision-making process, at great personal and professional cost. He dedicated the rest of his life to advocating for engineering ethics.</p>`,
+            broa: `<p><strong>Beliefs:</strong> Engineering decisions must be based on empirical evidence and technical truth, not managerial or financial pressure. Professional competence creates a non-negotiable moral obligation to protect public safety. Individual moral courage is essential for correcting systemic institutional failures.</p><p><strong>Rules:</strong> Systematically document and persistently communicate all safety concerns through official channels. When internal channels fail and lives are at risk, speak the truth to outside authorities (whistleblowing). Prioritize public safety and technical facts over career security.</p><p><strong>Ontology:</strong> Technical expertise and moral responsibility are inseparably integrated in the engineering profession. An institution's safety culture is a direct reflection of its ethical integrity.</p><p><strong>Authenticity:</strong> An unwavering integration of one's technical competence with one's moral responsibility to the public, regardless of the personal consequences.</p>`,
+            atcf: "Successfully integrated his technical engineering training, professional experience, and deeply held moral values into a coherent identity. His actions before, during, and after the Challenger disaster demonstrate a perfect, albeit tragic, coherence between his professional assessment of risk and his personal ethical duty.",
+            fop: "His work was oriented toward preventing future disasters by creating a more robust ethical culture in engineering. He advocated for institutional reforms and educational frameworks that would protect professional dissent and ensure that the lessons from the Challenger disaster would inform and protect future generations.",
+            capabilities: ["Technical-Ethical Integration", "Individual-Institutional Navigation", "Expert-Public Communication", "Professional Moral Courage"],
+            fullPrfAnalysis: `
+                <h4 class="font-bold mb-2">Assembly History: From Technical Excellence to Ethical Witness</h4>
+                
+                <h5 class="font-semibold mt-3 mb-1">Early Formation and Engineering Education (1938-1960 CE)</h5>
+                <p class="mb-2">Roger Boisjoly's Personal Reality Framework emerged from the intersection of post-Depression American values, a Catholic moral formation, and emerging aerospace technology. Born in Lowell, Massachusetts, his PRF was grounded in a working-class ethos that prioritized honest work and community welfare. His mechanical engineering education provided rigorous technical training and a systematic, evidence-based approach to problem-solving, where safety was a fundamental professional obligation. His military service in the U.S. Air Force further solidified his awareness of how technical decisions could have life-and-death consequences.</p>
+                
+                <h5 class="font-semibold mt-3 mb-1">Early Career and Professional Development (1960-1979 CE)</h5>
+                <p class="mb-2">His early career in the aerospace industry, including work on NASA's Apollo program, gave him direct experience with systematic safety protocols and quality assurance in high-stakes environments. He developed deep expertise in materials science, particularly the behavior of polymers under extreme conditions, which became crucial for his later analysis of the Space Shuttle's O-ring performance. During this time, he gradually recognized that engineering competence required not just technical skill but a moral responsibility for public safety.</p>
+                
+                <h5 class="font-semibold mt-3 mb-1">Morton Thiokol Career and Shuttle Program Involvement (1979-1987 CE)</h5>
+                <p class="mb-2">Working at Morton Thiokol on the Space Shuttle's solid rocket boosters, Boisjoly systematically investigated and documented critical erosion and blow-by problems with the O-rings. He persistently attempted to communicate these safety concerns through official organizational channels but experienced systematic resistance from a management culture focused on schedule and cost over safety. This culminated in the teleconference on January 27, 1986, where he and other engineers recommended against the Challenger launch due to cold weather concerns, a recommendation that was ultimately overridden by management in a decision that would prove fatal.</p>
+                
+                <h5 class="font-semibold mt-3 mb-1">Challenger Disaster and Whistleblowing (1986-1988 CE)</h5>
+                <p class="mb-2">Following the disaster, Boisjoly’s commitment to factual accuracy led him to cooperate fully with the investigation. His testimony before the Rogers Commission was a demonstration of exceptional moral courage, as he publicly contradicted his employer to reveal the institutional failures in the safety decision-making process. This act of whistleblowing led to severe professional retaliation, including workplace isolation and demotion, forcing his early retirement and causing significant personal distress.</p>
+                
+                <h5 class="font-semibold mt-3 mb-1">Post-Career Ethics Advocacy and Legacy Formation (1987-2012 CE)</h5>
+                <p class="mb-2">Boisjoly dedicated the rest of his life to transforming his traumatic experience into a constructive legacy. He became a renowned speaker on engineering ethics, advocating for institutional reforms and educational frameworks to prevent future disasters. His work supporting other whistleblowers and preserving the memory of the Challenger disaster cemented his role as a pivotal figure in modern professional ethics, eventually earning him the Prize for Scientific Freedom and Responsibility from the American Association for the Advancement of Science.</p>
 
-        <h4 class="font-bold mb-2 mt-4">Personal Reality Framework Configuration</h4>
-        <h5 class="font-semibold mt-3 mb-1">BROA+ (Beliefs, Rules, Ontological Commitments, Authenticity Criteria)</h5>
-        <p class="mb-2"><strong>Belief System (B):</strong></p>
-        <ul class="list-disc list-inside space-y-1 text-sm">
-            <li><strong>Technical Truth and Safety Priority:</strong> A profound conviction that engineering decisions must be based on empirical evidence and systematic analysis, with public safety as the ultimate authority, overriding organizational pressures.</li>
-            <li><strong>Professional Moral Responsibility:</strong> A core understanding that engineering competence creates an inseparable moral obligation to protect the public and speak the truth about technical risks.</li>
-            <li><strong>Institutional Reform Through Individual Courage:</strong> A systematic belief that positive institutional change requires individual professionals willing to challenge organizational failures.</li>
-            <li><strong>Education and Prevention Focus:</strong> A belief that engineering disasters stem from systematic failures that can be prevented through better education and a professional culture that prioritizes safety.</li>
-        </ul>
-        <p class="mt-2 mb-2"><strong>Rule System (R):</strong></p>
-        <ul class="list-disc list-inside space-y-1 text-sm">
-            <li><strong>Evidence-Based Decision Making:</strong> Consistently apply technical analysis and empirical data to safety decisions, resisting pressure to compromise judgment for non-technical reasons.</li>
-            <li><strong>Persistent Safety Advocacy:</strong> Systematically communicate safety concerns through all available channels, even in the face of institutional resistance.</li>
-            <li><strong>Truth-Telling and Documentation:</strong> Maintain accurate technical records and communicate honestly about safety risks to enable informed decision-making.</li>
-            <li><strong>Whistleblowing When Necessary:</strong> A willingness to go outside normal organizational channels to protect public safety when internal advocacy fails.</li>
-        </ul>
-        <p class="mt-2 mb-2"><strong>Ontological Commitments (O):</strong></p>
-        <ul class="list-disc list-inside space-y-1 text-sm">
-            <li><strong>Technical-Moral Integration:</strong> A framework where technical expertise and moral responsibility are not separate domains but are mutually enhancing aspects of a single professional identity.</li>
-            <li><strong>Present-Future Safety Coordination:</strong> A conviction that current technical decisions have long-term consequences that require systematic consideration of future risks over short-term organizational benefits.</li>
-            <li><strong>Expert-Public Communication:</strong> An understanding that technical expertise creates an obligation to educate the public and policymakers about safety risks in accessible terms.</li>
-        </ul>
-        <p class="mt-2 mb-2"><strong>Authenticity Criteria (A+):</strong></p>
-        <ul class="list-disc list-inside space-y-1 text-sm">
-            <li><strong>Technical-Ethical Integration:</strong> Authentic engineering practice requires coordinating technical competence with an unwavering commitment to safety and truth-telling.</li>
-            <li><strong>Professional-Personal Values Synthesis:</strong> A genuine professional identity demands the integration of one's personal moral principles with engineering expertise and institutional responsibility.</li>
-        </ul>
+                <h4 class="font-bold mb-2 mt-4">Personal Reality Framework Configuration</h4>
+                <h5 class="font-semibold mt-3 mb-1">BROA+ (Beliefs, Rules, Ontological Commitments, Authenticity Criteria)</h5>
+                <p class="mb-2"><strong>Belief System (B):</strong></p>
+                <ul class="list-disc list-inside space-y-1 text-sm">
+                    <li><strong>Technical Truth and Safety Priority:</strong> A profound conviction that engineering decisions must be based on empirical evidence and systematic analysis, with public safety as the ultimate authority, overriding organizational pressures.</li>
+                    <li><strong>Professional Moral Responsibility:</strong> A core understanding that engineering competence creates an inseparable moral obligation to protect the public and speak the truth about technical risks.</li>
+                    <li><strong>Institutional Reform Through Individual Courage:</strong> A systematic belief that positive institutional change requires individual professionals willing to challenge organizational failures.</li>
+                    <li><strong>Education and Prevention Focus:</strong> A belief that engineering disasters stem from systematic failures that can be prevented through better education and a professional culture that prioritizes safety.</li>
+                </ul>
+                <p class="mt-2 mb-2"><strong>Rule System (R):</strong></p>
+                <ul class="list-disc list-inside space-y-1 text-sm">
+                    <li><strong>Evidence-Based Decision Making:</strong> Consistently apply technical analysis and empirical data to safety decisions, resisting pressure to compromise judgment for non-technical reasons.</li>
+                    <li><strong>Persistent Safety Advocacy:</strong> Systematically communicate safety concerns through all available channels, even in the face of institutional resistance.</li>
+                    <li><strong>Truth-Telling and Documentation:</strong> Maintain accurate technical records and communicate honestly about safety risks to enable informed decision-making.</li>
+                    <li><strong>Whistleblowing When Necessary:</strong> A willingness to go outside normal organizational channels to protect public safety when internal advocacy fails.</li>
+                </ul>
+                <p class="mt-2 mb-2"><strong>Ontological Commitments (O):</strong></p>
+                <ul class="list-disc list-inside space-y-1 text-sm">
+                    <li><strong>Technical-Moral Integration:</strong> A framework where technical expertise and moral responsibility are not separate domains but are mutually enhancing aspects of a single professional identity.</li>
+                    <li><strong>Present-Future Safety Coordination:</strong> A conviction that current technical decisions have long-term consequences that require systematic consideration of future risks over short-term organizational benefits.</li>
+                    <li><strong>Expert-Public Communication:</strong> An understanding that technical expertise creates an obligation to educate the public and policymakers about safety risks in accessible terms.</li>
+                </ul>
+                <p class="mt-2 mb-2"><strong>Authenticity Criteria (A+):</strong></p>
+                <ul class="list-disc list-inside space-y-1 text-sm">
+                    <li><strong>Technical-Ethical Integration:</strong> Authentic engineering practice requires coordinating technical competence with an unwavering commitment to safety and truth-telling.</li>
+                    <li><strong>Professional-Personal Values Synthesis:</strong> A genuine professional identity demands the integration of one's personal moral principles with engineering expertise and institutional responsibility.</li>
+                </ul>
 
-        <h4 class="font-bold mb-2 mt-4">Coordination Capabilities (C)</h4>
-        <ul class="list-disc list-inside space-y-1 text-sm">
-            <li><strong>Technical-Ethical Integration:</strong> Exceptional ability to coordinate systematic engineering analysis with an unwavering moral commitment to safety and truth-telling.</li>
-            <li><strong>Individual-Institutional Navigation:</strong> Sophisticated capacity for coordinating personal professional integrity with complex organizational dynamics.</li>
-            <li><strong>Expert-Public Communication:</strong> Advanced ability to coordinate technical expertise with accessible public education, maintaining both scientific accuracy and democratic accountability.</li>
-            <li><strong>Present-Future Safety Advocacy:</strong> Demonstrated capacity for coordinating immediate technical work with long-term safety implications.</li>
-        </ul>
-    `
+                <h4 class="font-bold mb-2 mt-4">Coordination Capabilities (C)</h4>
+                <ul class="list-disc list-inside space-y-1 text-sm">
+                    <li><strong>Technical-Ethical Integration:</strong> Exceptional ability to coordinate systematic engineering analysis with an unwavering moral commitment to safety and truth-telling.</li>
+                    <li><strong>Individual-Institutional Navigation:</strong> Sophisticated capacity for coordinating personal professional integrity with complex organizational dynamics.</li>
+                    <li><strong>Expert-Public Communication:</strong> Advanced ability to coordinate technical expertise with accessible public education, maintaining both scientific accuracy and democratic accountability.</li>
+                    <li><strong>Present-Future Safety Advocacy:</strong> Demonstrated capacity for coordinating immediate technical work with long-term safety implications.</li>
+                </ul>
+            `
         }
-        
     ],
     thinkers: [
         {
@@ -1396,21 +1391,21 @@ Future-Oriented Projections (FOP)
 Moral Education Systematization: Development of comprehensive frameworks for ethical education that could transform both individual character and social institutions through systematic cultivation approaches accessible across social boundaries and sustainable across generations.
 Virtue-Based Governance Implementation: Integration of moral leadership principles with practical governmental administration through institutional reforms that coordinate individual character development with collective political wisdom and administrative effectiveness.
 Cultural Wisdom Preservation: Understanding that traditional cultural knowledge requires active interpretation and creative application to serve contemporary moral education while preserving essential insights for ongoing ethical development and social transformation.
-Social Harmony Through Character: Contribution to systematic approaches for building social cohesion and political stability through moral cultivation rather than coercive control, creating sustainable frameworks for collective flourishing based on ethical relationships and virtuous leadership.`
+Social Harmony Through Character: Contribution to systematic approaches for building social cohesion and political stability through moral cultivation rather than coercive control, creating sustainable frameworks for collective flourishing based on ethical relationships and virtuous leadership.`,
         },
         {
             name: "Aristotle",
-    lifespan: "384-322 BCE",
-    title: "A PRF Analysis of Systematic Philosophy, Empirical Investigation, and Comprehensive Knowledge",
-    summary: "Synthesized empirical observation with systematic logic to create a comprehensive framework for understanding ethics, politics, and the natural world.",
-    bioLink: "https://www.britannica.com/biography/Aristotle",
-    videoUrl: null,
-    assemblyHistory: `<p><strong>Platonic Education (384-347 BCE):</strong> Born to a court physician, his PRF was shaped by both medical-scientific observation and a twenty-year education in Plato's Academy, which emphasized systematic dialectic and metaphysical speculation.</p><p><strong>Independent Development (347-335 BCE):</strong> After leaving the Academy, his extensive biological investigations demonstrated an unprecedented integration of detailed empirical observation with theoretical classification. His role as tutor to Alexander of Macedon allowed him to apply philosophical wisdom to practical political education.</p><p><strong>Lyceum Leadership (335-322 BCE):</strong> He founded the Lyceum, creating a framework for collaborative research that coordinated individual philosophical development with collective knowledge advancement across multiple domains. His mature work integrated logic, natural philosophy, ethics, politics, and metaphysics into a coherent systematic framework.</p>`,
-    broa: `<p><strong>Beliefs:</strong> All genuine knowledge forms a coherent, systematic whole. Knowledge requires the coordination of careful empirical observation and rigorous rational analysis. Natural processes and human activities are directed toward ends (telos) that can be rationally understood.</p><p><strong>Rules:</strong> Ground all theoretical claims in careful observation. Apply systematic logical analysis (syllogism, definitions, categories) to all problems. Coordinate theoretical knowledge with practical judgment and ethical action (phronesis).</p><p><strong>Ontology:</strong> Reality is composed of individual substances with essential and accidental properties. Physical objects consist of matter organized by a formal structure.</p><p><strong>Authenticity:</strong> A life of eudaimonia (flourishing) achieved through the coordination of theoretical reason, practical wisdom, and virtuous action.</p>`,
-    atcf: "Successfully integrated his traditional Greek philosophical heritage, Platonic educational foundation, independent research development, and systematic philosophical leadership while maintaining narrative coherence and intellectual authenticity throughout major theoretical and methodological innovations across sixty-two years.",
-    fop: "His philosophical methodology consistently aimed at establishing systematic frameworks for ongoing intellectual investigation and practical wisdom development that could serve multiple generations rather than achieving only immediate theoretical solutions or temporary intellectual recognition.",
-    capabilities: ["Capability for Systematic Categorization", "Capability for Integrating Empirical and Rational Methods", "Capability for Institutionalizing Knowledge", "Empirical-Theoretical Integration"],
-    fullPrfAnalysis: `Aristotle: A PRF Analysis of Systematic Philosophy, Empirical Investigation, and Comprehensive Knowledge
+            lifespan: "384-322 BCE",
+            title: "A PRF Analysis of Systematic Philosophy, Empirical Investigation, and Comprehensive Knowledge",
+            summary: "Synthesized empirical observation with systematic logic to create a comprehensive framework for understanding ethics, politics, and the natural world.",
+            bioLink: "https://www.britannica.com/biography/Aristotle",
+            videoUrl: null,
+            assemblyHistory: `<p><strong>Platonic Education (384-347 BCE):</strong> Born to a court physician, his PRF was shaped by both medical-scientific observation and a twenty-year education in Plato's Academy, which emphasized systematic dialectic and metaphysical speculation.</p><p><strong>Independent Development (347-335 BCE):</strong> After leaving the Academy, his extensive biological investigations demonstrated an unprecedented integration of detailed empirical observation with theoretical classification. His role as tutor to Alexander of Macedon allowed him to apply philosophical wisdom to practical political education.</p><p><strong>Lyceum Leadership (335-322 BCE):</strong> He founded the Lyceum, creating a framework for collaborative research that coordinated individual philosophical development with collective knowledge advancement across multiple domains. His mature work integrated logic, natural philosophy, ethics, politics, and metaphysics into a coherent systematic framework.</p>`,
+            broa: `<p><strong>Beliefs:</strong> All genuine knowledge forms a coherent, systematic whole. Knowledge requires the coordination of careful empirical observation and rigorous rational analysis. Natural processes and human activities are directed toward ends (telos) that can be rationally understood.</p><p><strong>Rules:</strong> Ground all theoretical claims in careful observation. Apply systematic logical analysis (syllogism, definitions, categories) to all problems. Coordinate theoretical knowledge with practical judgment and ethical action (phronesis).</p><p><strong>Ontology:</strong> Reality is composed of individual substances with essential and accidental properties. Physical objects consist of matter organized by a formal structure.</p><p><strong>Authenticity:</strong> A life of eudaimonia (flourishing) achieved through the coordination of theoretical reason, practical wisdom, and virtuous action.</p>`,
+            atcf: "Successfully integrated his traditional Greek philosophical heritage, Platonic educational foundation, independent research development, and systematic philosophical leadership while maintaining narrative coherence and intellectual authenticity throughout major theoretical and methodological innovations across sixty-two years.",
+            fop: "His philosophical methodology consistently aimed at establishing systematic frameworks for ongoing intellectual investigation and practical wisdom development that could serve multiple generations rather than achieving only immediate theoretical solutions or temporary intellectual recognition.",
+            capabilities: ["Capability for Systematic Categorization", "Capability for Integrating Empirical and Rational Methods", "Capability for Institutionalizing Knowledge", "Empirical-Theoretical Integration"],
+            fullPrfAnalysis: `Aristotle: A PRF Analysis of Systematic Philosophy, Empirical Investigation, and Comprehensive Knowledge
 Personal Reality Framework Analysis (384-322 BCE)
 Assembly History: From Platonic Student to Comprehensive Systematic Philosopher
 Early Formation and Platonic Education (384-347 BCE)
@@ -1473,7 +1468,7 @@ Future-Oriented Projections (FOP)
 Systematic Philosophy Institutionalization: Development of comprehensive frameworks for philosophical education and research that could sustain systematic investigation and theoretical development beyond individual philosophical careers through institutional organization and methodological transmission.
 Empirical-Rational Method Integration: Integration of systematic observational research with rigorous logical analysis through methodological frameworks that could serve diverse domains of investigation while maintaining theoretical coherence and empirical adequacy.
 Practical Wisdom Application: Understanding that philosophical knowledge must inform practical decision-making and ethical action through educational approaches that coordinate theoretical understanding with practical judgment and political participation.
-Comprehensive Knowledge Organization: Contribution to systematic approaches for organizing and integrating diverse forms of knowledge and investigation while maintaining both specialized expertise and comprehensive theoretical understanding that serves human flourishing and intellectual development.`
+Comprehensive Knowledge Organization: Contribution to systematic approaches for organizing and integrating diverse forms of knowledge and investigation while maintaining both specialized expertise and comprehensive theoretical understanding that serves human flourishing and intellectual development.`,
         },
         {
             name: "Plotinus",
