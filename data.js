@@ -212,8 +212,6 @@ const appData = {
     }
 ],
 
-
-
     navigators: [
         {
             name: "Socrates",
