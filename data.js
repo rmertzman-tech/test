@@ -158,8 +158,8 @@ const appData = {
                 <li><strong>The Temporal Coherence Framework (ATCF):</strong> A mathematical function for reasoning across time, measuring an agent's ability to maintain a consistent and authentic identity while integrating past, present, and future actions.</li>
             </ul>
             <p class="mb-4">Together, these tools form an integrated system for more robust, actionable, and collaborative reasoning in complex, real-world situations, transforming logic from a purely academic exercise into a practical instrument for human flourishing.</p>
-    
-    },
+
+    }
 ],
 
     navigators: [
