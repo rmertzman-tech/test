@@ -71,65 +71,16 @@ const appData = {
     ],
 
   essays: [
-    {
-        title: "The Recursive Foundation: How We Use Our Framework to Understand Ourselves",
-        summary: "Exploring the 'mirror problem' in ethics and how the PRF's recursive structure allows us to evaluate our own reasoning frameworks.",
-        paperUrl: "https://rmertzman-tech.github.io/Recursive-Foundation-/",
-        videoUrl: null, // Add URL for the video intro here
+    {title: "The Recursive Foundation: How We Use Our Framework to Understand Ourselves",
+            summary: "Exploring the 'mirror problem' in ethics and how the PRF's recursive structure allows us to evaluate our own reasoning frameworks.",
+            paperUrl: "https://rmertzman-tech.github.io/Recursive-Foundation-/",
+            videoUrl: null,
         content: `
             <h2 class="text-2xl font-bold mb-4">The Recursive Foundation: How We Use Our Framework to Understand Ourselves</h2>
             <p class="italic text-gray-600 mb-4">Meta-Constructor Capabilities and the Architecture of Self-Understanding</p>
             <h3 class="text-xl font-semibold mt-6 mb-2">Introduction: From Conceptual Framework to Empirical Science</h3>
             <p class="mb-4">This essay introduces the conceptual foundations for understanding how agents can examine their own reasoning capabilities...[content truncated for brevity]</p>
-        `
-    },
-    {
-        title: "The Integrative Storyline: From Cultural Evolution to Capability-Based Coordination",
-        summary: "A strategic narrative explaining how human psychological diversity is a feature to be leveraged, not a bug to be fixed, through capability-based coordination.",
-        paperUrl: null, 
-        videoUrl: null, // Add URL for the video intro here
-        content: `
-            <h2 class="text-2xl font-bold mb-4">The Integrative Storyline: From Cultural Evolution to Capability-Based Coordination</h2>
-            <p class="italic text-gray-600 mb-4">A Strategic Narrative for Logic, Ethics, and Societal Development</p>
-            <h3 class="text-xl font-semibold mt-6 mb-2">The Central Challenge: Unprecedented Coordination Requirements</h3>
-            <p class="mb-4">Humanity faces coordination challenges unprecedented in scope and urgency...[content truncated for brevity]</p>
-        `
-    },
-    {
-        title: "Two Operating Systems for Truth: Why We Need Both Eternal Foundations and Practical Coordination",
-        summary: "Discusses the deep human need for ultimate Truth and the modern practical need for cooperation across different 'truth-communities,' proposing a dual-operating-system model.",
-        paperUrl: null,
-        videoUrl: null, // Add URL for the video intro here
-        content: `
-            <h2 class="text-2xl font-bold mb-4">Two Operating Systems for Truth</h2>
-            <p class="italic text-gray-600 mb-4">Why We Need Both Eternal Foundations and Practical Coordination</p>
-            <h3 class="text-xl font-semibold mt-6 mb-2">The Ancient Dream of Ultimate Truth</h3>
-            <p class="mb-4">For millennia, humans have been driven by a profound longing to discover the fundamental Truth...[content truncated for brevity]</p>
-        `
-    },
-    {
-        title: "The Architecture of Ethical Reasoning: A Unified Framework for Applied Ethics",
-        summary: "Integrates Cross-Scale Information Organization, Capability-Based Propositions, and Temporal Coherence into a unified framework for ethical analysis and 'Ethical Cartography'.",
-        paperUrl: null,
-        videoUrl: null, // Add URL for the video intro here
-        content: `
-            <h2 class="text-2xl font-bold mb-4">The Architecture of Ethical Reasoning</h2>
-            <p class="italic text-gray-600 mb-4">A Unified Framework for Applied Ethics</p>
-            <h3 class="text-xl font-semibold mt-6 mb-2">From Ethical Theory to Coordination Science</h3>
-            <p class="mb-4">This essay reframes applied ethics as an organizational challenge...[content truncated for brevity]</p>
-        `
-    },
-    {
-        title: "The Logical Toolkit: How Formal Tools Enable Capability-Based Reasoning",
-        summary: "An explanation of the mathematical and logical framework behind practical, capability-based reasoning, including ATL, STIT, and the Temporal Coherence Framework.",
-        paperUrl: null,
-        videoUrl: null, // Add URL for the video intro here
-        content: `
-            <h2 class="text-2xl font-bold mb-4">The Logical Toolkit: How Formal Tools Enable Capability-Based Reasoning</h2>
-            <p class="italic text-gray-600 mb-4">Understanding the Mathematical Framework Behind Practical Logic</p>
-            <h3 class="text-xl font-semibold mt-6 mb-2">The Core Framework: Strategy-Based Truth</h3>
-            <p class="mb-4">This toolkit bridges the gap between abstract logic and practical reasoning...[content truncated for brevity]</p>
-        `
+       
     }.
     {
         title: "The Integrative Storyline: From Cultural Evolution to Capability-Based Coordination",
