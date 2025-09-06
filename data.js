@@ -130,8 +130,7 @@ const appData = {
             <h3 class="text-xl font-semibold mt-6 mb-2">The Core Framework: Strategy-Based Truth</h3>
             <p class="mb-4">This toolkit bridges the gap between abstract logic and practical reasoning...[content truncated for brevity]</p>
         `
-    }
-],
+    }.
     {
         title: "The Integrative Storyline: From Cultural Evolution to Capability-Based Coordination",
         summary: "A strategic narrative explaining how human psychological diversity is a feature to be leveraged, not a bug to be fixed, through capability-based coordination.",
