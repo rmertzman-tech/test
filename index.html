@@ -3,174 +3,1159 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ethical Cartography Lab</title>
+    <title>The Constructor's Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+        .view { display: none; }
+        .view.active { display: block; }
+        .loader {
+            border: 4px solid #e5e7eb;
+            border-top: 4px solid #3b82f6;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 8px;
+            background: #d1d5db;
+            border-radius: 5px;
+            outline: none;
+            opacity: 0.7;
+            transition: opacity .2s;
+        }
+        input[type="range"]:hover {
+            opacity: 1;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #3b82f6;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+        input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            background: #3b82f6;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+        .chat-bubble-user {
+            background-color: #dbeafe;
+            align-self: flex-end;
+        }
+        .chat-bubble-model {
+            background-color: #e5e7eb;
+            align-self: flex-start;
+        }
+        .tab-btn {
+            transition: all 0.2s ease-in-out;
+        }
+        .tab-btn.active {
+            border-color: #3b82f6;
+            color: #3b82f6;
+            background-color: #eff6ff;
+        }
+        .ai-response-card {
+            background-color: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .ai-response-card h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+        .ai-response-card p, .ai-response-card ul, .ai-response-card div {
+            color: #4b5563;
+        }
+        .ai-response-card ul {
+            list-style-position: inside;
+            padding-left: 0.5rem;
+        }
+        .synergy-lab-locked {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 0.75rem;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            position: relative;
+        }
+        .modal-body {
+            max-height: 70vh;
+            overflow-y: auto;
+            padding-right: 1rem; /* for scrollbar */
+        }
+        .modal-close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #9ca3af;
+        }
+        .modal-close-btn:hover {
+            color: #1f2937;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body class="text-gray-800">
 
-    <div id="app" class="container mx-auto p-4 md:p-8">
-        
-        <div id="welcome-screen" class="text-center py-16">
-            <h1 class="text-4xl md:text-5xl font-bold text-gray-900">Welcome to the Ethical Cartography Lab</h1>
-            <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">This is a space to explore ethics not as a set of rules, but as a practice of cultivating capabilities. Discover how diverse historical figures developed similar ethical skills and find role models for your own journey.</p>
-            <button id="start-btn" class="mt-8 bg-indigo-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-indigo-700 transition-colors text-lg">
-                Start Here
-            </button>
-        </div>
+    <div id="app" class="max-w-6xl mx-auto p-4 sm:p-6 lg:p-8">
 
-        <div id="app-container" class="hidden">
-            <header class="text-center mb-10 relative">
-                <h1 class="text-4xl md:text-5xl font-bold text-gray-900">Ethical Cartography Lab</h1>
-                <p class="mt-2 text-lg text-gray-600">Ethics as a Practice of Cultivating Capabilities</p>
-                <button id="settings-btn" aria-label="Open API Key Settings" class="absolute top-0 right-0 text-gray-500 hover:text-gray-800 p-2">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                </button>
-            </header>
+        <!-- Header -->
+        <header class="text-center mb-6">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-900">The Constructor's Dashboard</h1>
+            <p class="text-lg text-gray-600 mt-2">A Hierarchical Architecture for Bounded Ethical Agency</p>
+        </header>
 
-            <div class="mb-8 border-b border-gray-200">
-                <nav class="flex flex-wrap -mb-px" aria-label="Tabs">
-                    <button id="navigators-tab" class="tab-btn px-3 py-2 font-medium text-sm rounded-t-md" aria-selected="true">Ethical Navigators</button>
-                    <button id="thinkers-tab" class="tab-btn px-3 py-2 font-medium text-sm rounded-t-md" aria-selected="false">Philosophers & Thinkers</button>
-                    <button id="concepts-tab" class="tab-btn px-3 py-2 font-medium text-sm rounded-t-md" aria-selected="false">Core Concepts</button>
-                    <button id="foundations-tab" class="tab-btn px-3 py-2 font-medium text-sm rounded-t-md" aria-selected="false">Foundations</button>
-                    <button id="casestudies-tab" class="tab-btn px-3 py-2 font-medium text-sm rounded-t-md" aria-selected="false">Case Studies</button>
-                    <button id="essays-tab" class="tab-btn px-3 py-2 font-medium text-sm rounded-t-md" aria-selected="false">Essays & Deeper Dives</button>
-                    <button id="comparison-tab" class="tab-btn px-3 py-2 font-medium text-sm rounded-t-md" aria-selected="false">Comparison Lab</button>
-                    <button id="resonance-tab" class="tab-btn px-3 py-2 font-medium text-sm rounded-t-md" aria-selected="false">Personal Resonance Lab</button>
-                </nav>
+        <!-- Main Content Area -->
+        <main>
+            <!-- Global Action Buttons -->
+            <div id="action-buttons" class="text-center mb-8 space-x-2 sm:space-x-4">
+                <button id="start-here-btn" class="bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg shadow-sm hover:bg-blue-700 transition-colors">Start Here</button>
+                <button id="api-settings-btn" class="bg-gray-700 text-white font-semibold py-2 px-6 rounded-lg shadow-sm hover:bg-gray-800 transition-colors">API Settings</button>
+                <button id="abcd-mindset-btn" class="bg-teal-600 text-white font-semibold py-2 px-6 rounded-lg shadow-sm hover:bg-teal-700 transition-colors">ABCD Constructor's Mindset</button>
+                <button id="load-demo-btn" class="bg-gray-500 text-white font-semibold py-2 px-6 rounded-lg shadow-sm hover:bg-gray-600 transition-colors">Load Demo</button>
+                <button id="clear-work-btn" class="bg-red-600 text-white font-semibold py-2 px-6 rounded-lg shadow-sm hover:bg-red-700 transition-colors">Clear My Work</button>
             </div>
 
-            <main id="main-content-area">
-                <div id="navigators-section">
-                    <h2 class="text-2xl font-bold mb-6 text-gray-900">Ethical Navigators in Action</h2>
-                    <div id="profile-grid" class="card-container"></div>
-                </div>
+            <!-- Tab Navigation -->
+            <div class="mb-8 flex flex-wrap justify-center border-b border-gray-300">
+                <button class="tab-btn active font-semibold py-3 px-6 border-b-2 border-transparent" data-view="l1-identity-kernel-view">L1: Identity Kernel</button>
+                <button class="tab-btn font-semibold py-3 px-6 border-b-2 border-transparent" data-view="l2-domain-frameworks-view">L2: Domain Frameworks</button>
+                <button class="tab-btn font-semibold py-3 px-6 border-b-2 border-transparent" data-view="l3-task-slicing-view">L3: Task-Specific Slicing</button>
+                <button class="tab-btn font-semibold py-3 px-6 border-b-2 border-transparent" data-view="broa-lab-view">BROA Filter Lab</button>
+                <button class="tab-btn font-semibold py-3 px-6 border-b-2 border-transparent" data-view="abcd-lab-view">ABCD Mindset</button>
+                <button class="tab-btn font-semibold py-3 px-6 border-b-2 border-transparent" data-view="sage-lab-view">SAGE Design Lab</button>
+                <button class="tab-btn font-semibold py-3 px-6 border-b-2 border-transparent" data-view="lens-lab-view">Ethical Lens Navigator</button>
+                <button class="tab-btn font-semibold py-3 px-6 border-b-2 border-transparent" data-view="justice-lab-view">Justice Lab</button>
+                <button class="tab-btn font-semibold py-3 px-6 border-b-2 border-transparent" data-view="tech-lab-view">Technology Lab</button>
+                <button class="tab-btn font-semibold py-3 px-6 border-b-2 border-transparent" data-view="env-lab-view">Environmental Lab</button>
+                <button class="tab-btn font-semibold py-3 px-6 border-b-2 border-transparent" data-view="health-lab-view">Healthcare Lab</button>
+                <button class="tab-btn font-semibold py-3 px-6 border-b-2 border-transparent" data-view="education-lab-view">Education Lab</button>
+                <button class="tab-btn font-semibold py-3 px-6 border-b-2 border-transparent" data-view="politics-lab-view">Politics Lab</button>
+                <button class="tab-btn font-semibold py-3 px-6 border-b-2 border-transparent" data-view="os-design-lab-view">Ethical OS Design</button>
+                <button class="tab-btn font-semibold py-3 px-6 border-b-2 border-transparent" data-view="legacy-lab-view">Legacy Project</button>
+            </div>
 
-                <div id="thinkers-section" class="hidden">
-                    <h2 class="text-2xl font-bold mb-6 text-gray-900">Foundational Philosophers & Scientists</h2>
-                    <div id="thinker-grid" class="card-container"></div>
-                </div>
-
-                <div id="concepts-section" class="hidden">
-                     <h2 class="text-2xl font-bold mb-6 text-gray-900">Core Analytical Concepts</h2>
-                     <div id="concept-grid" class="card-container"></div>
-                </div>
-
-                <div id="foundations-section" class="hidden">
-                    <h2 class="text-2xl font-bold mb-4 text-gray-900">Theoretical Foundations</h2>
-                    <p id="disclaimer-text" class="text-sm text-gray-600 mb-6 max-w-3xl bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-r-lg"></p>
-                    <div id="foundation-grid" class="card-container"></div>
-                </div>
-
-                <div id="casestudy-section" class="hidden">
-                    <h2 class="text-2xl font-bold mb-6 text-gray-900">Case Studies in Action</h2>
-                    <div id="casestudy-grid" class="card-container"></div>
-                </div>
-                
-                <div id="essay-section" class="hidden">
-                    <h2 class="text-2xl font-bold mb-6 text-gray-900">Essays & Deeper Dives</h2>
-                    <div id="essay-grid" class="card-container"></div>
-                </div>
-
-                <div id="comparison-section" class="hidden">
-                    <h2 class="text-2xl font-bold mb-4 text-gray-900">Capability & Comparison Lab</h2>
-                    <p class="text-gray-600 mb-6 max-w-3xl">Explore "Functional Equivalence" by comparing any two figures side-by-side, or discover surprising connections by exploring a shared ethical capability.</p>
-                    
-                    <div class="bg-white p-6 rounded-lg shadow-md">
-                        <h3 class="text-xl font-semibold mb-4 text-gray-800">Direct Comparison</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div>
-                                <label for="figureA-select" class="block text-sm font-medium text-gray-700">Select Figure A</label>
-                                <select id="figureA-select" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"></select>
-                            </div>
-                            <div>
-                                <label for="figureB-select" class="block text-sm font-medium text-gray-700">Select Figure B</label>
-                                <select id="figureB-select" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"></select>
-                            </div>
-                        </div>
-                        <button id="compare-figures-btn" class="mt-4 w-full bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-indigo-700 transition-colors">✨ Analyze Functional Equivalence</button>
-                        <div id="comparison-output" class="mt-4"></div>
-                        <div id="comparison-chat-container" class="hidden mt-4">
-                            <div class="flex">
-                                <input type="text" id="comparison-chat-input" class="flex-1 block w-full rounded-none rounded-l-md border-gray-300 shadow-sm" placeholder="Ask a follow-up question...">
-                                <button id="comparison-send-btn" class="inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-sm hover:bg-gray-100 font-bold">Send</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="bg-white p-6 rounded-lg shadow-md mt-8">
-                        <h3 class="text-xl font-semibold mb-4 text-gray-800">Explore by Capability</h3>
+            <div id="main-content">
+                <!-- View 1: L1 Identity Kernel -->
+                <div id="l1-identity-kernel-view" class="view active bg-white p-6 md:p-8 rounded-2xl shadow-lg">
+                    <h2 class="text-3xl font-bold mb-2">Level 1: My Identity Kernel</h2>
+                    <p class="mb-8 text-gray-600">Your Identity Kernel is the most global, stable, and central part of your ethical self. It contains the core values, fundamental beliefs, and essential identity structures that you strive to keep coherent across all contexts of your life. It is the anchor for your authentic agency.</p>
+                    <div class="space-y-8">
                         <div>
-                            <label for="capability-select" class="block text-sm font-medium text-gray-700">Select a Core Ethical Capability</label>
-                            <select id="capability-select" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"></select>
+                            <h3 class="text-2xl font-semibold mb-2 text-gray-700">1. Core Values, Relationships, & Motivations</h3>
+                             <p class="mb-3 text-gray-500">What are the absolute, non-negotiable pillars of your identity?</p>
+                            <div class="space-y-4">
+                                <div><label for="ik-values" class="block text-lg font-semibold mb-2">Core Values:</label><textarea id="ik-values" rows="3" class="savable w-full p-3 border border-gray-300 rounded-lg" placeholder="e.g., Honesty, compassion, justice..."></textarea></div>
+                                <div><label for="ik-relationships" class="block text-lg font-semibold mb-2">Essential Relationships:</label><textarea id="ik-relationships" rows="3" class="savable w-full p-3 border border-gray-300 rounded-lg" placeholder="e.g., My role as a parent, my commitment to my community..."></textarea></div>
+                                <div><label for="ik-motivations" class="block text-lg font-semibold mb-2">Fundamental Motivations:</label><textarea id="ik-motivations" rows="3" class="savable w-full p-3 border border-gray-300 rounded-lg" placeholder="e.g., To reduce suffering, to create beauty, to discover truth..."></textarea></div>
+                            </div>
+                             <button id="ik-synthesize-btn" class="mt-6 bg-blue-600 text-white font-semibold py-3 px-8 rounded-lg shadow-md hover:bg-blue-700">Synthesize My Kernel</button>
+                             <div id="ik-result" class="mt-6"></div>
                         </div>
-                        <div id="capability-explorer-output" class="mt-4 card-container"></div>
-                    </div>
-                </div>
-
-                <div id="resonance-section" class="hidden">
-                    <h2 class="text-2xl font-bold mb-4 text-gray-900">Personal Resonance Lab</h2>
-                    <p class="text-gray-600 mb-6 max-w-3xl">This is a space for your own ethical reflection. Describe a value you hold, a capability you wish to cultivate, or an ethical challenge you are facing. The AI will help you find historical figures who demonstrated functionally equivalent capabilities, providing you with models for your own journey.</p>
-                    <div class="bg-white p-6 rounded-lg shadow-md">
-                        <label for="resonance-input" class="block text-sm font-medium text-gray-700">Enter your reflection here (e.g., "I want to be more courageous in speaking up," or "I value compassionate service above all else.")</label>
-                        <textarea id="resonance-input" rows="4" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"></textarea>
-                        <button id="find-counterparts-btn" class="mt-4 w-full bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-indigo-700 transition-colors">
-                            ✨ Discover Role Models for Your Ethical Journey
-                        </button>
-                        <div id="counterparts-output" class="mt-4"></div>
-                         <div id="resonance-chat-container" class="hidden mt-4">
-                            <div class="flex">
-                                <input type="text" id="resonance-chat-input" class="flex-1 block w-full rounded-none rounded-l-md border-gray-300 shadow-sm" placeholder="Ask a follow-up question...">
-                                <button id="resonance-send-btn" class="inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-sm hover:bg-gray-100 font-bold">Send</button>
+                        <div>
+                            <h3 class="text-2xl font-semibold mb-2 text-gray-700">2. Core BROA Filter</h3>
+                            <p class="mb-3 text-gray-500">Based on your history, define the most fundamental components of your ethical filter.</p>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label for="prf-beliefs" class="block text-lg font-semibold mb-2">Fundamental Beliefs:</label>
+                                    <textarea id="prf-beliefs" rows="4" class="savable w-full p-3 border border-gray-300 rounded-lg" placeholder="e.g., 'I believe people are fundamentally trying their best...'"></textarea>
+                                </div>
+                                <div>
+                                    <label for="prf-rules" class="block text-lg font-semibold mb-2">Fundamental Rules:</label>
+                                    <textarea id="prf-rules" rows="4" class="savable w-full p-3 border border-gray-300 rounded-lg" placeholder="e.g., 'Never betray a trust.'"></textarea>
+                                </div>
+                                <div>
+                                    <label for="prf-ontology" class="block text-lg font-semibold mb-2">Fundamental Ontology:</label>
+                                    <textarea id="prf-ontology" rows="4" class="savable w-full p-3 border border-gray-300 rounded-lg" placeholder="e.g., 'I see the world as an interconnected system.'"></textarea>
+                                </div>
+                                <div>
+                                    <label for="prf-authenticity" class="block text-lg font-semibold mb-2">Core Authenticity:</label>
+                                    <textarea id="prf-authenticity" rows="4" class="savable w-full p-3 border border-gray-300 rounded-lg" placeholder="e.g., 'I am my most authentic self when I am helping others find clarity.'"></textarea>
+                                </div>
                             </div>
                         </div>
+                         <button id="l1-synthesize-btn" class="mt-8 bg-indigo-600 text-white font-semibold py-3 px-8 rounded-lg shadow-md hover:bg-indigo-700">Synthesize My Identity Kernel</button>
+                         <div id="l1-result" class="mt-6"></div>
                     </div>
                 </div>
-            </main>
-        </div>
 
-        <div id="settings-api-key-modal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-75 h-full w-full z-50 flex items-center justify-center p-4">
-            <div class="relative w-full max-w-md shadow-lg rounded-lg bg-white p-6">
-                <h2 class="text-2xl font-bold text-gray-900 mb-4">Google Gemini API Key</h2>
-                <p class="text-gray-700 mb-4 text-sm">To use the AI features, the app needs a Google Gemini API key. It's free and easy to get:</p>
-                
-                <ol class="list-decimal list-inside text-sm text-gray-600 space-y-2 mb-4">
-                    <li>Go to <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" class="text-indigo-600 hover:underline font-semibold">Google AI Studio ↗</a>.</li>
-                    <li>Sign in with your Google Account.</li>
-                    <li>Click <strong class="font-semibold text-gray-800">"Get API key"</strong>, then <strong class="font-semibold text-gray-800">"Create API key"</strong>.</li>
-                    <li>Copy the new key and paste it in the field below.</li>
-                </ol>
-
-                <div>
-                    <label for="api-key-input-settings" class="block text-sm font-medium text-gray-700">Your API Key</label>
-                    <input type="password" id="api-key-input-settings" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                <!-- View 2: L2 Domain Frameworks -->
+                <div id="l2-domain-frameworks-view" class="view bg-white p-6 md:p-8 rounded-2xl shadow-lg">
+                    <h2 class="text-3xl font-bold mb-2">Level 2: My Domain Frameworks</h2>
+                    <p class="mb-8 text-gray-600">You don't use your entire ethical framework for every decision. You have specialized "Domain Frameworks" for different areas of your life. These are intermediate-level PRFs that bridge your core Identity Kernel and specific, in-the-moment tasks. Define a few of yours below.</p>
+                    <div class="space-y-8">
+                        <div>
+                            <h3 class="text-2xl font-semibold mb-2 text-gray-700">Domain: Being a Student</h3>
+                            <p class="mb-3 text-gray-500">What are your specific beliefs, rules, and ontological commitments in an academic context? How do they connect to your Identity Kernel?</p>
+                            <textarea id="domain-student" rows="5" class="savable w-full p-3 border border-gray-300 rounded-lg" placeholder="e.g., In my 'student' domain, my core value of 'honesty' becomes the rule 'never plagiarize.' My motivation to 'discover truth' becomes the belief that 'rigorous study is more important than grades.'"></textarea>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-semibold mb-2 text-gray-700">Domain: Being a Friend</h3>
+                            <p class="mb-3 text-gray-500">How does your PRF adapt in the context of your friendships? What rules or beliefs become more or less important?</p>
+                            <textarea id="domain-friend" rows="5" class="savable w-full p-3 border border-gray-300 rounded-lg" placeholder="e.g., In my 'friend' domain, my core value of 'compassion' becomes the rule 'always offer support, even when it's inconvenient.' The belief that 'people are trying their best' is highly active here."></textarea>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-semibold mb-2 text-gray-700">Domain: [Add Your Own]</h3>
+                            <p class="mb-3 text-gray-500">Define another domain that's important to you (e.g., as an employee, an artist, a family member).</p>
+                             <input type="text" id="domain-custom-name" class="savable w-full p-3 border border-gray-300 rounded-lg mb-2" placeholder="e.g., Being an Athlete">
+                            <textarea id="domain-custom" rows="5" class="savable w-full p-3 border border-gray-300 rounded-lg" placeholder="Describe the beliefs, rules, and values for this domain..."></textarea>
+                        </div>
+                    </div>
+                    <button id="l2-analyze-btn" class="mt-8 bg-indigo-600 text-white font-semibold py-3 px-8 rounded-lg shadow-md hover:bg-indigo-700">Analyze Domain Coherence</button>
+                    <div id="l2-result" class="mt-6"></div>
                 </div>
-                <div class="mt-6 flex justify-end space-x-3">
-                    <button id="cancel-api-key-btn" class="bg-gray-200 text-gray-700 font-bold py-2 px-4 rounded-lg hover:bg-gray-300">Cancel</button>
-                    <button id="save-api-key-btn" class="bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-indigo-700">Save Key</button>
+
+                 <!-- View 3: L3 Task-Specific Slicing -->
+                <div id="l3-task-slicing-view" class="view bg-white p-6 md:p-8 rounded-2xl shadow-lg">
+                     <div class="flex justify-between items-center mb-2"><h2 class="text-3xl font-bold">Level 3: Task-Specific Slicing (UEV Analysis)</h2></div>
+                    <p class="mb-6 text-gray-600">For any real-world ethical problem, you activate a "Task-Specific Slice" of your PRF. This lab helps you define that slice and then use the Unified Experience Vector (UEV) to check its internal coherence. A conflicted UEV reveals fragmentation and a need for better integration between your feelings, motivations, reasons, and actions.</p>
+                    <div><label for="cps-situation" class="block text-lg font-semibold mb-2">Describe an ethical situation you are facing:</label><textarea id="cps-situation" rows="4" class="savable w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="e.g., My friend asked me to lie for them..."></textarea></div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6 mt-6">
+                        <div>
+                            <label for="cps-feeling" class="block text-lg font-semibold">Global Feeling Tone</label>
+                            <p class="text-sm text-gray-500 mb-2">What is your immediate, gut-level sense of this situation? Does it feel right, wrong, tense, or calm?</p>
+                            <input type="range" id="cps-feeling" min="-10" max="10" value="0" class="savable w-full">
+                            <div class="flex justify-between text-xs text-gray-500 mt-1"><span>Conflict</span><span>Neutral</span><span>Coherence</span></div>
+                        </div>
+                        <div>
+                            <label for="cps-motivation" class="block text-lg font-semibold">Emotional Motivation Vector</label>
+                            <p class="text-sm text-gray-500 mb-2">What specific emotions are pulling you (e.g., loyalty, fear, ambition)? Where is your heart telling you to go?</p>
+                            <input type="range" id="cps-motivation" min="-10" max="10" value="0" class="savable w-full">
+                            <div class="flex justify-between text-xs text-gray-500 mt-1"><span>Conflict</span><span>Neutral</span><span>Coherence</span></div>
+                        </div>
+                        <div>
+                            <label for="cps-reasoning" class="block text-lg font-semibold">Rational Deliberation Vector</label>
+                            <p class="text-sm text-gray-500 mb-2">What is the logical story you are telling yourself? What are the 'good reasons' you would give to justify your actions?</p>
+                            <input type="range" id="cps-reasoning" min="-10" max="10" value="0" class="savable w-full">
+                            <div class="flex justify-between text-xs text-gray-500 mt-1"><span>Conflict</span><span>Neutral</span><span>Coherence</span></div>
+                        </div>
+                        <div>
+                            <label for="cps-action" class="block text-lg font-semibold">Action Readiness Vector</label>
+                            <p class="text-sm text-gray-500 mb-2">If you had to act right now, what would your body instinctively do? What action are you preparing to take?</p>
+                            <input type="range" id="cps-action" min="-10" max="10" value="0" class="savable w-full">
+                            <div class="flex justify-between text-xs text-gray-500 mt-1"><span>Conflict</span><span>Neutral</span><span>Coherence</span></div>
+                        </div>
+                    </div>
+                    <button id="cps-analyze-btn" class="mt-8 bg-green-600 text-white font-semibold py-3 px-8 rounded-lg shadow-md hover:bg-green-700">Analyze My Present Integration</button>
+                    <div id="cps-result" class="mt-6"></div>
+                    <div id="cps-dialogue-container" class="mt-6 hidden">
+                        <h4 class="text-lg font-semibold text-gray-700 mb-2">Conversational AI Coach</h4>
+                        <div id="cps-chat-history" class="space-y-4 mb-4 max-h-96 overflow-y-auto p-4 bg-gray-50 rounded-lg border flex flex-col"></div>
+                        <div class="flex space-x-2"><input type="text" id="cps-chat-input" class="flex-grow p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="Respond..."><button id="cps-chat-send-btn" class="bg-indigo-600 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-indigo-700">Send</button></div>
+                        <div id="cps-chat-loader" class="hidden"><div class="loader"></div></div>
+                    </div>
+                </div>
+
+                <!-- Legacy Views (BROA, ABCD, SAGE, LENS) -->
+                <div id="broa-lab-view" class="view bg-white p-6 md:p-8 rounded-2xl shadow-lg">
+                     <div class="flex justify-between items-center mb-2"><h2 class="text-3xl font-bold">BROA Filter Lab</h2></div>
+                    <p class="mb-6 text-gray-600">Make your unconscious ethical filter visible.</p>
+                    <div><label for="broa-situation" class="block text-lg font-semibold mb-2">The Ethical Situation:</label><textarea id="broa-situation" rows="4" class="savable w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="Describe or load the demo..."></textarea></div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-6">
+                        <div><label for="broa-beliefs" class="block text-lg font-semibold mb-2">B: Beliefs</label><p class="text-sm text-gray-500 mb-2">What do you assume is true?</p><textarea id="broa-beliefs" rows="5" class="savable w-full p-3 border border-gray-300 rounded-lg" placeholder="e.g., 'True friendship means helping...'"></textarea></div>
+                        <div><label for="broa-rules" class="block text-lg font-semibold mb-2">R: Rules</label><p class="text-sm text-gray-500 mb-2">What rules feel active?</p><textarea id="broa-rules" rows="5" class="savable w-full p-3 border border-gray-300 rounded-lg" placeholder="e.g., 'The rule is you don't cheat.'"></textarea></div>
+                        <div><label for="broa-ontology" class="block text-lg font-semibold mb-2">O: Ontology</label><p class="text-sm text-gray-500 mb-2">What kind of thing *is* this?</p><textarea id="broa-ontology" rows="5" class="savable w-full p-3 border border-gray-300 rounded-lg" placeholder="e.g., 'This is a test of my character.'"></textarea></div>
+                        <div><label for="broa-authenticity" class="block text-lg font-semibold mb-2">A: Authenticity</label><p class="text-sm text-gray-500 mb-2">What does your inner compass say?</p><textarea id="broa-authenticity" rows="5" class="savable w-full p-3 border border-gray-300 rounded-lg" placeholder="e.g., 'Helping them cheat feels wrong.'"></textarea></div>
+                    </div>
+                    <button id="broa-analyze-btn" class="mt-8 bg-purple-600 text-white font-semibold py-3 px-8 rounded-lg shadow-md hover:bg-purple-700">Analyze My Filters</button>
+                    <div id="broa-result" class="mt-6"></div>
+                </div>
+                <div id="abcd-lab-view" class="view bg-white p-6 md:p-8 rounded-2xl shadow-lg">
+                   <div class="flex justify-between items-center mb-2"><h2 class="text-3xl font-bold">ABCD Mindset Practice</h2></div>
+                    <p class="mb-6 text-gray-600">Train your ethical attention by seeing any situation through four lenses: Agency, Beauty/Awe, Context, and Dynamism.</p>
+                    <div><label for="abcd-situation" class="block text-lg font-semibold mb-2">The Ethical Situation:</label><textarea id="abcd-situation" rows="4" class="savable w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="Describe or load the demo..."></textarea></div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-6">
+                        <div><label for="abcd-agency" class="block text-lg font-semibold mb-2">A: Agency</label><p class="text-sm text-gray-500 mb-2">Who has power, voice, or the ability to act?</p><textarea id="abcd-agency" rows="5" class="savable w-full p-3 border border-gray-300 rounded-lg" placeholder="e.g., 'My friend has agency to ask...'"></textarea></div>
+                        <div><label for="abcd-beauty" class="block text-lg font-semibold mb-2">B: Beauty / Awe</label><p class="text-sm text-gray-500 mb-2">What has intrinsic value here?</p><textarea id="abcd-beauty" rows="5" class="savable w-full p-3 border border-gray-300 rounded-lg" placeholder="e.g., 'The value of our friendship is beautiful...'"></textarea></div>
+                        <div><label for="abcd-context" class="block text-lg font-semibold mb-2">C: Context</label><p class="text-sm text-gray-500 mb-2">What is the backstory?</p><textarea id="abcd-context" rows="5" class="savable w-full p-3 border border-gray-300 rounded-lg" placeholder="e.g., 'The context is my friend is under immense pressure...'"></textarea></div>
+                        <div><label for="abcd-dynamism" class="block text-lg font-semibold mb-2">D: Dynamism</label><p class="text-sm text-gray-500 mb-2">How is this situation changing?</p><textarea id="abcd-dynamism" rows="5" class="savable w-full p-3 border border-gray-300 rounded-lg" placeholder="e.g., 'If I help them, the immediate situation is resolved, but...'"></textarea></div>
+                    </div>
+                    <button id="abcd-analyze-btn" class="mt-8 bg-teal-600 text-white font-semibold py-3 px-8 rounded-lg shadow-md hover:bg-teal-700">Analyze My Perception</button>
+                    <div id="abcd-result" class="mt-6"></div>
+                </div>
+                <div id="sage-lab-view" class="view bg-white p-6 md:p-8 rounded-2xl shadow-lg">
+                    <div class="flex justify-between items-center mb-2"><h2 class="text-3xl font-bold">SAGE System Design Lab</h2></div>
+                    <p class="mb-8 text-gray-600">Apply your ethical insights to a real-world problem using the SAGE methodology: See, Analyze, Generate, and Evaluate.</p>
+                    <div class="space-y-8">
+                        <div><h3 class="text-2xl font-semibold mb-2 text-blue-600">S: See the System</h3><p class="mb-3 text-gray-500">Define the problem or system you want to address.</p><textarea id="sage-see" rows="4" class="savable w-full p-3 border border-gray-300 rounded-lg" placeholder="e.g., The system of academic pressure..."></textarea></div>
+                        <div><h3 class="text-2xl font-semibold mb-2 text-red-600">A: Analyze the Root Causes</h3><p class="mb-3 text-gray-500">What are the underlying patterns, incentives, and feedback loops?</p><textarea id="sage-analyze" rows="5" class="savable w-full p-3 border border-gray-300 rounded-lg" placeholder="e.g., The root causes include a competitive culture..."></textarea></div>
+                        <div><h3 class="text-2xl font-semibold mb-2 text-green-600">G: Generate Ethical Solutions</h3><p class="mb-3 text-gray-500">Brainstorm potential interventions or redesigns.</p><textarea id="sage-generate" rows="5" class="savable w-full p-3 border border-gray-300 rounded-lg" placeholder="e.g., We could create a peer tutoring network..."></textarea><button id="sage-brainstorm-btn" class="mt-3 bg-green-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-green-700">AI Brainstorm Help</button></div>
+                        <div><h3 class="text-2xl font-semibold mb-2 text-purple-600">E: Evaluate the Possibilities</h3><p class="mb-3 text-gray-500">Consider the potential impacts, risks, and ethical trade-offs.</p><textarea id="sage-evaluate" rows="5" class="savable w-full p-3 border border-gray-300 rounded-lg" placeholder="e.g., A peer tutoring network has low risk..."></textarea></div>
+                    </div>
+                    <div id="sage-result" class="mt-8"></div>
+                </div>
+                <div id="lens-lab-view" class="view bg-white p-6 md:p-8 rounded-2xl shadow-lg">
+                    <div class="flex justify-between items-center mb-2"><h2 class="text-3xl font-bold">Ethical Lens Navigator</h2></div>
+                    <p class="mb-6 text-gray-600">Analyze your dilemma through four classical ethical frameworks to gain a multi-perspectival view and find a coherent path forward.</p>
+                    <div><label for="lens-situation" class="block text-lg font-semibold mb-2">The Ethical Situation:</label><textarea id="lens-situation" rows="4" class="savable w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="Describe or load the demo..."></textarea></div>
+                    <button id="lens-analyze-btn" class="mt-8 bg-orange-600 text-white font-semibold py-3 px-8 rounded-lg shadow-md hover:bg-orange-700">Analyze with Lenses</button>
+                    <div id="lens-result" class="mt-8"></div>
+                </div>
+                
+                <!-- Generic Cartography Lab Template (used for justice, tech, etc.) -->
+                <div id="justice-lab-view" class="view bg-white p-6 md:p-8 rounded-2xl shadow-lg">
+                     <!-- Content generated by JS -->
+                </div>
+                <div id="tech-lab-view" class="view bg-white p-6 md:p-8 rounded-2xl shadow-lg">
+                     <!-- Content generated by JS -->
+                </div>
+                <div id="env-lab-view" class="view bg-white p-6 md:p-8 rounded-2xl shadow-lg">
+                     <!-- Content generated by JS -->
+                </div>
+                <div id="health-lab-view" class="view bg-white p-6 md:p-8 rounded-2xl shadow-lg">
+                     <!-- Content generated by JS -->
+                </div>
+                <div id="education-lab-view" class="view bg-white p-6 md:p-8 rounded-2xl shadow-lg">
+                     <!-- Content generated by JS -->
+                </div>
+                 <div id="politics-lab-view" class="view bg-white p-6 md:p-8 rounded-2xl shadow-lg">
+                     <!-- Content generated by JS -->
+                </div>
+
+                <!-- New: Ethical OS Design -->
+                <div id="os-design-lab-view" class="view bg-white p-6 md:p-8 rounded-2xl shadow-lg">
+                    <h2 class="text-3xl font-bold mb-2">My Ethical Operating System (OS) Design</h2>
+                    <p class="mb-8 text-gray-600">Synthesize your work from the previous labs to build your own practical "owner's manual" for ethical decision-making. This is your personal architecture for navigating the world as a bounded but effective ethical agent.</p>
+                    <div class="space-y-8">
+                        <div>
+                            <h3 class="text-2xl font-semibold mb-2 text-gray-700">1. My Resource Allocation Protocols</h3>
+                            <p class="mb-3 text-gray-500">How will you manage your limited time, energy, and attention when facing ethical problems?</p>
+                            <textarea id="os-resource" rows="5" class="savable w-full p-3 border border-gray-300 rounded-lg" placeholder="e.g., For low-stakes interpersonal issues, I'll use a quick heuristic based on my 'friend' domain. For major professional dilemmas, I will dedicate at least one hour of deep reflection and seek input from a mentor."></textarea>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-semibold mb-2 text-gray-700">2. My Uncertainty Navigation Tools</h3>
+                            <p class="mb-3 text-gray-500">How will you act responsibly when you don't have all the facts?</p>
+                            <textarea id="os-uncertainty" rows="5" class="savable w-full p-3 border border-gray-300 rounded-lg" placeholder="e.g., My primary tool is to ask clarifying questions before acting. I will risk making mistakes that are reversible and prioritize avoiding actions that could cause irreparable harm. I update my approach when new evidence contradicts a core assumption."></textarea>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-semibold mb-2 text-gray-700">3. My Identity Preservation Strategies</h3>
+                            <p class="mb-3 text-gray-500">How will you grow and adapt without losing your core self?</p>
+                            <textarea id="os-identity" rows="5" class="savable w-full p-3 border border-gray-300 rounded-lg" placeholder="e.g., My non-negotiables are honesty and compassion. I will know I am adapting in a healthy way if I feel an increase in my UEV coherence. I will know I'm compromising inauthentically if my Global Feeling Tone is consistently negative, even if my actions seem logical."></textarea>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-semibold mb-2 text-gray-700">4. My Coordination Interfaces</h3>
+                            <p class="mb-3 text-gray-500">How will you work effectively with people who have different values and PRFs?</p>
+                            <textarea id="os-coordination" rows="5" class="savable w-full p-3 border border-gray-300 rounded-lg" placeholder="e.g., My primary interface is to seek 'functional equivalence.' I won't try to convince them my values are correct. Instead, I will ask: 'Even though we see this differently, can we agree on a practical next step that serves both our goals?'"></textarea>
+                        </div>
+                    </div>
+                    <button id="os-analyze-btn" class="mt-8 bg-purple-700 text-white font-semibold py-3 px-8 rounded-lg shadow-md hover:bg-purple-800">Analyze My Ethical OS</button>
+                    <div id="os-result" class="mt-6"></div>
+                </div>
+
+                <!-- View 14: Legacy Project -->
+                <div id="legacy-lab-view" class="view bg-white p-6 md:p-8 rounded-2xl shadow-lg">
+                    <div class="flex justify-between items-center mb-2"><h2 class="text-3xl font-bold">The Legacy Project</h2></div>
+                    <p class="mb-8 text-gray-600">This is your capstone project. Synthesize your work from across the dashboard to define your moral innovation and formulate your legacy as a constructor with a high **Meta-Constructor Capacity**.</p>
+                    <div class="space-y-8">
+                        <div><h3 class="text-2xl font-semibold mb-2 text-gray-700">1. My Moral Innovation</h3><p class="mb-3 text-gray-500">Clearly articulate the systemic intervention you designed in the SAGE, Justice, Technology, or Environmental labs. What is the core idea?</p><textarea id="legacy-innovation" rows="5" class="savable w-full p-3 border border-gray-300 rounded-lg" placeholder="e.g., My moral innovation is a 'structured choice' model for first-year grading..."></textarea></div>
+                        <div><h3 class="text-2xl font-semibold mb-2 text-gray-700">2. Synthesize Key Insights</h3><p class="mb-3 text-gray-500">Connect your innovation back to your foundational work. How does it reflect your Identity Kernel? How is it informed by your BROA, ABCD, and Lens analyses?</p><textarea id="legacy-insights" rows="6" class="savable w-full p-3 border border-gray-300 rounded-lg" placeholder="e.g., This innovation reflects my core value of compassion..."></textarea></div>
+                        <div><h3 class="text-2xl font-semibold mb-2 text-gray-700">3. My Legacy Statement</h3><p class="mb-3 text-gray-500">Based on your work, formulate a legacy statement. How do you intend to act as a **meta-constructor** in the world? What new capabilities for coherence and coordination do you hope to build, first in yourself, and then for others?</p><textarea id="legacy-statement" rows="5" class="savable w-full p-3 border border-gray-300 rounded-lg" placeholder="e.g., My legacy is to be a constructor who designs systems that are not only fair but also compassionate..."></textarea></div>
+                    </div>
+                    <button id="legacy-analyze-btn" class="mt-8 bg-purple-700 text-white font-semibold py-3 px-8 rounded-lg shadow-md hover:bg-purple-800">Receive Capstone Feedback</button>
+                    <div id="legacy-result" class="mt-8"></div>
+                    <div id="legacy-dialogue-container" class="mt-6 hidden">
+                        <h4 class="text-lg font-semibold text-gray-700 mb-2">Conversational AI Coach</h4>
+                        <div id="legacy-chat-history" class="space-y-4 mb-4 max-h-96 overflow-y-auto p-4 bg-gray-50 rounded-lg border flex flex-col"></div>
+                        <div class="flex space-x-2"><input type="text" id="legacy-chat-input" class="flex-grow p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="Continue the analysis..."><button id="legacy-chat-send-btn" class="bg-indigo-600 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-indigo-700">Send</button></div>
+                        <div id="legacy-chat-loader" class="hidden"><div class="loader"></div></div>
+                    </div>
                 </div>
             </div>
-        </div>
-
-        <div id="detail-modal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 h-full w-full z-50 flex items-center justify-center p-4">
-            <div class="relative w-full max-w-3xl shadow-lg rounded-lg bg-white">
-                <div class="modal-content p-6">
-                     <div class="flex justify-between items-start">
-                         <div id="modal-content-details" class="w-full pr-4">
-                             </div>
-                         <button id="close-modal" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center sticky top-0">
-                             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                         </button>
-                     </div>
+        </main>
+    </div>
+    
+    <!-- Modal Structures -->
+    <div id="start-here-modal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="start-here-modal-title">
+         <div class="modal-content">
+            <button id="start-here-modal-close-btn" class="modal-close-btn" aria-label="Close modal">&times;</button>
+            <div class="modal-body">
+                <h2 id="start-here-modal-title" class="text-2xl font-bold mb-4">Welcome to the Dashboard</h2>
+                <div class="space-y-4 text-gray-700">
+                    <p>This tool is designed for deep, personal reflection. Before you begin, please review the following:</p>
+                    <div>
+                        <h3 class="font-semibold text-gray-900">1. Using the AI Features (Important)</h3>
+                        <p>To use the "Analyze" and "Synthesize" buttons, this app requires a Google Gemini API Key. You can get a free key from Google AI Studio. Please add your key in the **API Settings** modal before you begin.</p>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-gray-900">2. How Your Work is Saved</h3>
+                        <p>All the text you enter is saved <strong>directly in your browser's local storage</strong>. It is not sent to any server unless you click an analysis button. To resume your work, you must use the same computer and browser.</p>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-gray-900">3. How the AI Analysis Works</h3>
+                        <p>When you click an "Analyze" button, the relevant text is sent to Google's servers using your API key. This is done via a secure, encrypted HTTPS connection. <strong>The interaction is stateless; your data is not stored by Google or used to train the model.</strong></p>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-gray-900">4. Advice for Your Psychological Safety</h3>
+                        <p>This is a space for you to explore your own thoughts and feelings. To ensure you feel safe and in control:</p>
+                        <ul class="list-disc list-inside pl-4 space-y-1 mt-2">
+                            <li><strong>Be Mindful:</strong> You are in complete control of what you write. Only share what feels right to you.</li>
+                            <li><strong>Generalize If Needed:</strong> Consider describing sensitive experiences in general terms.</li>
+                            <li><strong>Protect Others' Privacy:</strong> Avoid using the real names or identifying information of other people.</li>
+                        </ul>
+                    </div>
+                    <p class="pt-4 text-sm text-gray-600">By using this tool, you acknowledge this process. We hope it provides a valuable space for your growth and self-discovery.</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="data.js"></script>
-    <script src="script.js"></script>
+    <div id="api-settings-modal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="api-settings-modal-title">
+        <div class="modal-content">
+            <button id="api-settings-modal-close-btn" class="modal-close-btn" aria-label="Close modal">&times;</button>
+            <div class="modal-body">
+                <h2 id="api-settings-modal-title" class="text-2xl font-bold mb-4">API Key Settings</h2>
+                <div class="space-y-4 text-gray-700">
+                    <p>The AI analysis features of this dashboard are powered by Google's Gemini model. To use them, you need to provide your own API key.</p>
+                    <p>You can get a free API key from Google AI Studio:</p>
+                    <a href="https://aistudio.google.com/app/apikey" target="_blank" class="text-blue-600 hover:underline">https://aistudio.google.com/app/apikey</a>
+                    <div class="mt-4">
+                        <label for="gemini-api-key-input" class="block font-semibold mb-2">Your Gemini API Key:</label>
+                        <input type="password" id="gemini-api-key-input" class="w-full p-2 border border-gray-300 rounded-lg" placeholder="Enter your API key here">
+                    </div>
+                    <div class="flex justify-end space-x-4 mt-6">
+                         <button id="clear-api-key-btn" class="text-gray-600 font-semibold py-2 px-4 rounded-lg hover:bg-gray-100 transition-colors">Clear Key</button>
+                        <button id="save-api-key-btn" class="bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-sm hover:bg-blue-700 transition-colors">Save Key</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="abcd-mindset-modal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="abcd-mindset-modal-title">
+        <div class="modal-content">
+            <button id="abcd-mindset-modal-close-btn" class="modal-close-btn" aria-label="Close modal">&times;</button>
+            <div class="modal-body">
+                <h2 id="abcd-mindset-modal-title" class="text-2xl font-bold mb-4">The ABCD Constructor's Mindset</h2>
+                <div class="space-y-4 text-gray-700">
+                    <p>Each day, ground yourself in the constructor's point of view. This is a practical mindset for building a more coherent self and coordinating effectively with others. Today's focus is:</p>
+                    <div id="abcd-prompts-container" class="space-y-3 mt-4"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const API_KEY_STORAGE = 'geminiApiKey';
+            const STORAGE_KEY = 'constructorDashboardData';
+            
+            let userApiKey = '';
+            let chatHistory = [];
+            let activeChat = null;
+            let isDemoMode = false;
+
+            const actionButtons = document.getElementById('action-buttons');
+
+            // --- Modal Logic ---
+            const startHereBtn = document.getElementById('start-here-btn');
+            const startHereModal = document.getElementById('start-here-modal');
+            const startHereCloseBtn = document.getElementById('start-here-modal-close-btn');
+
+            const apiSettingsBtn = document.getElementById('api-settings-btn');
+            const apiSettingsModal = document.getElementById('api-settings-modal');
+            const apiSettingsCloseBtn = document.getElementById('api-settings-modal-close-btn');
+
+            const abcdMindsetBtn = document.getElementById('abcd-mindset-btn');
+            const abcdMindsetModal = document.getElementById('abcd-mindset-modal');
+            const abcdMindsetCloseBtn = document.getElementById('abcd-mindset-modal-close-btn');
+
+            const openModal = (modal) => modal.classList.remove('hidden');
+            const closeModal = (modal) => modal.classList.add('hidden');
+
+            startHereBtn.addEventListener('click', () => openModal(startHereModal));
+            startHereCloseBtn.addEventListener('click', () => closeModal(startHereModal));
+            startHereModal.addEventListener('click', (e) => { if (e.target === startHereModal) closeModal(startHereModal); });
+
+            apiSettingsBtn.addEventListener('click', () => openModal(apiSettingsModal));
+            apiSettingsCloseBtn.addEventListener('click', () => closeModal(apiSettingsModal));
+            apiSettingsModal.addEventListener('click', (e) => { if (e.target === apiSettingsModal) closeModal(apiSettingsModal); });
+
+            abcdMindsetBtn.addEventListener('click', () => {
+                populateAbcdPrompts();
+                openModal(abcdMindsetModal);
+            });
+            abcdMindsetCloseBtn.addEventListener('click', () => closeModal(abcdMindsetModal));
+            abcdMindsetModal.addEventListener('click', (e) => { if (e.target === abcdMindsetModal) closeModal(abcdMindsetModal); });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    if (!startHereModal.classList.contains('hidden')) closeModal(startHereModal);
+                    if (!apiSettingsModal.classList.contains('hidden')) closeModal(apiSettingsModal);
+                    if (!abcdMindsetModal.classList.contains('hidden')) closeModal(abcdMindsetModal);
+                }
+            });
+
+            // --- API Key Logic ---
+            const apiKeyInput = document.getElementById('gemini-api-key-input');
+            const saveApiKeyBtn = document.getElementById('save-api-key-btn');
+            const clearApiKeyBtn = document.getElementById('clear-api-key-btn');
+
+            function loadApiKey() {
+                const savedKey = localStorage.getItem(API_KEY_STORAGE);
+                if (savedKey) {
+                    userApiKey = savedKey;
+                    apiKeyInput.value = savedKey;
+                }
+            }
+
+            function saveApiKey() {
+                const key = apiKeyInput.value.trim();
+                if (key) {
+                    userApiKey = key;
+                    localStorage.setItem(API_KEY_STORAGE, key);
+                    closeModal(apiSettingsModal);
+                    alert('API Key saved successfully.');
+                } else {
+                    alert('Please enter a valid API key.');
+                }
+            }
+
+            function clearApiKey() {
+                 if (confirm("Are you sure you want to clear your saved API Key?")) {
+                    userApiKey = '';
+                    localStorage.removeItem(API_KEY_STORAGE);
+                    apiKeyInput.value = '';
+                    alert('API Key cleared.');
+                 }
+            }
+            
+            saveApiKeyBtn.addEventListener('click', saveApiKey);
+            clearApiKeyBtn.addEventListener('click', clearApiKey);
+
+            // --- ABCD Mindset Daily Prompts ---
+            function populateAbcdPrompts() {
+                const prompts = {
+                    agency: [ "What choice today will strengthen my Identity Kernel?", "Where can I act as a coordinator to bring two conflicting parts of my life into better alignment?", "What system can I build or improve today, no matter how small?", "How can I exercise my agency to create a new capability for myself or someone else?", "What is one action I can take to move from my current self to my future-projected self?" ],
+                    beauty: [ "What elegant solution or coherent system can I appreciate today?", "Where can I find beauty in the coordination between different people or ideas?", "What moment of 'flow' or deep integration can I seek out today?", "How does appreciating a complex, beautiful system (in nature, art, or science) inform my own work as a constructor?", "What is one example of profound coherence I can find in the world today?" ],
+                    context: [ "Whose Personal Reality Framework (PRF) can I try to understand today to broaden my own?", "What is the 'assembly history' of a situation I'm facing?", "How can I find 'functional equivalence' between my perspective and someone else's, even if our beliefs differ?", "What unseen feedback loop is shaping a challenge I'm currently facing?", "How can I see a disagreement not as a conflict of values, but as a mismatch of contexts?" ],
+                    dynamism: [ "What belief in my PRF is ready for an update?", "How can I embrace a small change today as a path to greater temporal coherence?", "What is one way my identity is currently evolving, and how can I support that growth?", "How can I see a moment of uncertainty not as a threat, but as an opportunity to reconstruct?", "What is a 'productive tension' in my life right now that is driving my evolution as a constructor?" ]
+                };
+                const dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
+                const container = document.getElementById('abcd-prompts-container');
+                container.innerHTML = `
+                    <div class="border-l-4 border-blue-500 pl-4">
+                        <h3 class="font-semibold text-gray-900">Agency:</h3><p>${prompts.agency[dayOfYear % prompts.agency.length]}</p>
+                    </div>
+                    <div class="border-l-4 border-red-500 pl-4">
+                        <h3 class="font-semibold text-gray-900">Beauty/Awe:</h3><p>${prompts.beauty[dayOfYear % prompts.beauty.length]}</p>
+                    </div>
+                    <div class="border-l-4 border-green-500 pl-4">
+                        <h3 class="font-semibold text-gray-900">Context:</h3><p>${prompts.context[dayOfYear % prompts.context.length]}</p>
+                    </div>
+                    <div class="border-l-4 border-purple-500 pl-4">
+                        <h3 class="font-semibold text-gray-900">Dynamism:</h3><p>${prompts.dynamism[dayOfYear % prompts.dynamism.length]}</p>
+                    </div>`;
+            }
+
+            // --- Save & Load Logic ---
+            function saveWork() {
+                if (isDemoMode) return;
+                const data = {};
+                document.querySelectorAll('.savable').forEach(field => { data[field.id] = field.value; });
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+            }
+
+            function loadWork() {
+                const savedData = localStorage.getItem(STORAGE_KEY);
+                if (savedData) {
+                    const data = JSON.parse(savedData);
+                    document.querySelectorAll('.savable').forEach(field => {
+                        if (data[field.id] !== undefined) field.value = data[field.id];
+                    });
+                }
+            }
+
+            function clearWork() {
+                if (confirm("Are you sure you want to clear all your saved work? This cannot be undone.")) {
+                    localStorage.removeItem(STORAGE_KEY);
+                    document.querySelectorAll('.savable').forEach(field => {
+                        if (field.type === 'range') { field.value = 0; } 
+                        else { field.value = ''; }
+                    });
+                    document.querySelectorAll('[id$="-result"]').forEach(el => el.innerHTML = '');
+                    document.querySelectorAll('[id$="-dialogue-container"]').forEach(el => el.classList.add('hidden'));
+                    document.querySelectorAll('[id$="-synergy-container"]').forEach(el => el.classList.add('synergy-lab-locked'));
+                }
+            }
+
+            // --- Tab Switching Logic ---
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            const views = document.querySelectorAll('.view');
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    const viewId = button.getAttribute('data-view');
+                    views.forEach(view => view.classList.toggle('active', view.id === viewId));
+                });
+            });
+
+            // --- AI & Formatting Logic ---
+            function formatAIResponse(text) {
+                return text.split(/\n\s*\n/).map(section => {
+                    if (section.trim() === '') return '';
+                    let content = section.trim();
+                    const headingMatch = content.match(/^(\*\*|###?)\s*(.*?)\s*(\*\*|:)/);
+                    if (headingMatch) {
+                        const title = headingMatch[2].trim();
+                        const body = content.substring(headingMatch[0].length).trim().replace(/\n/g, '<br>');
+                        return `<div class="ai-response-card"><h3>${title}</h3><div>${body}</div></div>`;
+                    }
+                    return `<div class="ai-response-card"><p>${content.replace(/\n/g, '<br>')}</p></div>`;
+                }).join('');
+            }
+
+            function formatChatResponse(text) {
+                return text.replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold">$1</strong>').replace(/\n/g, '<br>');
+            }
+
+            async function callGeminiAPI(promptOrHistory, resultElement, isChat = false, isTextarea = false) {
+                if (!userApiKey) {
+                    alert('Please set your Gemini API Key in the API Settings before using the AI features.');
+                    openModal(apiSettingsModal);
+                    return;
+                }
+                
+                const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${userApiKey}`;
+                const loader = isChat ? document.getElementById(`${activeChat}-chat-loader`) : null;
+                if (loader) loader.classList.remove('hidden');
+                else if (resultElement && !isTextarea) resultElement.innerHTML = '<div class="loader"></div>';
+
+                const payload = Array.isArray(promptOrHistory) ? { contents: promptOrHistory } : { contents: [{ role: "user", parts: [{ text: promptOrHistory }] }] };
+
+                try {
+                    const response = await fetch(API_URL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    if (!response.ok) throw new Error(`API Error: ${response.status}`);
+                    const data = await response.json();
+                    if (data.candidates && data.candidates[0].content) {
+                        const text = data.candidates[0].content.parts[0].text;
+                        if (isChat) {
+                            chatHistory.push({ role: "model", parts: [{ text }] });
+                            renderChat();
+                        } else if (isTextarea) {
+                            if (resultElement) resultElement.value = text;
+                        } else {
+                            if (resultElement) resultElement.innerHTML = formatAIResponse(text);
+                        }
+                    } else { throw new Error("No content from API."); }
+                } catch (error) {
+                    console.error("Gemini API call failed:", error);
+                    const errorHtml = `<div class="text-red-600 p-4 bg-red-100 rounded-lg">Error: Could not get a response. The API key might be invalid or have restrictions.</div>`;
+                    if (isChat && activeChat) document.getElementById(`${activeChat}-chat-history`).innerHTML += errorHtml;
+                    else if (resultElement && !isTextarea) resultElement.innerHTML = errorHtml;
+                } finally {
+                    if (loader) loader.classList.add('hidden');
+                }
+            }
+            
+            // --- Chat Logic ---
+            function renderChat() {
+                const historyEl = document.getElementById(`${activeChat}-chat-history`);
+                if (!historyEl) return;
+                historyEl.innerHTML = '';
+                // Start from index 1 to skip the initial system prompt
+                chatHistory.slice(1).forEach(message => { 
+                    const bubble = document.createElement('div');
+                    bubble.classList.add('p-3', 'rounded-lg', 'max-w-xl', 'w-fit');
+                    if (message.role === 'user') {
+                        bubble.textContent = message.parts[0].text;
+                        bubble.classList.add('chat-bubble-user');
+                    } else {
+                        bubble.innerHTML = formatChatResponse(message.parts[0].text);
+                        bubble.classList.add('chat-bubble-model');
+                    }
+                    historyEl.appendChild(bubble);
+                });
+                historyEl.scrollTop = historyEl.scrollHeight;
+            }
+            
+            function sendChatMessage() {
+                const inputEl = document.getElementById(`${activeChat}-chat-input`);
+                if (!inputEl) return;
+                const userMessage = inputEl.value.trim();
+                if (!userMessage) return;
+                chatHistory.push({ role: "user", parts: [{ text: userMessage }] });
+                renderChat();
+                inputEl.value = '';
+                callGeminiAPI(chatHistory, null, true);
+            }
+            
+            // --- Lab Button Listeners ---
+            document.getElementById('l1-synthesize-btn').addEventListener('click', () => {
+                const values = document.getElementById('ik-values').value;
+                const relationships = document.getElementById('ik-relationships').value;
+                const motivations = document.getElementById('ik-motivations').value;
+                const beliefs = document.getElementById('prf-beliefs').value;
+                const rules = document.getElementById('prf-rules').value;
+                const ontology = document.getElementById('prf-ontology').value;
+                const authenticity = document.getElementById('prf-authenticity').value;
+                if (!values || !relationships || !motivations || !beliefs || !rules || !ontology || !authenticity) {
+                    alert('Please fill out all fields to synthesize your Identity Kernel.');
+                    return;
+                }
+                const prompt = `Act as an AI ethics synthesizer. A user has defined the components of their Level 1 Identity Kernel. 
+                - Core Values: ${values}
+                - Essential Relationships: ${relationships}
+                - Fundamental Motivations: ${motivations}
+                - Fundamental Beliefs: ${beliefs}
+                - Fundamental Rules: ${rules}
+                - Fundamental Ontology: ${ontology}
+                - Core Authenticity: ${authenticity}
+                
+                Your task is to synthesize this into a single, coherent "Identity Kernel Statement." Weave the components together into a narrative that describes the user's core ethical self. Identify one potential point of productive tension between their stated values and rules. Conclude with a question that prompts them to think about how this kernel remains stable yet flexible.`;
+                callGeminiAPI(prompt, document.getElementById('l1-result'));
+            });
+
+            document.getElementById('ik-synthesize-btn').addEventListener('click', () => {
+                const inputs = {
+                    values: document.getElementById('ik-values').value,
+                    relationships: document.getElementById('ik-relationships').value,
+                    motivations: document.getElementById('ik-motivations').value
+                };
+                if (Object.values(inputs).some(v => !v)) { alert('Please fill out all three Identity Kernel sections.'); return; }
+                const prompt = `Synthesize the following into a 2-3 sentence "Draft Identity Kernel" statement. Core Values: "${inputs.values}", Key Relationships: "${inputs.relationships}", Core Motivations: "${inputs.motivations}".`;
+                callGeminiAPI(prompt, document.getElementById('ik-result'));
+            });
+
+             document.getElementById('l2-analyze-btn').addEventListener('click', () => {
+                const studentDomain = document.getElementById('domain-student').value;
+                const friendDomain = document.getElementById('domain-friend').value;
+                const customDomainName = document.getElementById('domain-custom-name').value;
+                const customDomain = document.getElementById('domain-custom').value;
+                const kernel = document.getElementById('l1-result').innerText;
+
+                if (!studentDomain || !friendDomain || !kernel) {
+                    alert('Please define your Student and Friend domains, and synthesize your Identity Kernel on the L1 tab first.');
+                    return;
+                }
+                let prompt = `Act as an AI ethics coach. A user has defined their Level 2 Domain Frameworks and their Level 1 Identity Kernel.
+                - Identity Kernel: ${kernel}
+                - 'Student' Domain Framework: ${studentDomain}
+                - 'Friend' Domain Framework: ${friendDomain}
+                `;
+
+                if (customDomainName && customDomain) {
+                    prompt += `- '${customDomainName}' Domain Framework: ${customDomain}\n`;
+                }
+
+                prompt += `Your Task: Analyze the coherence between the user's domains and their core kernel.
+                1.  **Identify Coherence:** Point out one clear example of how a domain-specific rule or belief is a logical application of their core Identity Kernel.
+                2.  **Identify Potential Conflict:** Point out one potential area of conflict or tension between two different domains (e.g., between the 'Student' and 'Friend' domains).
+                3.  **Pose a Bounded Agency Question:** Ask a question that encourages them to think about how they manage these different domains given their limited time and energy.`;
+                
+                callGeminiAPI(prompt, document.getElementById('l2-result'));
+            });
+
+            document.getElementById('cps-analyze-btn').addEventListener('click', async () => {
+                activeChat = 'cps';
+                const inputs = {
+                    situation: document.getElementById('cps-situation').value,
+                    kernel: document.getElementById('l1-result').innerText,
+                    feeling: document.getElementById('cps-feeling').value,
+                    motivation: document.getElementById('cps-motivation').value,
+                    reasoning: document.getElementById('cps-reasoning').value,
+                    action: document.getElementById('cps-action').value
+                };
+                if (!inputs.situation || !inputs.kernel || inputs.kernel.includes("Error")) { alert('Please describe a situation and synthesize your Identity Kernel (on L1 tab) first.'); return; }
+                const getAlignmentText = (v) => (v < -5 ? "strong conflict" : v < 0 ? "mild conflict" : v == 0 ? "neutral" : v > 5 ? "strong coherence" : "mild coherence");
+                const prompt = `Act as an AI ethics coach. A user is analyzing a "Task-Specific Slice" of their PRF using the UEV.
+                - User's Identity Kernel: "${inputs.kernel}"
+                - Ethical Situation: "${inputs.situation}"
+                
+                - User's UEV Mapping:
+                    - **Global Feeling Tone:** ${getAlignmentText(inputs.feeling)}
+                    - **Emotional Motivation Vector:** ${getAlignmentText(inputs.motivation)}
+                    - **Rational Deliberation Vector:** ${getAlignmentText(inputs.reasoning)}
+                    - **Action Readiness Vector:** ${getAlignmentText(inputs.action)}
+
+                **Your Task:**
+                1.  **Analyze Present Integration:** Provide a brief, insightful analysis of the user's UEV. Point out the most significant area of coherence (where vectors align) and the most significant area of fragmentation (where they conflict).
+                2.  **Connect to Bounded Agency:** Explain how this analysis reveals the "Task-Specific Slice" of their PRF they've activated, and how any fragmentation might be a result of conflicting Domain Frameworks (e.g., 'student' vs. 'friend').
+                3.  **Pose a Socratic Question:** Ask one focused Socratic question that targets the greatest point of conflict in their UEV to help them improve their internal alignment.`;
+                chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
+                document.getElementById('cps-result').innerHTML = ''; // Clear main result area
+                await callGeminiAPI(chatHistory, null, true); // Call as chat
+                document.getElementById('cps-dialogue-container').classList.remove('hidden');
+            });
+            
+            document.getElementById('broa-analyze-btn').addEventListener('click', () => {
+                const inputs = {
+                    situation: document.getElementById('broa-situation').value,
+                    beliefs: document.getElementById('broa-beliefs').value,
+                    rules: document.getElementById('broa-rules').value,
+                    ontology: document.getElementById('broa-ontology').value,
+                    authenticity: document.getElementById('broa-authenticity').value
+                };
+                if (Object.values(inputs).some(v => !v)) { alert('Please fill out all five BROA fields.'); return; }
+                const prompt = `Analyze BROA Filter for situation: "${inputs.situation}" with Beliefs: "${inputs.beliefs}", Rules: "${inputs.rules}", Ontology: "${inputs.ontology}", Authenticity: "${inputs.authenticity}". Provide a reflection and a Socratic question.`;
+                callGeminiAPI(prompt, document.getElementById('broa-result'));
+            });
+
+            document.getElementById('abcd-analyze-btn').addEventListener('click', () => {
+                const inputs = {
+                    situation: document.getElementById('abcd-situation').value,
+                    agency: document.getElementById('abcd-agency').value,
+                    beauty: document.getElementById('abcd-beauty').value,
+                    context: document.getElementById('abcd-context').value,
+                    dynamism: document.getElementById('abcd-dynamism').value
+                };
+                if (Object.values(inputs).some(v => !v)) { alert('Please fill out all five ABCD fields.'); return; }
+                const prompt = `Analyze ABCD Mindset for situation: "${inputs.situation}" with Agency: "${inputs.agency}", Beauty: "${inputs.beauty}", Context: "${inputs.context}", Dynamism: "${inputs.dynamism}". Connect two observations and ask a Socratic question.`;
+                callGeminiAPI(prompt, document.getElementById('abcd-result'));
+            });
+
+             document.getElementById('sage-brainstorm-btn').addEventListener('click', () => {
+                const inputs = {
+                    see: document.getElementById('sage-see').value,
+                    analyze: document.getElementById('sage-analyze').value
+                };
+                if (!inputs.see || !inputs.analyze) { alert('Please complete "See" and "Analyze" to brainstorm.'); return; }
+                const prompt = `Brainstorm 5-7 ethical solutions for a system where the problem is "${inputs.see}" and the root causes are "${inputs.analyze}".`;
+                callGeminiAPI(prompt, document.getElementById('sage-result'));
+            });
+
+             document.getElementById('lens-analyze-btn').addEventListener('click', () => {
+                const inputs = {
+                    situation: document.getElementById('lens-situation').value,
+                    kernel: document.getElementById('l1-result').innerText
+                };
+                if (!inputs.situation) { alert('Please describe the situation.'); return; }
+                if (!inputs.kernel || inputs.kernel.includes("Error")) { alert('Please synthesize your Identity Kernel first.'); return; }
+                const prompt = `Analyze the dilemma "${inputs.situation}" through the four classical lenses (Consequences, Duties, Character, Care). Then, in a final section called "Ethical Triangulation & Coherence," synthesize the results in light of this user's Identity Kernel: "${inputs.kernel}".`;
+                callGeminiAPI(prompt, document.getElementById('lens-result'));
+            });
+            
+            document.getElementById('os-analyze-btn').addEventListener('click', () => {
+                const resource = document.getElementById('os-resource').value;
+                const uncertainty = document.getElementById('os-uncertainty').value;
+                const identity = document.getElementById('os-identity').value;
+                const coordination = document.getElementById('os-coordination').value;
+                if (!resource || !uncertainty || !identity || !coordination) {
+                    alert('Please fill out all four sections of your Ethical OS.');
+                    return;
+                }
+                const prompt = `Act as an AI ethics professor providing feedback on a student's "Ethical Operating System" design.
+                - Resource Allocation Protocols: ${resource}
+                - Uncertainty Navigation Tools: ${uncertainty}
+                - Identity Preservation Strategies: ${identity}
+                - Coordination Interfaces: ${coordination}
+
+                Your Task: Provide a holistic analysis of their OS.
+                1.  **Identify a Key Strength:** What is the most robust or insightful part of their OS design?
+                2.  **Identify a Potential Blind Spot:** Where might this OS be vulnerable? What kind of ethical problem might it struggle to handle?
+                3.  **Suggest a "Stress Test":** Propose a brief scenario that would specifically challenge one of their stated protocols and ask them how their OS would handle it.`;
+                callGeminiAPI(prompt, document.getElementById('os-result'));
+            });
+
+            const cartographyLabs = [
+                { prefix: 'justice', color: 'red', fields: ['map', 'types', 'intervention'], synergyFields: ['scale', 'conflicts', 'capability', 'fef'] },
+                { prefix: 'tech', color: 'cyan', fields: ['map', 'values', 'intervention'], synergyFields: ['scale', 'conflicts', 'capability', 'fef'] },
+                { prefix: 'env', color: 'green', fields: ['map', 'tensions', 'intervention'], synergyFields: ['scale', 'conflicts', 'capability', 'fef'] },
+                { prefix: 'health', color: 'pink', fields: ['map', 'tensions', 'intervention'], synergyFields: ['scale', 'conflicts', 'capability', 'fef'] },
+                { prefix: 'education', color: 'yellow', fields: ['map', 'tensions', 'intervention'], synergyFields: ['scale', 'conflicts', 'capability', 'fef'] },
+                { prefix: 'politics', color: 'gray', fields: ['map', 'tensions', 'intervention'], synergyFields: ['scale', 'conflicts', 'capability', 'fef'] }
+            ];
+
+            const createCartographyHTML = (lab) => {
+                 const titles = { map: 'Map the System', types: 'Identify the Types of Justice', values: 'Identify Embedded Values & CPS Impact', tensions: 'Identify the Core Ethical Tensions', intervention: 'Design a Constructive Intervention' };
+                 const placeholders = { map: 'e.g., Stakeholders include...', types: 'e.g., The process focuses on Retributive Justice...', values: 'e.g., The algorithm values engagement over truth...', tensions: 'e.g., The core tension is between...', intervention: 'e.g., I propose...' };
+                 const synergyTitles = { scale: 'Identify Primary Scale & Lenses', conflicts: 'Map Cross-Scale Conflicts', capability: 'Reframe as a Capability Proposition', fef: 'Test for Functional Equivalence (FEF)' };
+                
+                return `
+                    <div class="flex justify-between items-center mb-2"><h2 class="text-3xl font-bold">${lab.prefix.charAt(0).toUpperCase() + lab.prefix.slice(1)} System Cartography Lab</h2></div>
+                    <p class="mb-6 text-gray-600">Map the ethical architecture of a complex ${lab.prefix} system.</p>
+                    <div class="border-b-2 border-gray-200 pb-8 mb-8">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">Part 1: Initial System Map</h3>
+                        <div class="border-b pb-8 mb-8">
+                            <label for="${lab.prefix}-case-study" class="block text-lg font-semibold mb-2">${lab.prefix.charAt(0).toUpperCase() + lab.prefix.slice(1)} Case Study:</label>
+                            <textarea id="${lab.prefix}-case-study" rows="6" class="savable w-full p-3 border border-gray-300 rounded-lg bg-gray-50" placeholder="Click 'Generate Case Study' or paste your own here."></textarea>
+                            <button id="${lab.prefix}-generate-case-btn" class="mt-4 bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-blue-700">Generate Case Study</button>
+                        </div>
+                        <div class="space-y-8">
+                            ${lab.fields.map(field => `
+                                <div>
+                                    <h3 class="text-xl font-semibold mb-2 text-gray-700">${titles[field]}</h3>
+                                    <textarea id="${lab.prefix}-${field}" rows="5" class="savable w-full p-3 border border-gray-300 rounded-lg" placeholder="${placeholders[field]}"></textarea>
+                                </div>
+                            `).join('')}
+                        </div>
+                        <button id="${lab.prefix}-analyze-btn" class="mt-8 bg-${lab.color}-600 text-white font-semibold py-3 px-8 rounded-lg shadow-md hover:bg-${lab.color}-700">Analyze My ${lab.prefix.charAt(0).toUpperCase() + lab.prefix.slice(1)} Map</button>
+                        <div id="${lab.prefix}-result" class="mt-8"></div>
+                    </div>
+                    <div id="${lab.prefix}-synergy-container" class="synergy-lab-locked">
+                        <h3 class="text-2xl font-bold text-indigo-600 mb-4">Part 2: Cross-Scale Coordination & Synergy Lab</h3>
+                        <p class="mb-6 text-gray-500">This advanced lab is now unlocked. Deepen your analysis to refine your intervention into a robust moral innovation by ensuring it coordinates effectively across different scales and perspectives.</p>
+                        <div id="${lab.prefix}-synergy-lab" class="space-y-8">
+                            <div><h3 class="text-xl font-semibold mb-2 text-indigo-700">1. Identify Primary Scale & Lenses</h3><p class="mb-3 text-gray-500">At what level of social organization is your intervention primarily aimed (e.g., Individual, Community, Institutional)? Based on Scale-Appropriate Ethics, which ethical frameworks are most effective at that scale?</p><textarea id="${lab.prefix}-synergy-scale" rows="4" class="savable w-full p-3 border border-gray-300 rounded-lg"></textarea></div>
+                            <div><h3 class="text-xl font-semibold mb-2 text-indigo-700">2. Map Cross-Scale Conflicts</h3><p class="mb-3 text-gray-500">How might your solution, which is designed for one scale, create unintended problems or tensions at a different scale (e.g., how might a new Institutional rule affect Individual relationships)?</p><textarea id="${lab.prefix}-synergy-conflicts" rows="4" class="savable w-full p-3 border border-gray-300 rounded-lg"></textarea></div>
+                            <div><h3 class="text-xl font-semibold mb-2 text-indigo-700">3. Reframe as a Capability Proposition</h3><p class="mb-3 text-gray-500">Instead of describing what your intervention *does*, describe what it makes *possible*. What new capabilities for action, feeling, or reasoning does it give to the people involved?</p><textarea id="${lab.prefix}-synergy-capability" rows="4" class="savable w-full p-3 border border-gray-300 rounded-lg"></textarea></div>
+                            <div><h3 class="text-xl font-semibold mb-2 text-indigo-700">4. Test for Functional Equivalence (FEF)</h3><p class="mb-3 text-gray-500">Your intervention is likely based on a moral argument. Now, make the strongest possible case for the *exact same intervention* from a completely different, non-moral perspective (e.g., pure economic efficiency, risk management, or brand reputation).</p><textarea id="${lab.prefix}-synergy-fef" rows="4" class="savable w-full p-3 border border-gray-300 rounded-lg"></textarea></div>
+                            <div class="mt-8 pt-8 border-t border-gray-300">
+                                <h3 class="text-xl font-semibold mb-2 text-indigo-700">5. Disambiguation & Refinement</h3>
+                                <p class="mb-3 text-gray-500">Your solution will face ambiguous edge cases. Choose one of the Four Disambiguation Algorithms to stress-test your intervention against a hypothetical challenge.</p>
+                                <select id="${lab.prefix}-synergy-disambiguation-algo" class="savable w-full p-3 border border-gray-300 rounded-lg mb-2">
+                                    <option value="">Select an Algorithm...</option>
+                                    <option value="in-out">"In/Out" Processing</option>
+                                    <option value="category-change">"Category Change"</option>
+                                    <option value="refine-discriminate">"Refine and Discriminate"</option>
+                                    <option value="rule-modification">"Rule Modification"</option>
+                                </select>
+                                <textarea id="${lab.prefix}-synergy-disambiguation-apply" rows="4" class="savable w-full p-3 border border-gray-300 rounded-lg" placeholder="Describe a hypothetical edge case and apply your chosen algorithm to refine your solution..."></textarea>
+                            </div>
+                        </div>
+                        <button id="${lab.prefix}-synergy-analyze-btn" class="mt-8 bg-indigo-600 text-white font-semibold py-3 px-8 rounded-lg shadow-md hover:bg-indigo-700">Run Synergy Analysis</button>
+                    </div>
+                     <div id="${lab.prefix}-dialogue-container" class="mt-6 hidden">
+                        <h4 class="text-lg font-semibold text-gray-700 mb-2">Conversational AI Coach</h4>
+                        <div id="${lab.prefix}-chat-history" class="space-y-4 mb-4 max-h-96 overflow-y-auto p-4 bg-gray-50 rounded-lg border flex flex-col"></div>
+                        <div class="flex space-x-2"><input type="text" id="${lab.prefix}-chat-input" class="flex-grow p-3 border border-gray-300 rounded-lg" placeholder="Continue the analysis..."><button id="${lab.prefix}-chat-send-btn" class="bg-indigo-600 text-white font-semibold py-3 px-6 rounded-lg">Send</button></div>
+                        <div id="${lab.prefix}-chat-loader" class="hidden"><div class="loader"></div></div>
+                    </div>
+                `;
+            };
+            
+            const setupCartographyLab = (prefix) => {
+                const generateCaseBtn = document.getElementById(`${prefix}-generate-case-btn`);
+                generateCaseBtn.addEventListener('click', () => {
+                    const prompt = `Generate a brief and accessible case study for introductory college students in a ${prefix.charAt(0).toUpperCase() + prefix.slice(1)} ethics course. The scenario should be simple, clear, and relatable to a typical university student's experience. It must focus on a single, clear ethical tension that can be reasonably discussed in a single class period or analyzed in a short essay (under 1000 words). Avoid professional jargon, complex multi-stakeholder systems, and situations requiring specialized technical or scientific knowledge. The goal is to create a straightforward dilemma that sparks immediate discussion.`;
+                    callGeminiAPI(prompt, document.getElementById(`${prefix}-case-study`), false, true);
+                });
+
+                const analyzeBtn = document.getElementById(`${prefix}-analyze-btn`);
+                analyzeBtn.addEventListener('click', async () => {
+                    activeChat = prefix;
+                    const caseStudy = document.getElementById(`${prefix}-case-study`).value;
+                    const map = document.getElementById(`${prefix}-map`).value;
+                    const field2 = document.getElementById(`${prefix}-types`) || document.getElementById(`${prefix}-values`) || document.getElementById(`${prefix}-tensions`);
+                    const intervention = document.getElementById(`${prefix}-intervention`).value;
+
+                    if (!caseStudy || !map || !field2.value || !intervention) {
+                        alert('Please ensure the case study and all three analysis fields are filled out.');
+                        return;
+                    }
+                    const initialPrompt = `Act as an AI ethics coach. A student has completed a ${prefix.charAt(0).toUpperCase() + prefix.slice(1)} System Cartography analysis... Case Study: "${caseStudy}"... Student's Analysis: 1. Map: "${map}", 2. Tensions/Types/Values: "${field2.value}", 3. Intervention: "${intervention}"... Your Task: Provide constructive feedback...`;
+                    chatHistory = [{ role: "user", parts: [{ text: initialPrompt }] }];
+                    document.querySelectorAll('[id$="-dialogue-container"]').forEach(el => el.classList.add('hidden'));
+                    
+                    document.getElementById(`${prefix}-result`).innerHTML = ''; 
+                    await callGeminiAPI(chatHistory, null, true); 
+                    
+                    document.getElementById(`${prefix}-synergy-container`).classList.remove('synergy-lab-locked');
+                    document.getElementById(`${prefix}-dialogue-container`).classList.remove('hidden');
+                });
+
+                const synergyAnalyzeBtn = document.getElementById(`${prefix}-synergy-analyze-btn`);
+                synergyAnalyzeBtn.addEventListener('click', async () => {
+                    activeChat = prefix;
+                    const scale = document.getElementById(`${prefix}-synergy-scale`).value;
+                    const conflicts = document.getElementById(`${prefix}-synergy-conflicts`).value;
+                    const capability = document.getElementById(`${prefix}-synergy-capability`).value;
+                    const fef = document.getElementById(`${prefix}-synergy-fef`).value;
+                    const algo = document.getElementById(`${prefix}-synergy-disambiguation-algo`).value;
+                    const apply = document.getElementById(`${prefix}-synergy-disambiguation-apply`).value;
+
+                    if (!scale || !conflicts || !capability || !fef || !algo || !apply) { alert('Please fill out all five fields in the Synergy Lab.'); return; }
+                    
+                    const synergyPrompt = `Now, let's deepen this analysis using the FAIM-QIRF framework's Cross-Scale Coordination & Synergy Lab. Here are my thoughts:
+ - **Primary Scale & Lenses:** ${scale}
+ - **Cross-Scale Conflicts:** ${conflicts}
+ - **Capability Proposition:** ${capability}
+ - **Functional Equivalence (FEF):** ${fef}
+ - **Disambiguation Algorithm:** The user chose the '${algo}' algorithm.
+ - **Application:** ${apply}
+ 
+ Please act as an advanced AI coach. Based on my Synergy Lab input, provide a deeper analysis.
+ 1.  Evaluate the resilience of my proposed moral innovation. How well does it account for cross-scale conflicts?
+ 2.  How could the **capability proposition** be strengthened?
+ 3.  Does the **functional equivalence** argument create a robust, non-moral justification?
+ 4.  Evaluate their application of the disambiguation algorithm. Is it a good choice for their intervention? How does it make their solution more resilient?
+ 5.  Conclude with a final Socratic question to guide my next steps as a constructor.`;
+                    
+                    chatHistory.push({ role: "user", parts: [{ text: synergyPrompt }] });
+                    renderChat();
+                    callGeminiAPI(chatHistory, null, true);
+                });
+
+                const sendBtn = document.getElementById(`${prefix}-chat-send-btn`);
+                const input = document.getElementById(`${prefix}-chat-input`);
+                if (sendBtn && input) {
+                    sendBtn.addEventListener('click', sendChatMessage);
+                    input.addEventListener('keypress', (e) => { if (e.key === 'Enter') sendChatMessage(); });
+                }
+            };
+
+            document.getElementById('legacy-analyze-btn').addEventListener('click', async () => {
+                 activeChat = 'legacy';
+                 const inputs = {
+                    innovation: document.getElementById('legacy-innovation').value,
+                    insights: document.getElementById('legacy-insights').value,
+                    statement: document.getElementById('legacy-statement').value,
+                    kernel: document.getElementById('l1-result').innerText || "not synthesized",
+                    metaCapacity: document.getElementById('os-identity').value || "not described"
+                 };
+                 if (!inputs.innovation || !inputs.insights || !inputs.statement) { alert('Please fill out all Legacy Project sections.'); return; }
+                 const prompt = `Act as an AI ethics professor... Legacy Project: Innovation: "${inputs.innovation}", Insights: "${inputs.insights}", Statement: "${inputs.statement}". Connect this to their Identity Kernel: "${inputs.kernel}" and Meta-Constructor Capacity described in their Ethical OS: "${inputs.metaCapacity}". Provide a capstone analysis and a final Socratic question.`;
+                 chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
+                 document.getElementById('legacy-result').innerHTML = '';
+                 await callGeminiAPI(chatHistory, null, true);
+                 document.getElementById('legacy-dialogue-container').classList.remove('hidden');
+            });
+
+            // --- Demo & Project Switching Logic ---
+            const loadDemo = () => {
+                isDemoMode = true;
+                const demoData = {
+                    'ik-values': "I value loyalty to my friends, but also academic honesty and personal integrity.",
+                    'ik-relationships': "My friendship with Alex is really important to me, as is my standing as a trustworthy student in my academic community.",
+                    'ik-motivations': "I'm motivated to help my friends succeed, but I also have a deep drive to be a person who earns their achievements fairly.",
+                    'prf-beliefs': "I believe that context is more important than rigid rules and that most people are trying their best given their circumstances.",
+                    'prf-rules': "The primary rule is to seek understanding before judgment. Another rule is that systems should be flexible enough to accommodate human complexity.",
+                    'prf-ontology': "I see ethical dilemmas not as simple right-vs-wrong choices, but as complex systems of interacting needs, histories, and power dynamics.",
+                    'prf-authenticity': "It feels most authentic to me to act as a mediator or a bridge-builder, rather than an enforcer of rules.",
+                    'domain-student': "In my 'student' domain, my core value of 'honesty' becomes the rule 'never plagiarize.' My motivation to 'discover truth' becomes the belief that 'rigorous study is more important than grades.' This connects to my Identity Kernel's focus on integrity.",
+                    'domain-friend': "In my 'friend' domain, my core value of 'compassion' becomes the rule 'always offer support, even when it's inconvenient.' The belief that 'people are trying their best' is highly active here, which sometimes conflicts with the academic domain's focus on individual responsibility.",
+                    'domain-custom-name': "Being a Team Captain",
+                    'domain-custom': "As a captain, my main rule is 'lead by example' and my ontology shifts to seeing my teammates not just as individuals but as parts of a coordinated system. This requires balancing my 'compassion' kernel with the need for discipline and high standards.",
+                    'cps-situation': "My close friend Alex is overwhelmed and falling behind. They've asked me to let them copy my answers for a major assignment that's due tomorrow. I know they're struggling, but I feel it's wrong to cheat.",
+                    'cps-feeling': "-8", 'cps-motivation': "-5", 'cps-reasoning': "7", 'cps-action': "-3",
+                    'broa-situation': "My close friend Alex is overwhelmed and falling behind. They've asked me to let them copy my answers for a major assignment that's due tomorrow. I know they're struggling, but I feel it's wrong to cheat.",
+                    'broa-beliefs': "I believe that true friendship means helping someone, but I also believe that learning requires personal effort and that cheating devalues everyone's work.",
+                    'broa-rules': "The explicit rule is 'do not cheat.' The implicit social rule is 'be loyal to your friends.' These rules are in direct conflict.",
+                    'broa-ontology': "I see this as a test of my integrity. I also see it as a cry for help from a friend who is struggling with a system that is overwhelming them.",
+                    'broa-authenticity': "Letting Alex cheat feels fundamentally inauthentic and dishonest to me. But abandoning a friend in need also feels like a betrayal of who I am.",
+                    'abcd-situation': "My close friend Alex is overwhelmed and falling behind. They've asked me to let them copy my answers for a major assignment that's due tomorrow. I know they're struggling, but I feel it's wrong to cheat.",
+                    'abcd-agency': "Alex has the agency to ask for help, and I have the agency to say yes, no, or offer a different kind of help. The professor and the school also have agency in creating the conditions for this dilemma.",
+                    'abcd-beauty': "The value of our friendship is beautiful and worth protecting. So is the value of academic integrity and the personal growth that comes from honest work.",
+                    'abcd-context': "The context is that Alex is under immense pressure from family and the competitive school environment. This isn't just about one assignment; it's about a system that can push students to desperate measures.",
+                    'abcd-dynamism': "If I help them cheat, the immediate situation is resolved, but it might create a dynamic where they rely on me, or it could damage our trust if we're caught. Refusing could strain our friendship now, but might lead to a more honest conversation about the pressures we're facing.",
+                    'sage-see': "The immediate problem is my friend asking to cheat. The larger system is the high-pressure academic environment at our school that normalizes extreme stress and creates incentives for academic dishonesty.",
+                    'sage-analyze': "Root causes include: a competitive 'weed-out' culture in our major, inadequate mental health and academic support services, and a grading system that rewards performance over genuine learning and collaboration.",
+                    'sage-generate': "Possible solutions: 1. Offer to spend the evening tutoring Alex instead of giving them the answers. 2. Together, approach the professor to ask for an extension for Alex, explaining the situation without making excuses. 3. Start a student group to advocate for better mental health resources or a more collaborative academic culture.",
+                    'sage-evaluate': "Tutoring Alex directly helps my friend and maintains my integrity (low risk, high relational reward). Asking the professor is riskier but could help Alex without compromising academic honesty. Starting a student group is a long-term, high-impact solution that addresses the root cause but doesn't solve the immediate crisis.",
+                    'lens-situation': "My close friend Alex is overwhelmed and falling behind and has asked to copy my assignment. I need to decide whether to help them cheat, refuse, or find another way.",
+                    'justice-case-study': "The university's Academic Integrity Committee is reviewing the case of Alex, who was caught submitting plagiarized work provided by another student. The standard policy mandates a zero on the assignment and a formal notation on their academic record. However, Alex has presented evidence that they were suffering from a severe mental health crisis, were not receiving adequate support from the university's over-burdened counseling services, and felt this was the only way to avoid failing the course and losing their scholarship. The committee must decide whether to follow the standard procedure or consider a more lenient, restorative approach.",
+                    'justice-map': "Stakeholders: Alex, myself (the friend), the professor, the Academic Integrity Committee, the university administration, and other students. Power is concentrated in the Committee, which follows rules set by the administration. Alex has very little power. The historical context is a campus culture that prizes high achievement but fails to adequately support student well-being, creating a feedback loop where stress leads to academic dishonesty.",
+                    'justice-types': "The standard policy is purely Retributive Justice (punishment for a rule violation). Alex's situation brings up questions of Procedural Justice (was the process fair, given their mental state?) and Distributive Justice (are support resources distributed fairly across the student body?). A restorative approach would introduce Compensatory Justice (how can Alex repair the harm done?).",
+                    'justice-intervention': "I propose a two-tiered system. For first-time offenses where mitigating circumstances like a documented mental health crisis exist, the case should be referred to a restorative justice circle instead of the punitive committee. This circle would include the student, professor, and a trained mediator. The goal would be to create a plan for Alex to learn from the mistake, get connected to real support, and repair the harm to the professor's trust, rather than simply being punished. This maintains accountability while being more compassionate and addressing the root cause.",
+                    'justice-synergy-scale': "My intervention is primarily at the Institutional scale, aiming to change the university's formal procedures. The most appropriate lenses here are Procedural Justice and Rights Protection.",
+                    'justice-synergy-conflicts': "My institutional solution (a restorative justice circle) might conflict with the National scale if there are rigid federal guidelines for academic misconduct. It could also conflict with the Individual scale if a professor feels their authority is undermined by a non-punitive process.",
+                    'justice-synergy-capability': "This intervention creates the capability for students to learn from mistakes without catastrophic failure, the capability for faculty to exercise compassion within a structured process, and the capability for the institution to learn from patterns of student distress.",
+                    'justice-synergy-fef': "From a purely risk-management perspective, this intervention is also superior. It reduces the risk of lawsuits from students who feel unfairly treated, lowers the chance of negative press from a harsh disciplinary action, and improves long-term student retention by addressing crises constructively instead of punitively.",
+                    'justice-synergy-disambiguation-algo': "refine-discriminate",
+                    'justice-synergy-disambiguation-apply': "An edge case: What if the student's mental health crisis was caused by their own poor choices (e.g., substance abuse)? Using 'Refine and Discriminate,' I would create a subcategory. The restorative path is still the default, but if the crisis is self-induced and part of a pattern of irresponsibility, the restorative plan must include mandatory counseling and a stricter accountability plan. This preserves the compassionate principle while preventing it from being exploited.",
+                    'os-resource': "For low-stakes interpersonal issues, I'll use a quick heuristic based on my 'friend' domain (5-10 mins). For major professional dilemmas, I will block at least one hour of deep reflection in my calendar and commit to speaking with one trusted mentor before deciding.",
+                    'os-uncertainty': "My primary tool is to ask 'What is the most charitable interpretation of this person's actions?' before assuming intent. I will risk making mistakes that are reversible (like being too trusting) and prioritize avoiding actions that could cause irreparable harm to relationships or reputation. I update my approach when new evidence directly contradicts my charitable interpretation twice.",
+                    'os-identity': "My non-negotiables are compassion and intellectual honesty. I know I am adapting in a healthy way when I feel an increase in my UEV coherence (my reason and emotions align). I will recognize an inauthentic compromise if my Global Feeling Tone remains negative for more than a day, even if my actions seem logical. This is my internal alarm system.",
+                    'os-coordination': "My primary interface is to seek 'functional equivalence.' I will not try to convince others my values are correct. Instead, I will ask: 'Even though we see this differently, can we agree on a practical next step that serves both our underlying goals?' My goal is to find the shared capability we both want to build.",
+                    'legacy-innovation': "My moral innovation is the 'structured choice' model for first-year grading, developed in the Education Lab. The core idea is to make pass/fail the default to lower stress, while allowing students to opt-in to a letter grade after mid-terms. This balances the systemic need for well-being with the individual need for differentiation.",
+                    'legacy-insights': "This innovation directly reflects my Identity Kernel's values of compassion and integrity. My BROA analysis showed that the 'problem' of academic dishonesty is also a 'cry for help' from a stressful system. My ABCD analysis highlighted the need to see the broader context of student pressure. This intervention is a direct response to those insights, aiming to build a more supportive system rather than just punishing individuals.",
+                    'legacy-statement': "My legacy as a constructor is to design systems that create the capability for others to flourish without sacrificing their ethical coherence or well-being. I want to build regenerative structures that are not only fair and efficient, but also compassionate and sensitive to the embodied experience of the agents within them."
+                };
+                
+                document.querySelectorAll('.savable').forEach(field => {
+                    if (demoData[field.id]) {
+                        field.value = demoData[field.id];
+                    } else {
+                        if (field.type === 'range') field.value = 0;
+                        else field.value = '';
+                    }
+                });
+                
+                actionButtons.innerHTML = `<button id="return-to-work-btn" class="bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg shadow-sm hover:bg-blue-700 transition-colors">Return to My Project</button> <button id="clear-work-btn" class="bg-red-600 text-white font-semibold py-2 px-6 rounded-lg shadow-sm hover:bg-red-700 transition-colors">Clear My Work</button>`;
+                document.getElementById('return-to-work-btn').addEventListener('click', returnToWork);
+                document.getElementById('clear-work-btn').addEventListener('click', clearWork);
+            };
+
+            function returnToWork() {
+                isDemoMode = false;
+                document.querySelectorAll('.savable').forEach(field => {
+                     if (field.type === 'range') field.value = 0;
+                     else field.value = '';
+                });
+                loadWork(); 
+                actionButtons.innerHTML = `
+                    <button id="start-here-btn" class="bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg shadow-sm hover:bg-blue-700 transition-colors">Start Here</button>
+                    <button id="api-settings-btn" class="bg-gray-700 text-white font-semibold py-2 px-6 rounded-lg shadow-sm hover:bg-gray-800 transition-colors">API Settings</button>
+                    <button id="abcd-mindset-btn" class="bg-teal-600 text-white font-semibold py-2 px-6 rounded-lg shadow-sm hover:bg-teal-700 transition-colors">ABCD Constructor's Mindset</button>
+                    <button id="load-demo-btn" class="bg-gray-500 text-white font-semibold py-2 px-6 rounded-lg shadow-sm hover:bg-gray-600 transition-colors">Load Demo</button>
+                    <button id="clear-work-btn" class="bg-red-600 text-white font-semibold py-2 px-6 rounded-lg shadow-sm hover:bg-red-700 transition-colors">Clear My Work</button>`;
+                
+                document.getElementById('start-here-btn').addEventListener('click', () => openModal(startHereModal));
+                document.getElementById('api-settings-btn').addEventListener('click', () => openModal(apiSettingsModal));
+                document.getElementById('abcd-mindset-btn').addEventListener('click', () => { populateAbcdPrompts(); openModal(abcdMindsetModal); });
+                document.getElementById('load-demo-btn').addEventListener('click', loadDemo);
+                document.getElementById('clear-work-btn').addEventListener('click', clearWork);
+            }
+
+            // Initial setup after all elements are on the page
+             document.querySelectorAll('.savable').forEach(field => field.addEventListener('input', saveWork));
+            document.getElementById('load-demo-btn').addEventListener('click', loadDemo);
+            document.getElementById('clear-work-btn').addEventListener('click', clearWork);
+            
+            cartographyLabs.forEach(lab => {
+                const labContainer = document.getElementById(`${lab.prefix}-lab-view`);
+                if(labContainer) {
+                    labContainer.innerHTML = createCartographyHTML(lab);
+                    setupCartographyLab(lab.prefix); 
+                }
+            });
+            
+            loadApiKey();
+            loadWork();
+
+        });
+    </script>
 </body>
 </html>
+
